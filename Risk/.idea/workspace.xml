@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="COMP345RISK" targetName="Common" />
+      <config projectName="COMP345RISK" targetName="MapLoaderDriver" />
+      <config projectName="COMP345RISK" targetName="CommonLib" />
+      <config projectName="COMP345RISK" targetName="MapDriver" />
+    </generated>
+  </component>
+  <component name="CMakeSettings" AUTO_RELOAD="true">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7ca97671-161b-47fb-8107-3fc1d41fb1cc" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CMakeLists.txt" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1hkRZXI2uIxd5tCafR94A1bRSdj" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Driver" />
+    <property name="settings.editor.selected.configurable" value="fileTemplates" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\programs\Temp\Risk\Driver" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\programs\Temp\Risk\Common" />
+    </key>
+  </component>
+  <component name="RunManager" selected="CMake Application.MapLoaderDriver">
+    <configuration name="Common" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="COMP345RISK" TARGET_NAME="Common" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CommonLib" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="COMP345RISK" TARGET_NAME="CommonLib" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="COMP345RISK" RUN_TARGET_NAME="CommonLib">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MapDriver" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="COMP345RISK" TARGET_NAME="MapDriver" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="COMP345RISK" RUN_TARGET_NAME="MapDriver">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MapLoaderDriver" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="COMP345RISK" TARGET_NAME="MapLoaderDriver" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="COMP345RISK" RUN_TARGET_NAME="MapLoaderDriver">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.Common" />
+      <item itemvalue="CMake Application.CommonLib" />
+      <item itemvalue="CMake Application.MapDriver" />
+      <item itemvalue="CMake Application.MapLoaderDriver" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7ca97671-161b-47fb-8107-3fc1d41fb1cc" name="Default Changelist" comment="" />
+      <created>1600553159764</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1600553159764</updated>
+      <workItem from="1600553160790" duration="3250000" />
+      <workItem from="1600704816586" duration="8207000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1022" y="519" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600731194653">
+      <screen x="62" y="0" width="3010" height="1728" />
+    </state>
+    <state x="1022" y="519" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600731194653" />
+    <state x="1329" y="666" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600727781252">
+      <screen x="62" y="0" width="3010" height="1728" />
+    </state>
+    <state x="1329" y="666" key="#com.intellij.fileTypes.FileTypeChooser/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600727781252" />
+    <state x="1348" y="619" key="FileChooserDialogImpl" timestamp="1600553610636">
+      <screen x="62" y="0" width="3010" height="1728" />
+    </state>
+    <state x="1348" y="619" key="FileChooserDialogImpl/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600553610636" />
+    <state width="2967" height="509" key="GridCell.Tab.0.bottom" timestamp="1600733719549">
+      <screen x="62" y="0" width="3010" height="1728" />
+    </state>
+    <state width="2967" height="509" key="GridCell.Tab.0.bottom/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600733719549" />
+    <state width="2967" height="509" key="GridCell.Tab.0.bottom/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600564543205" />
+    <state width="2967" height="509" key="GridCell.Tab.0.center" timestamp="1600733719549">
+      <screen x="62" y="0" width="3010" height="1728" />
+    </state>
+    <state width="2967" height="509" key="GridCell.Tab.0.center/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600733719549" />
+    <state width="2967" height="509" key="GridCell.Tab.0.center/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600564543205" />
+    <state width="2967" height="509" key="GridCell.Tab.0.left" timestamp="1600733719549">
+      <screen x="62" y="0" width="3010" height="1728" />
+    </state>
+    <state width="2967" height="509" key="GridCell.Tab.0.left/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600733719549" />
+    <state width="2967" height="509" key="GridCell.Tab.0.left/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600564543205" />
+    <state width="2967" height="509" key="GridCell.Tab.0.right" timestamp="1600733719549">
+      <screen x="62" y="0" width="3010" height="1728" />
+    </state>
+    <state width="2967" height="509" key="GridCell.Tab.0.right/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600733719549" />
+    <state width="2967" height="509" key="GridCell.Tab.0.right/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600564543205" />
+    <state x="1076" y="509" key="SettingsEditor" timestamp="1600728434429">
+      <screen x="62" y="0" width="3010" height="1728" />
+    </state>
+    <state x="1076" y="509" key="SettingsEditor/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600728434429" />
+    <state x="1076" y="509" key="SettingsEditor/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600553973703" />
+  </component>
+</project>
