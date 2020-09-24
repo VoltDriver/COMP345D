@@ -5,7 +5,8 @@
 
 int main() {
     Map::validate();
-    MapLoader::parse("../Resource/test.map");
+    MapLoader loader = MapLoader();
+    loader.parse("../Resource/test.map");
 
     return 0;
 }

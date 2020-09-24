@@ -1,17 +1,19 @@
 #pragma once
+
 #include <vector>
 #include <string>
 
-#include "Country.h"
-
 using namespace std;
+
+class Country;
 
 class Continent {
 private:
-    vector<Country*> territories;
+    vector<Country*> countries;
     string name;
-    int armies;
-    string color;
+    int armies = 0;
+    friend ostream& operator<<(ostream&, const Continent&);
+
 public:
-    Continent();
+    explicit Continent(string&);
 };

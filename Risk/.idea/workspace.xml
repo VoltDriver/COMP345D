@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
       <config projectName="COMP345RISK" targetName="Common" />
       <config projectName="COMP345RISK" targetName="MapLoaderDriver" />
-      <config projectName="COMP345RISK" targetName="CommonLib" />
       <config projectName="COMP345RISK" targetName="MapDriver" />
+      <config projectName="COMP345RISK" targetName="CommonLib" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
@@ -14,7 +32,21 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7ca97671-161b-47fb-8107-3fc1d41fb1cc" name="Default Changelist" comment="" />
+    <list default="true" id="7ca97671-161b-47fb-8107-3fc1d41fb1cc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Common/Util.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Common/Util.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Common/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Continent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Continent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Continent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Continent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Country.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Country.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Country.h" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Country.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Map.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Map.h" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Map.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/MapLoader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/MapLoader.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/MapLoader.h" beforeDir="false" afterPath="$PROJECT_DIR$/Common/MapLoader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Driver/MapLoaderDriver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Driver/MapLoaderDriver.cpp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,7 +63,14 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="OCResolveContextSettings">
+    <option name="configuration" value="0-Debug-Common" />
+  </component>
   <component name="ProjectId" id="1hkRZXI2uIxd5tCafR94A1bRSdj" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -40,7 +79,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Driver" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="fileTemplates" />
   </component>
   <component name="RecentsManager">
@@ -72,19 +111,14 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="CMake Application.Common" />
       <item itemvalue="CMake Application.CommonLib" />
+      <item itemvalue="CMake Application.Common" />
       <item itemvalue="CMake Application.MapDriver" />
       <item itemvalue="CMake Application.MapLoaderDriver" />
     </list>
@@ -99,11 +133,28 @@
       <updated>1600553159764</updated>
       <workItem from="1600553160790" duration="3250000" />
       <workItem from="1600704816586" duration="8207000" />
+      <workItem from="1600734026294" duration="1218000" />
+      <workItem from="1600735267110" duration="1932000" />
+      <workItem from="1600824236763" duration="12023000" />
+      <workItem from="1600889594773" duration="4069000" />
+      <workItem from="1600962883860" duration="8164000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1022" y="519" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600731194653">
@@ -114,30 +165,31 @@
       <screen x="62" y="0" width="3010" height="1728" />
     </state>
     <state x="1329" y="666" key="#com.intellij.fileTypes.FileTypeChooser/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600727781252" />
-    <state x="1348" y="619" key="FileChooserDialogImpl" timestamp="1600553610636">
+    <state x="1348" y="619" key="FileChooserDialogImpl" timestamp="1600735276336">
       <screen x="62" y="0" width="3010" height="1728" />
     </state>
+    <state x="1348" y="619" key="FileChooserDialogImpl/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600735276336" />
     <state x="1348" y="619" key="FileChooserDialogImpl/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600553610636" />
-    <state width="2967" height="509" key="GridCell.Tab.0.bottom" timestamp="1600733719549">
+    <state width="2967" height="491" key="GridCell.Tab.0.bottom" timestamp="1600976595270">
       <screen x="62" y="0" width="3010" height="1728" />
     </state>
-    <state width="2967" height="509" key="GridCell.Tab.0.bottom/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600733719549" />
-    <state width="2967" height="509" key="GridCell.Tab.0.bottom/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600564543205" />
-    <state width="2967" height="509" key="GridCell.Tab.0.center" timestamp="1600733719549">
+    <state width="2967" height="491" key="GridCell.Tab.0.bottom/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
+    <state width="2967" height="491" key="GridCell.Tab.0.bottom/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
+    <state width="2967" height="491" key="GridCell.Tab.0.center" timestamp="1600976595270">
       <screen x="62" y="0" width="3010" height="1728" />
     </state>
-    <state width="2967" height="509" key="GridCell.Tab.0.center/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600733719549" />
-    <state width="2967" height="509" key="GridCell.Tab.0.center/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600564543205" />
-    <state width="2967" height="509" key="GridCell.Tab.0.left" timestamp="1600733719549">
+    <state width="2967" height="491" key="GridCell.Tab.0.center/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
+    <state width="2967" height="491" key="GridCell.Tab.0.center/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
+    <state width="2967" height="491" key="GridCell.Tab.0.left" timestamp="1600976595270">
       <screen x="62" y="0" width="3010" height="1728" />
     </state>
-    <state width="2967" height="509" key="GridCell.Tab.0.left/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600733719549" />
-    <state width="2967" height="509" key="GridCell.Tab.0.left/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600564543205" />
-    <state width="2967" height="509" key="GridCell.Tab.0.right" timestamp="1600733719549">
+    <state width="2967" height="491" key="GridCell.Tab.0.left/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
+    <state width="2967" height="491" key="GridCell.Tab.0.left/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
+    <state width="2967" height="491" key="GridCell.Tab.0.right" timestamp="1600976595270">
       <screen x="62" y="0" width="3010" height="1728" />
     </state>
-    <state width="2967" height="509" key="GridCell.Tab.0.right/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600733719549" />
-    <state width="2967" height="509" key="GridCell.Tab.0.right/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600564543205" />
+    <state width="2967" height="491" key="GridCell.Tab.0.right/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
+    <state width="2967" height="491" key="GridCell.Tab.0.right/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
     <state x="1076" y="509" key="SettingsEditor" timestamp="1600728434429">
       <screen x="62" y="0" width="3010" height="1728" />
     </state>

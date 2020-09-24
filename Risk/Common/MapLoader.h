@@ -5,9 +5,11 @@
 
 class MapLoader {
 private:
-    Map* current;
+    Map* loaded_map = nullptr;
+
 public:
-    static void parse(string fileName);
+    MapLoader();
+    void parse(string);
 };
 
 
