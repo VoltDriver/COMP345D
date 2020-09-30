@@ -4,9 +4,12 @@
 #include "Common/MapLoader.h"
 
 int main() {
-    Map::validate();
     MapLoader loader = MapLoader();
-    loader.parse("../Resource/test.map");
+    try {
+        loader.parse("../Resource/test2.map");
+    } catch (const std::exception &e) {
+        cout << e.what() << endl;
+    }
 
     return 0;
 }

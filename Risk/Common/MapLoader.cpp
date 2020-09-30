@@ -9,52 +9,94 @@
 
 using namespace std;
 
-void MapLoader::parse(string fileName) {
-    try {
+/**
+ * Parses a .map file into a Map entity with continents and territories linked
+ *
+ * NOTE Spaces used to separate data in a line, can't be used in country/continent names
+ * .map files broken into sections:
+ *
+ * Continents, delimited by [continents] - ORDER IS IMPORTANT, CONTINENT IDS BASED ON POSITION
+ *  Continent_Name / Number of armies / Color
+ *  EX: North_America 6 red
+ *
+ * Countries. delimited by [countries]
+ * Id of the Country (Needs to be in order) / Country name / Id of the continent / X coords / Y coords
+ * EX: 1 Alaska 1 44 83
+ *
+ * Borders, delimited by [borders]
+ * Main country ID / Any number of bordering country IDs
+ * EX: 1 2 3 38
+ *
+ * @param fileName Name of file to open
+ */
+void MapLoader::parse(string file_name) {
         Map map;
-        this-> loaded_map = &map;
+        loaded_map = &map;
 
-        ifstream fileReader(fileName);
+        ifstream file_reader(file_name);
         string line;
 
-        if (fileReader.fail()) {
-            cout << "Error opening file" << endl;
+        if (file_reader.fail()) {
+            throw runtime_error("Error opening or reading file: " + file_name);
         } else {
             /* CONTINENTS */
             // Skip file contents until we reach the continent section of the file
-            while (getline(fileReader, line) &&  line !=  "[continents]") {}
+            while (getline(file_reader, line) &&  line !=  "[continents]") {}
 
-            while (getline(fileReader, line) &&  !line.empty()) {
+            // Iterate and process each line defined under [continents]
+            while (getline(file_reader, line) &&  !line.empty()) {
                 auto* new_continent = new Continent(line);
                 this-> loaded_map-> add_continent(new_continent);
 
+                // Debug - REMOVEME
                 cout << *new_continent << endl;
             }
 
             /* COUNTRIES */
             // Skip file contents until we reach the continent section of the file
-            while (getline(fileReader, line) &&  line !=  "[countries]") {}
+            while (getline(file_reader, line) &&  line !=  "[countries]") {}
 
             int country_index = 1;
-            while (getline(fileReader, line) &&  !line.empty()) {
+            while (getline(file_reader, line) &&  !line.empty()) {
                 auto* new_country = new Country(line);
+                Continent* current_continent = map.get_continents()[new_country->get_continent_id() - 1];
+                current_continent->add_country(new_country);
+                new_country->set_continent(current_continent);
+
+                // If the ID defined for the country doesn't match our accumulator, they are not in order from 1 to n
+                if (new_country-> get_id() !=  country_index) {
+                    throw invalid_argument("Countries not listed in order");
+                }
+
                 this-> loaded_map-> add_country(new_country);
 
+                country_index++;
+                // Debug
                 cout << *new_country << endl;
             }
 
-
             /* BORDERS */
             // Skip file contents until we reach the continent section of the file
-            while (getline(fileReader, line) &&  line !=  "[borders]") {}
+            while (getline(file_reader, line) &&  line !=  "[borders]") {}
 
-            while (getline(fileReader, line) &&  !line.empty()) {
+            vector<Country*> all_countries = map.get_countries();
+            while (getline(file_reader, line) &&  !line.empty()) {
+                const vector<string> split_string = split(line);
+                Country* current = all_countries[stoi(split_string[0]) - 1];
+
+                for (int i = 1; i < split_string.size(); i++ ) {
+                    current-> add_bordering_country(all_countries[stoi(split_string[i]) - 1]);
+                }
+
+                // Debug - REMOVEME
                 cout << "border data: " <<  line << endl;
             }
+
+            // Debug - REMOVEME
+            cout << *all_countries[1] << endl;
+            cout << "IS VALID?: " << map.validate() << endl;
+            cout << "IS VALID 2?: " << map.validate_unique_continents() << endl;
         }
-    } catch (const std::exception &e) {
-        cout << e.what() << endl;
-    }
 }
 
 MapLoader::MapLoader() = default;

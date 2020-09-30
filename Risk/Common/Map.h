@@ -13,7 +13,10 @@ private:
     vector<Country*> countries;
 public:
     Map();
-    static void validate();
-    void add_country(Country*);
-    void add_continent(Continent*);
+    vector<Country*> get_countries();
+    vector<Continent*> get_continents();
+    void add_country(Country* new_country);
+    void add_continent(Continent* new_continent);
+    bool validate();
+    bool validate_unique_continents() const;
 };

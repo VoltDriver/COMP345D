@@ -20,6 +20,7 @@
   </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
+      <config projectName="COMP345RISK" targetName="PlayerDriver" />
       <config projectName="COMP345RISK" targetName="Common" />
       <config projectName="COMP345RISK" targetName="MapLoaderDriver" />
       <config projectName="COMP345RISK" targetName="MapDriver" />
@@ -33,8 +34,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7ca97671-161b-47fb-8107-3fc1d41fb1cc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Common/Util.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Common/Util.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Common/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Common/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Common/Continent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Continent.cpp" afterDir="false" />
@@ -44,8 +43,10 @@
       <change beforePath="$PROJECT_DIR$/Common/Map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Map.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Common/Map.h" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Map.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Common/MapLoader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/MapLoader.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/MapLoader.h" beforeDir="false" afterPath="$PROJECT_DIR$/Common/MapLoader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Driver/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Driver/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Driver/MapDriver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Driver/MapDriver.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Driver/MapLoaderDriver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Driver/MapLoaderDriver.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resource/test.map" beforeDir="false" afterPath="$PROJECT_DIR$/Resource/test.map" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,9 +67,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="OCResolveContextSettings">
-    <option name="configuration" value="0-Debug-Common" />
-  </component>
   <component name="ProjectId" id="1hkRZXI2uIxd5tCafR94A1bRSdj" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -80,7 +78,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="fileTemplates" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -90,7 +89,7 @@
       <recent name="D:\programs\Temp\Risk\Common" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake Application.MapLoaderDriver">
+  <component name="RunManager" selected="CMake Application.PlayerDriver">
     <configuration name="Common" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="COMP345RISK" TARGET_NAME="Common" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -111,6 +110,16 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="PlayerDriver" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="COMP345RISK" TARGET_NAME="PlayerDriver" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="COMP345RISK" RUN_TARGET_NAME="PlayerDriver">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -121,6 +130,7 @@
       <item itemvalue="CMake Application.Common" />
       <item itemvalue="CMake Application.MapDriver" />
       <item itemvalue="CMake Application.MapLoaderDriver" />
+      <item itemvalue="CMake Application.PlayerDriver" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -137,7 +147,13 @@
       <workItem from="1600735267110" duration="1932000" />
       <workItem from="1600824236763" duration="12023000" />
       <workItem from="1600889594773" duration="4069000" />
-      <workItem from="1600962883860" duration="8164000" />
+      <workItem from="1600962883860" duration="13940000" />
+      <workItem from="1601064058501" duration="13948000" />
+      <workItem from="1601142045375" duration="21284000" />
+      <workItem from="1601223372612" duration="7050000" />
+      <workItem from="1601242085937" duration="6499000" />
+      <workItem from="1601409618926" duration="11180000" />
+      <workItem from="1601482753710" duration="4385000" />
     </task>
     <servers />
   </component>
@@ -161,39 +177,48 @@
       <screen x="62" y="0" width="3010" height="1728" />
     </state>
     <state x="1022" y="519" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600731194653" />
-    <state x="1329" y="666" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600727781252">
+    <state x="1329" y="666" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1601149265928">
       <screen x="62" y="0" width="3010" height="1728" />
     </state>
-    <state x="1329" y="666" key="#com.intellij.fileTypes.FileTypeChooser/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600727781252" />
+    <state x="1329" y="666" key="#com.intellij.fileTypes.FileTypeChooser/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1601149265928" />
+    <state x="1315" y="719" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1601144411480">
+      <screen x="62" y="0" width="3010" height="1728" />
+    </state>
+    <state x="1315" y="719" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1601144411480" />
     <state x="1348" y="619" key="FileChooserDialogImpl" timestamp="1600735276336">
       <screen x="62" y="0" width="3010" height="1728" />
     </state>
     <state x="1348" y="619" key="FileChooserDialogImpl/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600735276336" />
     <state x="1348" y="619" key="FileChooserDialogImpl/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600553610636" />
-    <state width="2967" height="491" key="GridCell.Tab.0.bottom" timestamp="1600976595270">
+    <state width="2967" height="433" key="GridCell.Tab.0.bottom" timestamp="1601437934922">
       <screen x="62" y="0" width="3010" height="1728" />
     </state>
-    <state width="2967" height="491" key="GridCell.Tab.0.bottom/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
+    <state width="730" height="594" key="GridCell.Tab.0.bottom/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@3840.479.1920.1080" timestamp="1601187838870" />
+    <state width="2967" height="433" key="GridCell.Tab.0.bottom/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1601437934922" />
     <state width="2967" height="491" key="GridCell.Tab.0.bottom/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
-    <state width="2967" height="491" key="GridCell.Tab.0.center" timestamp="1600976595270">
+    <state width="2967" height="433" key="GridCell.Tab.0.center" timestamp="1601437934922">
       <screen x="62" y="0" width="3010" height="1728" />
     </state>
-    <state width="2967" height="491" key="GridCell.Tab.0.center/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
+    <state width="730" height="594" key="GridCell.Tab.0.center/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@3840.479.1920.1080" timestamp="1601187838870" />
+    <state width="2967" height="433" key="GridCell.Tab.0.center/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1601437934922" />
     <state width="2967" height="491" key="GridCell.Tab.0.center/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
-    <state width="2967" height="491" key="GridCell.Tab.0.left" timestamp="1600976595270">
+    <state width="2967" height="433" key="GridCell.Tab.0.left" timestamp="1601437934922">
       <screen x="62" y="0" width="3010" height="1728" />
     </state>
-    <state width="2967" height="491" key="GridCell.Tab.0.left/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
+    <state width="730" height="594" key="GridCell.Tab.0.left/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@3840.479.1920.1080" timestamp="1601187838870" />
+    <state width="2967" height="433" key="GridCell.Tab.0.left/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1601437934922" />
     <state width="2967" height="491" key="GridCell.Tab.0.left/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
-    <state width="2967" height="491" key="GridCell.Tab.0.right" timestamp="1600976595270">
+    <state width="2967" height="433" key="GridCell.Tab.0.right" timestamp="1601437934922">
       <screen x="62" y="0" width="3010" height="1728" />
     </state>
-    <state width="2967" height="491" key="GridCell.Tab.0.right/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
+    <state width="730" height="594" key="GridCell.Tab.0.right/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@3840.479.1920.1080" timestamp="1601187838870" />
+    <state width="2967" height="433" key="GridCell.Tab.0.right/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1601437934922" />
     <state width="2967" height="491" key="GridCell.Tab.0.right/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
-    <state x="1076" y="509" key="SettingsEditor" timestamp="1600728434429">
+    <state x="1076" y="509" key="SettingsEditor" timestamp="1601144040072">
       <screen x="62" y="0" width="3010" height="1728" />
     </state>
-    <state x="1076" y="509" key="SettingsEditor/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600728434429" />
+    <state x="-1117" y="677" key="SettingsEditor/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@-1842.457.1842.1080" timestamp="1601005275985" />
+    <state x="1076" y="509" key="SettingsEditor/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1601144040072" />
     <state x="1076" y="509" key="SettingsEditor/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600553973703" />
   </component>
 </project>

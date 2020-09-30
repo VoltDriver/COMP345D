@@ -15,3 +15,15 @@ ostream &operator<<(std::ostream& strm, const Continent &continent) {
                 << "name: " << continent.name
                 << ")";
 }
+
+string Continent::get_name() const {
+    return name;
+}
+
+vector<Country *> Continent::get_countries() const {
+    return countries;
+}
+
+void Continent::add_country(Country *country) {
+    countries.push_back(country);
+}

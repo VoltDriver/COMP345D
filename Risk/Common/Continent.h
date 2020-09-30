@@ -16,4 +16,7 @@ private:
 
 public:
     explicit Continent(string&);
+    string get_name() const;
+    void add_country(Country* country);
+    vector<Country*> get_countries() const;
 };

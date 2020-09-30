@@ -3,9 +3,6 @@
 #include "Common/Map.h"
 
 int main() {
-    std::cout << "Test executable" << std::endl;
-
-    Map::validate();
-
+    Map *map = new Map();
     return 0;
 }

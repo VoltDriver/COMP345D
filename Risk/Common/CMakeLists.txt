@@ -3,13 +3,15 @@ set(SOURCES
         Continent.cpp
         Country.cpp
         MapLoader.cpp
-        Util.cpp)
+        Util.cpp
+        Player.cpp)
 set(HEADERS
         Map.h
         Continent.h
         Country.h
         MapLoader.h
-        Util.h)
+        Util.h
+        Player.h)
 
 add_library(Common STATIC ${SOURCES} ${HEADERS})
 add_executable(CommonLib Main.cpp)
