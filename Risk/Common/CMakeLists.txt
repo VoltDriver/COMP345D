@@ -1,11 +1,13 @@
 set(SOURCES
         Map.cpp
+        Cards.cpp
         Continent.cpp
         Country.cpp
         MapLoader.cpp
         Util.cpp)
 set(HEADERS
         Map.h
+        Cards.h
         Continent.h
         Country.h
         MapLoader.h
