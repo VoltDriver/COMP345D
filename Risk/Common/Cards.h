@@ -1,25 +1,44 @@
-#include "Orders.h"
-
 #ifndef COMP345RISK_CARDS_H
 #define COMP345RISK_CARDS_H
 
-class CardType{
+#include "Orders.h"
+#include <list>
+#include <iostream>
 
-};
+enum CardType{ Bomb, Reinforcement, Blockade, Airlift, Diplomacy};
 
 class Card {
     public:
-        Order play();
+        CardType* type;
+        Order* play();
+        Card();
+        Card(CardType type);
+
+        // Copy constructor
+        Card(const Card& card);
+
+        // Assignment Operator
+        Card& operator =(const Card& card);
+
+        // Stream insertion operators
+        friend std::istream& operator>>(std::istream& in, const Card& card);
+        friend std::ostream& operator<<(std::ostream& out, const Card& card);
 };
 
 class Deck {
     public:
-        Card draw();
+        Card* draw();
+        int remainingCards();
+        void reset();
 };
 
 class Hand {
-    public:
+    private:
 
+    public:
+        std::list<Card>* listAllCards();
+        void addCard();
+        void removeCard();
 };
 
 
