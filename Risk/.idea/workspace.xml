@@ -89,11 +89,6 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.CardsDriver">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="CardsDriver" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="COMP345RISK" TARGET_NAME="CardsDriver" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="COMP345RISK" RUN_TARGET_NAME="CardsDriver">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -124,6 +119,11 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="CMake Application.CommonLib" />
       <item itemvalue="CMake Application.CardsDriver" />
@@ -147,7 +147,8 @@
       <workItem from="1600824236763" duration="12023000" />
       <workItem from="1600889594773" duration="4069000" />
       <workItem from="1600962883860" duration="8164000" />
-      <workItem from="1601487326556" duration="8752000" />
+      <workItem from="1601487326556" duration="8776000" />
+      <workItem from="1601513204848" duration="23000" />
     </task>
     <servers />
   </component>
@@ -184,29 +185,29 @@
     </state>
     <state x="1348" y="619" key="FileChooserDialogImpl/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600735276336" />
     <state x="1348" y="619" key="FileChooserDialogImpl/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600553610636" />
-    <state width="2005" height="305" key="GridCell.Tab.0.bottom" timestamp="1601496266707">
+    <state width="2005" height="305" key="GridCell.Tab.0.bottom" timestamp="1601496356645">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state width="2967" height="491" key="GridCell.Tab.0.bottom/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
-    <state width="2005" height="305" key="GridCell.Tab.0.bottom/0.0.2048.1112/-1920.0.1920.1040@0.0.2048.1112" timestamp="1601496266707" />
+    <state width="2005" height="305" key="GridCell.Tab.0.bottom/0.0.2048.1112/-1920.0.1920.1040@0.0.2048.1112" timestamp="1601496356645" />
     <state width="2967" height="491" key="GridCell.Tab.0.bottom/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
-    <state width="2005" height="305" key="GridCell.Tab.0.center" timestamp="1601496266707">
+    <state width="2005" height="305" key="GridCell.Tab.0.center" timestamp="1601496356645">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state width="2967" height="491" key="GridCell.Tab.0.center/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
-    <state width="2005" height="305" key="GridCell.Tab.0.center/0.0.2048.1112/-1920.0.1920.1040@0.0.2048.1112" timestamp="1601496266707" />
+    <state width="2005" height="305" key="GridCell.Tab.0.center/0.0.2048.1112/-1920.0.1920.1040@0.0.2048.1112" timestamp="1601496356645" />
     <state width="2967" height="491" key="GridCell.Tab.0.center/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
-    <state width="2005" height="305" key="GridCell.Tab.0.left" timestamp="1601496266707">
+    <state width="2005" height="305" key="GridCell.Tab.0.left" timestamp="1601496356645">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state width="2967" height="491" key="GridCell.Tab.0.left/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
-    <state width="2005" height="305" key="GridCell.Tab.0.left/0.0.2048.1112/-1920.0.1920.1040@0.0.2048.1112" timestamp="1601496266707" />
+    <state width="2005" height="305" key="GridCell.Tab.0.left/0.0.2048.1112/-1920.0.1920.1040@0.0.2048.1112" timestamp="1601496356645" />
     <state width="2967" height="491" key="GridCell.Tab.0.left/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
-    <state width="2005" height="305" key="GridCell.Tab.0.right" timestamp="1601496266707">
+    <state width="2005" height="305" key="GridCell.Tab.0.right" timestamp="1601496356645">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state width="2967" height="491" key="GridCell.Tab.0.right/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
-    <state width="2005" height="305" key="GridCell.Tab.0.right/0.0.2048.1112/-1920.0.1920.1040@0.0.2048.1112" timestamp="1601496266707" />
+    <state width="2005" height="305" key="GridCell.Tab.0.right/0.0.2048.1112/-1920.0.1920.1040@0.0.2048.1112" timestamp="1601496356645" />
     <state width="2967" height="491" key="GridCell.Tab.0.right/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
     <state x="690" y="328" key="SettingsEditor" timestamp="1601488726553">
       <screen x="0" y="0" width="2048" height="1112" />
