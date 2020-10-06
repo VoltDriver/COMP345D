@@ -9,10 +9,30 @@
 
 using namespace std;
 
+
 /* Constructors */
 Map::Map() = default;
 
+
+/* Accessors & Mutators */
+vector<Country *> Map::get_countries() {
+    return countries;
+}
+
+vector<Continent *> Map::get_continents() {
+    return continents;
+}
+
+
 /* Methods */
+void Map::add_country(Country *new_country) {
+    this->countries.push_back(new_country);
+}
+
+void Map::add_continent(Continent *new_continent) {
+    this->continents.push_back(new_continent);
+}
+
 bool Map::validate() {
     int total_countries = countries.size();
     int total_continents = continents.size();
@@ -37,7 +57,7 @@ bool Map::validate() {
         queue.pop_front();
 
         Country *current_country = countries[current];
-        cout << "Verifying: " << *current_country << endl;
+        cout << "\nVerifying: " << *current_country << endl;
 
         // Get the border countries from the current country being traversed
         vector<Country *> bordering_countries = current_country->get_bordering_country();
@@ -55,6 +75,7 @@ bool Map::validate() {
             // If the country wasn't already visited, process it
             if (!visited_countries[bordering_country->get_id() - 1]) {
                 cout << "NOT VISITED" << endl;
+
                 // Verify that the bordering country also has the current country as a border
                 if (bordering_country->borders_country(current_country)) {
                     cout << "CONNECTS BACK" << endl;
@@ -99,20 +120,3 @@ bool Map::validate_unique_continents() const {
 
     return true;
 }
-
-void Map::add_country(Country *new_country) {
-    this->countries.push_back(new_country);
-}
-
-void Map::add_continent(Continent *new_continent) {
-    this->continents.push_back(new_continent);
-}
-
-vector<Country *> Map::get_countries() {
-    return countries;
-}
-
-vector<Continent *> Map::get_continents() {
-    return continents;
-}
-

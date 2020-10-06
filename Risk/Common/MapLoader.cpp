@@ -65,7 +65,8 @@ void MapLoader::parse(string file_name) {
 
                 // If the ID defined for the country doesn't match our accumulator, they are not in order from 1 to n
                 if (new_country-> get_id() !=  country_index) {
-                    throw invalid_argument("Countries not listed in order");
+                    cout << "\nERROR at: " << line << endl;
+                    throw invalid_argument("Reason: Countries are not listed in order.");
                 }
 
                 this-> loaded_map-> add_country(new_country);
@@ -93,9 +94,10 @@ void MapLoader::parse(string file_name) {
             }
 
             // Debug - REMOVEME
-            cout << *all_countries[1] << endl;
-            cout << "IS VALID?: " << map.validate() << endl;
-            cout << "IS VALID 2?: " << map.validate_unique_continents() << endl;
+            bool map_validate = map.validate();
+            bool map_validate_unique_continents = map.validate_unique_continents();
+            cout << "\nAll countries are linked IS VALID?: " << map_validate << endl;
+            cout << "Each country belongs to one and only one continent IS VALID?: " << map_validate_unique_continents << endl;
         }
 }
 

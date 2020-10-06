@@ -11,6 +11,7 @@ class Map {
 private:
     vector<Continent*> continents;
     vector<Country*> countries;
+
 public:
     Map();
     vector<Country*> get_countries();

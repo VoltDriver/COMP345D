@@ -10,9 +10,8 @@ using namespace std;
 
 class Country {
 private:
-    int id;
+    int id, continent_id;
     string name;
-    int continent_id;
     Continent* continent = nullptr;
     // Player* player = nullptr;
     vector<Country*> bordering_countries;
@@ -20,14 +19,15 @@ private:
 
 public:
     explicit Country(string&);
+    Country(const Country &obj);
 
     string get_name() const;
     int get_id() const;
     int get_continent_id() const;
+    void set_continent(Continent* continent);
     Continent* get_continent() const;
-    void add_bordering_country(Country*);
     vector<Country*> get_bordering_country();
+    void add_bordering_country(Country*);
     string bordering_countries_tostring() const;
     bool borders_country(Country* country) const;
-    void set_continent(Continent* continent);
 };

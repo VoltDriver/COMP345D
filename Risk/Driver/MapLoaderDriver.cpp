@@ -6,7 +6,7 @@
 int main() {
     MapLoader loader = MapLoader();
     try {
-        loader.parse("../Resource/test2.map");
+        loader.parse("../Resource/test5_duplicate_country.map");
     } catch (const std::exception &e) {
         cout << e.what() << endl;
     }
