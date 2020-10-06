@@ -2,17 +2,14 @@
 
 
 /* Constructors */
-Player::Player() {
-
-}
-
+Player::Player() = default;
 
 /* Accessors & Mutators */
 
 
 /* Methods */
 void issue_order(Order* order) {
-    orders.push_back(order);
+    orders->push_back(order);
 }
 
 vector<Country *> Player::to_defend() {
@@ -22,5 +19,7 @@ vector<Country *> Player::to_defend() {
 vector<Country *> Player::to_attack() {
     return countries_toAttack;
 }
+
+
 
 /* Overloaders */

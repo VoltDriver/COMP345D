@@ -32,6 +32,7 @@ void Map::add_country(Country *new_country) {
 void Map::add_continent(Continent *new_continent) {
     this->continents.push_back(new_continent);
 }
+
 /**
  *
  * @return true or false

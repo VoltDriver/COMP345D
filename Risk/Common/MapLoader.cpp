@@ -66,7 +66,7 @@ void MapLoader::parse(string file_name) {
                 // If the ID defined for the country doesn't match our accumulator, they are not in order from 1 to n
                 if (new_country-> get_id() !=  country_index) {
                     cout << "\nERROR at: " << line << endl;
-                    throw invalid_argument("Reason: Countries are not listed in order.");
+                    throw invalid_argument("Reason: Countries are not listed in order.\n");
                 }
 
                 this-> loaded_map-> add_country(new_country);

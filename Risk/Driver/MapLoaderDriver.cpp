@@ -28,6 +28,13 @@ int main() {
         cout << e.what() << endl;
     }
 
+    MapLoader loader_test = MapLoader();
+    cout << "*********** Test: TEST ***********\n" << endl;
+    try {
+        loader_test.parse("../Resource/test7_unreachable_continent.map");
+    } catch (const std::exception &e) {
+        cout << e.what() << endl;
+    }
 
     return 0;
 }
