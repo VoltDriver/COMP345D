@@ -97,7 +97,7 @@ void MapLoader::parse(string file_name) {
             bool map_validate = map.validate();
             bool map_validate_unique_continents = map.validate_unique_continents();
             cout << "\nAll countries are linked IS VALID?: " << map_validate << endl;
-            cout << "Each country belongs to one and only one continent IS VALID?: " << map_validate_unique_continents << endl;
+            cout << "Each country belongs to one and only one continent IS VALID?: " << map_validate_unique_continents << "\n" << endl;
         }
 }
 

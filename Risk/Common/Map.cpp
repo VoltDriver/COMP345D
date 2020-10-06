@@ -32,7 +32,10 @@ void Map::add_country(Country *new_country) {
 void Map::add_continent(Continent *new_continent) {
     this->continents.push_back(new_continent);
 }
-
+/**
+ *
+ * @return true or false
+ */
 bool Map::validate() {
     int total_countries = countries.size();
     int total_continents = continents.size();
@@ -103,7 +106,7 @@ bool Map::validate() {
 }
 /**
  * Verify that each country has only a single continent
- * @return
+ * @return true or false
  */
 bool Map::validate_unique_continents() const {
     map<string, string> country_continent;
@@ -117,6 +120,5 @@ bool Map::validate_unique_continents() const {
             country_continent[country->get_name()] = continent->get_name();
         }
     }
-
     return true;
 }
