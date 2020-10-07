@@ -2,7 +2,7 @@
 #include <vector>
 
 #include "Player.h"
-#include "Country.h"
+#include "Territory.h"
 
 class Card;
 class Order {
@@ -12,14 +12,14 @@ private:
 
 class Player {
 private:
-    vector<Country*> countries;
+    vector<Territory*> territories;
     vector<Order*> orders;
     vector<Card*> cards;
 public:
-    Player(vector<Country*> countries);
+    Player(vector<Territory*> territories);
     Player(const Player &p);
 
-    vector<Country*> to_defend();
-    vector<Country*> to_attack();
+    vector<Territory*> to_defend();
+    vector<Territory*> to_attack();
     void issue_order(Order* order);
 };

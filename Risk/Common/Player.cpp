@@ -4,12 +4,12 @@
 /* Constructors */
 //Player::Player() = default;
 
-Player::Player(vector<Country*> countries) {
-    this->countries = countries;
+Player::Player(vector<Territory*> territories) {
+    this->territories = territories;
 }
 
 Player::Player(const Player &p) {
-    this->countries = p.countries;
+    this->territories = p.territories;
 }
 
 /* Accessors & Mutators */
@@ -21,12 +21,12 @@ void Player::issue_order(Order* order) {
     cout << "order has been added to list of orders" << endl;
 }
 
-vector<Country *> Player::to_defend() {
-    return countries;
+vector<Territory *> Player::to_defend() {
+    return territories;
 }
 
-vector<Country *> Player::to_attack() {
-    return countries;
+vector<Territory *> Player::to_attack() {
+    return territories;
 }
 
 

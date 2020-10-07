@@ -1,14 +1,14 @@
 set(SOURCES
         Map.cpp
         Continent.cpp
-        Country.cpp
+        Territory.cpp
         MapLoader.cpp
         Util.cpp
         Player.cpp)
 set(HEADERS
         Map.h
         Continent.h
-        Country.h
+        Territory.h
         MapLoader.h
         Util.h
         Player.h)

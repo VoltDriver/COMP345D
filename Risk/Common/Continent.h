@@ -5,13 +5,13 @@
 
 using namespace std;
 
-class Country;
+class Territory;
 
 class Continent {
 private:
     int armies = 0;
     string name;
-    vector<Country*> countries;
+    vector<Territory*> territories;
     friend ostream& operator<<(ostream&, const Continent&);
 
 public:
@@ -19,8 +19,8 @@ public:
     Continent(const Continent &obj);
 
     string get_name() const;
-    vector<Country*> get_countries() const;
-    void add_country(Country* country);
+    vector<Territory*> get_territories() const;
+    void add_territory(Territory* territory);
 
     Continent& operator=(const Continent &c);
 };

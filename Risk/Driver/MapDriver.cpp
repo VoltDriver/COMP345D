@@ -29,7 +29,7 @@ int main() {
     MapLoader loader3 = MapLoader();
     cout << "\n*********** Test3: Map is not connected graph ***********\n" << endl;
     try {
-        *map3 = loader3.parse("../Resource/test_unreachable_country.map");
+        *map3 = loader3.parse("../Resource/test_unreachable_territory.map");
     } catch (const std::exception &e) {
         cout << e.what() << endl;
     }
@@ -43,9 +43,9 @@ int main() {
     }
 
     MapLoader loader5 = MapLoader();
-    cout << "\n*********** Test5: Countries do not have unique continents (duplicate country) ***********\n" << endl;
+    cout << "\n*********** Test5: Territories do not have unique continents (duplicate territory) ***********\n" << endl;
     try {
-        *map5 = loader5.parse("../Resource/test_duplicate_country.map");
+        *map5 = loader5.parse("../Resource/test_duplicate_territory.map");
     } catch (const std::exception &e) {
         cout << e.what() << endl;
     }

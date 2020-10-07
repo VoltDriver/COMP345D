@@ -14,8 +14,8 @@ Map::Map() = default;
 
 
 /* Accessors & Mutators */
-vector<Country *> Map::get_countries() {
-    return countries;
+vector<Territory *> Map::get_territories() {
+    return territories;
 }
 
 vector<Continent *> Map::get_continents() {
@@ -23,8 +23,8 @@ vector<Continent *> Map::get_continents() {
 }
 
 /* Methods */
-void Map::add_country(Country *new_country) {
-    this->countries.push_back(new_country);
+void Map::add_territory(Territory *new_territory) {
+    this->territories.push_back(new_territory);
 }
 
 void Map::add_continent(Continent *new_continent) {
@@ -34,16 +34,16 @@ void Map::add_continent(Continent *new_continent) {
 /**
  * Check that the entire map is a connected subgraph
  *
- * Traverse each country and its borders and check that every node has been visited by the end
+ * Traverse each territory and its borders and check that every node has been visited by the end
  */
 bool Map::verify_map_connected_subgraph() const {
-    int total_countries = countries.size();
-    // Arrays to keep track of countries and continents that have been visited
-    bool* visited_countries = new bool[total_countries];
+    int total_territories = territories.size();
+    // Arrays to keep track of territories and continents that have been visited
+    bool* visited_territories = new bool[total_territories];
 
     // Initialize all values to false besides our starting value
-    for (int i = 0; i < total_countries; i++) {
-        visited_countries[i] = (i == 0);
+    for (int i = 0; i < total_territories; i++) {
+        visited_territories[i] = (i == 0);
     }
 
     list<int> queue = { 0 };
@@ -53,35 +53,35 @@ bool Map::verify_map_connected_subgraph() const {
         int current = queue.front();
         queue.pop_front();
 
-        Country *current_country = countries[current];
+        Territory *current_territory = territories[current];
 
-        // Get the border countries from the current country being traversed
-        vector<Country *> bordering_countries = current_country->get_bordering_country();
-        int bordering_count = current_country->get_bordering_country().size();
+        // Get the border territories from the current territory being traversed
+        vector<Territory *> bordering_territories = current_territory->get_bordering_territory();
+        int bordering_count = current_territory->get_bordering_territory().size();
 
-        // Iterate through each bordering country
+        // Iterate through each bordering territory
         for (int i = 0; i < bordering_count; i++) {
-            Country *bordering_country = bordering_countries[i];
+            Territory *bordering_territory = bordering_territories[i];
 
-            // If the country wasn't already visited, process it
-            if (!visited_countries[bordering_country->get_id() - 1]) {
+            // If the territory wasn't already visited, process it
+            if (!visited_territories[bordering_territory->get_id() - 1]) {
 
-                // Verify that the bordering country also has the current country as a border
-                if (bordering_country->borders_country(current_country)) {
+                // Verify that the bordering territory also has the current territory as a border
+                if (bordering_territory->borders_territory(current_territory)) {
                     // Add it to the queue to be processed on following iterations
-                    queue.push_back(bordering_country->get_id() - 1);
-                    visited_countries[bordering_country->get_id() - 1] = true;
+                    queue.push_back(bordering_territory->get_id() - 1);
+                    visited_territories[bordering_territory->get_id() - 1] = true;
                 } else {
-                    // If the bordering country doesn't also have the current country as a border, return false (invalid)
+                    // If the bordering territory doesn't also have the current territory as a border, return false (invalid)
                     return false;
                 }
             }
         }
     }
 
-    // Check that all countries and continents were marked as visited, if not return false
-    for (int i = 0; i < total_countries; i++) {
-        if (!visited_countries[i]) return false;
+    // Check that all territories and continents were marked as visited, if not return false
+    for (int i = 0; i < total_territories; i++) {
+        if (!visited_territories[i]) return false;
     }
 
     return true;
@@ -95,62 +95,62 @@ bool Map::validate() const {
  * Check that each continent is a connected subgraph
  *
  * Functionally equivalent to verify_map_connected_subgraph(), except we treat each continent
- * and its countries as its own map.
+ * and its territories as its own map.
  */
 bool Map::verify_continent_connected_subgraph() const {
     for (Continent *continent: continents) {
-        vector<Country*> continent_countries = continent->get_countries();
+        vector<Territory*> continent_territories = continent->get_territories();
 
-        // If the continent has no countries it is unreachable
-        if (continent_countries.empty()) {
+        // If the continent has no territories it is unreachable
+        if (continent_territories.empty()) {
             return false;
         }
 
-        // Iterate through each country belonging to the continent
-        for (Country *_: continent_countries) {
-            map<int, bool> visited_countries;
+        // Iterate through each territory belonging to the continent
+        for (Territory *_: continent_territories) {
+            map<int, bool> visited_territories;
 
-            // Initialize each country to false in our map
-            for (Country *country: continent_countries) {
-                visited_countries.insert({ country->get_id() - 1, false });
+            // Initialize each territory to false in our map
+            for (Territory *territory: continent_territories) {
+                visited_territories.insert({territory->get_id() - 1, false });
             }
 
             list<int> queue;
-            queue.push_back(continent_countries[0]->get_id() - 1);
+            queue.push_back(continent_territories[0]->get_id() - 1);
 
             while (!queue.empty()) {
                 // Get the current value at the front and then remove it from our queue
                 int current = queue.front();
                 queue.pop_front();
 
-                Country *current_country = countries[current];
+                Territory *current_territory = territories[current];
 
-                // Get the border countries from the current country being traversed
-                vector<Country *> bordering_countries = current_country->get_bordering_country();
-                int bordering_count = current_country->get_bordering_country().size();
+                // Get the border territories from the current territory being traversed
+                vector<Territory *> bordering_territories = current_territory->get_bordering_territory();
+                int bordering_count = current_territory->get_bordering_territory().size();
 
-                // Iterate through each bordering country
+                // Iterate through each bordering territory
                 for (int j = 0; j < bordering_count; j++) {
-                    Country *bordering_country = bordering_countries[j];
+                    Territory *bordering_territory = bordering_territories[j];
 
-                    // If the country wasn't already visited, process it
-                    if (!visited_countries[bordering_country->get_id() - 1]) {
+                    // If the territory wasn't already visited, process it
+                    if (!visited_territories[bordering_territory->get_id() - 1]) {
 
-                        // Verify that the bordering country also has the current country as a border
-                        if (bordering_country->borders_country(current_country)) {
+                        // Verify that the bordering territory also has the current territory as a border
+                        if (bordering_territory->borders_territory(current_territory)) {
                             // Add it to the queue to be processed on following iterations
-                            queue.push_back(bordering_country->get_id() - 1);
-                            visited_countries[bordering_country->get_id() - 1] = true;
+                            queue.push_back(bordering_territory->get_id() - 1);
+                            visited_territories[bordering_territory->get_id() - 1] = true;
                         } else {
-                            // If the bordering country doesn't also have the current country as a border, return false (invalid)
+                            // If the bordering territory doesn't also have the current territory as a border, return false (invalid)
                             return false;
                         }
                     }
                 }
             }
 
-            for (Country *country: continent_countries) {
-                if (!visited_countries[country->get_id() - 1]) return false;
+            for (Territory *territory: continent_territories) {
+                if (!visited_territories[territory->get_id() - 1]) return false;
             }
         }
     }
@@ -159,19 +159,19 @@ bool Map::verify_continent_connected_subgraph() const {
 }
 
 /**
- * Verify that each country has only a single continent
+ * Verify that each territory has only a single continent
  * @return true or false
  */
 bool Map::verify_unique_continents() const {
-    map<string, string> country_continent;
+    map<string, string> territory_continent;
 
     for (Continent* continent: continents) {
-        for (Country* country: continent->get_countries()) {
-            // Check that a key for the current country exists
-            if(country_continent.count(country->get_name()) != 0) {
+        for (Territory* territory: continent->get_territories()) {
+            // Check that a key for the current territory exists
+            if(territory_continent.count(territory->get_name()) != 0) {
                 return false;
             }
-            country_continent[country->get_name()] = continent->get_name();
+            territory_continent[territory->get_name()] = continent->get_name();
         }
     }
     return true;

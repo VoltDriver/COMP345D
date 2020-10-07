@@ -12,7 +12,7 @@ Continent::Continent(string &raw_continent) {
 
 Continent::Continent(const Continent &c) {
     this->name = *(new string(c.name));
-    this->countries = c.countries;
+    this->territories = c.territories;
     this->armies = *(new int(c.armies));
 }
 
@@ -22,14 +22,14 @@ string Continent::get_name() const {
     return name;
 }
 
-vector<Country *> Continent::get_countries() const {
-    return countries;
+vector<Territory *> Continent::get_territories() const {
+    return territories;
 }
 
 
 /* Methods */
-void Continent::add_country(Country *country) {
-    countries.push_back(country);
+void Continent::add_territory(Territory *territory) {
+    territories.push_back(territory);
 }
 
 
@@ -42,7 +42,7 @@ ostream &operator<<(std::ostream& strm, const Continent &continent) {
 
 Continent& Continent::operator=(const Continent& c) {
     this->name = *(new string(c.name));
-    this->countries = c.countries;
+    this->territories = c.territories;
     this->armies = *(new int(c.armies));
 
     return *this;

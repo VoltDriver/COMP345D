@@ -20,7 +20,7 @@ using namespace std;
  *  EX: North_America 6 red
  *
  * Countries. delimited by [countries]
- * Id of the Country (Needs to be in order) / Country name / Id of the continent / X coords / Y coords
+ * Id of the Territory (Needs to be in order) / Territory name / Id of the continent / X coords / Y coords
  * EX: 1 Alaska 1 44 83
  *
  * Borders, delimited by [borders]
@@ -55,30 +55,30 @@ Map MapLoader::parse(string file_name) {
             /* COUNTRIES */
             // Skip file contents until we reach the continent section of the file
             while (getline(file_reader, line) &&  line !=  "[countries]") {
-//                throw invalid_argument("Error loading map -> Reason: Cannot find countries.");
+//                throw invalid_argument("Error loading map -> Reason: Cannot find territories.");
             }
 
-            int country_index = 1;
+            int territory_index = 1;
             while (getline(file_reader, line) &&  !line.empty()) {
-                auto* new_country = new Country(line);
+                auto* new_territory = new Territory(line);
 
                 // Verify that the continent id is valid
-                if(new_country->get_continent_id() > map.get_continents().size()) {
-                    throw invalid_argument("Error loading map -> Reason: Country with invalid continent id.");
+                if(new_territory->get_continent_id() > map.get_continents().size()) {
+                    throw invalid_argument("Error loading map -> Reason: Territory with invalid continent id.");
                 }
 
-                Continent* current_continent = map.get_continents()[new_country->get_continent_id() - 1];
-                current_continent->add_country(new_country);
-                new_country->set_continent(current_continent);
+                Continent* current_continent = map.get_continents()[new_territory->get_continent_id() - 1];
+                current_continent->add_territory(new_territory);
+                new_territory->set_continent(current_continent);
 
-                // If the ID defined for the country doesn't match our accumulator, they are not in order from 1 to n
-                if (new_country-> get_id() !=  country_index) {
-                    throw invalid_argument("Error loading map -> Reason: Countries are not listed in order.");
+                // If the ID defined for the territory doesn't match our accumulator, they are not in order from 1 to n
+                if (new_territory-> get_id() != territory_index) {
+                    throw invalid_argument("Error loading map -> Reason: Territories are not listed in order.");
                 }
 
-                this->loaded_map->add_country(new_country);
+                this->loaded_map->add_territory(new_territory);
 
-                country_index++;
+                territory_index++;
             }
 
             /* BORDERS */
@@ -87,25 +87,25 @@ Map MapLoader::parse(string file_name) {
 //                throw invalid_argument("Error loading map -> Reason: Cannot find borders.");
             }
 
-            vector<Country*> all_countries = map.get_countries();
+            vector<Territory*> all_territories = map.get_territories();
             while (getline(file_reader, line) &&  !line.empty()) {
                 const vector<string> split_string = split(line);
 
-                // Verify that the country id actually exists
-                const int country_id = stoi(split_string[0]);
-                if (country_id > all_countries.size()) {
-                    throw invalid_argument("Initial country index out of range");
+                // Verify that the territory id actually exists
+                const int territory_id = stoi(split_string[0]);
+                if (territory_id > all_territories.size()) {
+                    throw invalid_argument("Initial territory index out of range");
                 }
 
-                Country* current = all_countries[country_id - 1];
+                Territory* current = all_territories[territory_id - 1];
 
                 for (int i = 1; i < split_string.size(); i++ ) {
-                    const int bordering_country_id = stoi(split_string[i]);
-                    if (bordering_country_id > all_countries.size()) {
-                        throw invalid_argument("Bordering country id doesn't exist!");
+                    const int bordering_territory_id = stoi(split_string[i]);
+                    if (bordering_territory_id > all_territories.size()) {
+                        throw invalid_argument("Bordering territory id doesn't exist!");
                     }
 
-                    current-> add_bordering_country(all_countries[stoi(split_string[i]) - 1]);
+                    current->add_bordering_territory(all_territories[stoi(split_string[i]) - 1]);
                 }
             }
         }
@@ -123,10 +123,10 @@ Map MapLoader::parse(string file_name) {
             throw invalid_argument("Error loading map -> Reason: Continents are not connected subgraphs.");
         }
         if (map.verify_unique_continents()) {
-            cout << "Countries all have unique continents." << endl;
+            cout << "Territories all have unique continents." << endl;
         }
         else {
-            throw invalid_argument("Error loading map -> Reason: Countries do not have unique continents.");
+            throw invalid_argument("Error loading map -> Reason: Territories do not have unique continents.");
         }
         return *loaded_map;
 }
