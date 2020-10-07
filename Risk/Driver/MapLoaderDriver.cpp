@@ -5,7 +5,7 @@
 
 int main() {
     MapLoader loader1 = MapLoader();
-    cout << "\n*********** Test1: loaded Europa map successfully ***********\n" << endl;
+    cout << "\n*********** Test1: Loaded Europa map successfully ***********\n" << endl;
     try {
         loader1.parse("../Resource/test_success1.map");
     } catch (const std::exception &e) {
@@ -13,7 +13,7 @@ int main() {
     }
 
     MapLoader loader2 = MapLoader();
-    cout << "\n*********** Test2: loaded Brazil map successfully ***********\n" << endl;
+    cout << "\n*********** Test2: Loaded Brazil map successfully ***********\n" << endl;
     try {
         loader2.parse("../Resource/test_success2.map");
     } catch (const std::exception &e) {
@@ -21,7 +21,7 @@ int main() {
     }
 
     MapLoader loader3 = MapLoader();
-    cout << "\n*********** Test3: loaded Canada map successfully ***********\n" << endl;
+    cout << "\n*********** Test3: Loaded Canada map successfully ***********\n" << endl;
     try {
         loader3.parse("../Resource/test_success3.map");
     } catch (const std::exception &e) {
@@ -29,7 +29,7 @@ int main() {
     }
 
     MapLoader loader4 = MapLoader();
-    cout << "\n*********** Test4: map index not in order error ***********\n" << endl;
+    cout << "\n*********** Test4: Map index not in order error ***********\n" << endl;
     try {
         loader4.parse("../Resource/test_index_error.map");
     } catch (const std::exception &e) {
@@ -37,11 +37,29 @@ int main() {
     }
 
     MapLoader loader5 = MapLoader();
-    cout << "\n*********** Test:  ***********\n" << endl;
+    cout << "\n*********** Test5: Territory with invalid continent id ***********\n" << endl;
     try {
-        loader5.parse("../Resource/test_finding_territory_error.map");
+        loader5.parse("../Resource/test_invalid_continent_id.map");
     } catch (const std::exception &e) {
         cout << e.what() << endl;
     }
+
+//    MapLoader loader6 = MapLoader();
+//    cout << "\n*********** Test6: ***********\n" << endl;
+//    try {
+//        loader6.parse("../Resource/test.map");
+//    } catch (const std::exception &e) {
+//        cout << e.what() << endl;
+//    }
+
+    MapLoader loader7 = MapLoader();
+    cout << "\n*********** Test7: Unable to parse territories because ['Countries'] is missing or misspelled in map file ***********\n" << endl;
+    try {
+        loader7.parse("../Resource/test_finding_territory_error.map");
+    } catch (const std::exception &e) {
+        cout << e.what() << endl;
+    }
+
+
     return 0;
 }

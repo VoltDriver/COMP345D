@@ -7,6 +7,7 @@ int main() {
     Map *map1 = new Map();
     Map *map2 = new Map();
     Map *map3 = new Map();
+    Map *map4 = new Map();
 
     MapLoader loader1 = MapLoader();
     cout << "\n*********** Test1: Map is not connected graph ***********\n" << endl;
@@ -28,6 +29,14 @@ int main() {
     cout << "\n*********** Test5: Territories do not have unique continents (duplicate territory) ***********\n" << endl;
     try {
         *map3 = loader3.parse("../Resource/test_duplicate_territory.map");
+    } catch (const std::exception &e) {
+        cout << e.what() << endl;
+    }
+
+    MapLoader loader4 = MapLoader();
+    cout << "\n*********** Test4: Loaded Europa map successfully ***********\n" << endl;
+    try {
+        *map4 = loader4.parse("../Resource/test_success1.map");
     } catch (const std::exception &e) {
         cout << e.what() << endl;
     }
