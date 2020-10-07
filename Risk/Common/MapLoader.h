@@ -9,7 +9,7 @@ private:
 
 public:
     MapLoader();
-    void parse(string);
+    Map parse(string);
 };
 
 

@@ -6,6 +6,12 @@
 
 
 /* Constructors */
+Country::Country(int id, string name, int continent) {
+    this->id = id;
+    this->name = name;
+    this->continent_id = continent;
+}
+
 Country::Country(string &raw_country) {
     const vector<string> country_data = split(raw_country);
     this->id = std::stoi(country_data.at(0));

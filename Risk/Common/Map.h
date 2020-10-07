@@ -22,4 +22,5 @@ public:
     bool verify_map_connected_subgraph() const;
     bool verify_continent_connected_subgraph() const;
     bool verify_unique_continents() const;
+    void print(std::vector <Country> const &a);
 };

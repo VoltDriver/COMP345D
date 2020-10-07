@@ -5,16 +5,19 @@
 #include "Country.h"
 
 class Card;
-class Order;
+class Order {
+private:
+    string order;
+};
 
 class Player {
 private:
-    vector<Country*> countries_toDefend;
-    vector<Country*> countries_toAttack;
+    vector<Country*> countries;
     vector<Order*> orders;
     vector<Card*> cards;
 public:
-    Player();
+    Player(vector<Country*> countries);
+    Player(const Player &p);
 
     vector<Country*> to_defend();
     vector<Country*> to_attack();

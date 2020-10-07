@@ -87,10 +87,6 @@ bool Map::verify_map_connected_subgraph() const {
     return true;
 }
 
-/**
- *
- * @return true or false
- */
 bool Map::validate() const {
     return verify_map_connected_subgraph() && verify_unique_continents() && verify_continent_connected_subgraph();
 }

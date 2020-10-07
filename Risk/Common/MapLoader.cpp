@@ -29,7 +29,7 @@ using namespace std;
  *
  * @param fileName Name of file to open
  */
-void MapLoader::parse(string file_name) {
+Map MapLoader::parse(string file_name) {
         Map map;
         loaded_map = &map;
 
@@ -38,10 +38,13 @@ void MapLoader::parse(string file_name) {
 
         if (file_reader.fail()) {
             throw runtime_error("Error opening or reading file: " + file_name);
-        } else {
+        }
+        else {
             /* CONTINENTS */
             // Skip file contents until we reach the continent section of the file
-            while (getline(file_reader, line) &&  line !=  "[continents]") {}
+            while (getline(file_reader, line) &&  line !=  "[continents]") {
+//                throw invalid_argument("Error loading map -> Reason: Cannot find continents.");
+            }
 
             // Iterate and process each line defined under [continents]
             while (getline(file_reader, line) &&  !line.empty()) {
@@ -51,7 +54,9 @@ void MapLoader::parse(string file_name) {
 
             /* COUNTRIES */
             // Skip file contents until we reach the continent section of the file
-            while (getline(file_reader, line) &&  line !=  "[countries]") {}
+            while (getline(file_reader, line) &&  line !=  "[countries]") {
+//                throw invalid_argument("Error loading map -> Reason: Cannot find countries.");
+            }
 
             int country_index = 1;
             while (getline(file_reader, line) &&  !line.empty()) {
@@ -59,7 +64,7 @@ void MapLoader::parse(string file_name) {
 
                 // Verify that the continent id is valid
                 if(new_country->get_continent_id() > map.get_continents().size()) {
-                    throw invalid_argument("Country with invalid continent id");
+                    throw invalid_argument("Error loading map -> Reason: Country with invalid continent id.");
                 }
 
                 Continent* current_continent = map.get_continents()[new_country->get_continent_id() - 1];
@@ -68,7 +73,7 @@ void MapLoader::parse(string file_name) {
 
                 // If the ID defined for the country doesn't match our accumulator, they are not in order from 1 to n
                 if (new_country-> get_id() !=  country_index) {
-                    throw invalid_argument("Reason: Countries are not listed in order.\n");
+                    throw invalid_argument("Error loading map -> Reason: Countries are not listed in order.");
                 }
 
                 this->loaded_map->add_country(new_country);
@@ -78,7 +83,9 @@ void MapLoader::parse(string file_name) {
 
             /* BORDERS */
             // Skip file contents until we reach the continent section of the file
-            while (getline(file_reader, line) &&  line !=  "[borders]") {}
+            while (getline(file_reader, line) &&  line !=  "[borders]") {
+//                throw invalid_argument("Error loading map -> Reason: Cannot find borders.");
+            }
 
             vector<Country*> all_countries = map.get_countries();
             while (getline(file_reader, line) &&  !line.empty()) {
@@ -103,10 +110,25 @@ void MapLoader::parse(string file_name) {
             }
         }
 
-        cout << "MAP IS CONNECTED SUBGRAPH?: " << map.verify_map_connected_subgraph() << endl;
-        cout << "CONTINENTS IS CONNECTED SUBGRAPH?: " << map.verify_continent_connected_subgraph() << endl;
-        cout << "Countries all have unique continents?: " << map.verify_unique_continents() << endl;
-
+        if (map.verify_map_connected_subgraph()) {
+            cout << "Map is a connected graph." << endl;
+        }
+        else {
+            throw invalid_argument("Error loading map -> Reason: Map is not a connected graph.");
+        }
+        if (map.verify_continent_connected_subgraph()) {
+            cout << "Continents are connected subgraphs." << endl;
+        }
+        else {
+            throw invalid_argument("Error loading map -> Reason: Continents are not connected subgraphs.");
+        }
+        if (map.verify_unique_continents()) {
+            cout << "Countries all have unique continents." << endl;
+        }
+        else {
+            throw invalid_argument("Error loading map -> Reason: Countries do not have unique continents.");
+        }
+        return *loaded_map;
 }
 
 MapLoader::MapLoader() = default;

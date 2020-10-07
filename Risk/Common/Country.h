@@ -12,7 +12,7 @@ class Player;
 
 class Country {
 private:
-    int id, continent_id;
+    int id, continent_id, armies;
     string name;
     Continent* continent = nullptr;
     Player* player = nullptr;
@@ -20,6 +20,7 @@ private:
     friend ostream& operator<<(ostream&, const Country&);
 
 public:
+    Country(int id, string name, int continent);
     explicit Country(string&);
     Country(const Country &obj);
 
