@@ -23,7 +23,6 @@ vector<Continent *> Map::get_continents() {
     return continents;
 }
 
-
 /* Methods */
 void Map::add_country(Country *new_country) {
     this->countries.push_back(new_country);
@@ -33,11 +32,7 @@ void Map::add_continent(Continent *new_continent) {
     this->continents.push_back(new_continent);
 }
 
-/**
- *
- * @return true or false
- */
-bool Map::validate() {
+bool Map::verify_connected_subgraph() const {
     int total_countries = countries.size();
     int total_continents = continents.size();
     // Arrays to keep track of countries and continents that have been visited
@@ -61,34 +56,28 @@ bool Map::validate() {
         queue.pop_front();
 
         Country *current_country = countries[current];
-        cout << "\nVerifying: " << *current_country << endl;
 
         // Get the border countries from the current country being traversed
         vector<Country *> bordering_countries = current_country->get_bordering_country();
         int bordering_count = current_country->get_bordering_country().size();
 
-        cout << "CONTINENT VISITED: " << current_country->get_continent()->get_name() << endl;
         // Mark continent as visited
         visited_continents[current_country->get_continent_id() - 1] = true;
 
         // Iterate through each bordering country
         for (int i = 0; i < bordering_count; i++) {
             Country *bordering_country = bordering_countries[i];
-            cout << "Bordering country: " << *bordering_country << endl;
 
             // If the country wasn't already visited, process it
             if (!visited_countries[bordering_country->get_id() - 1]) {
-                cout << "NOT VISITED" << endl;
 
                 // Verify that the bordering country also has the current country as a border
                 if (bordering_country->borders_country(current_country)) {
-                    cout << "CONNECTS BACK" << endl;
                     // Add it to the queue to be processed on following iterations
                     queue.push_back(bordering_country->get_id() - 1);
                     visited_countries[bordering_country->get_id() - 1] = true;
                 } else {
                     // If the bordering country doesn't also have the current country as a border, return false (invalid)
-                    cout << *bordering_country << "DOESN'T CONNECT BACK TO " << *current_country << endl;
                     return false;
                 }
             }
@@ -105,11 +94,20 @@ bool Map::validate() {
     }
     return true;
 }
+
+/**
+ *
+ * @return true or false
+ */
+bool Map::validate() const {
+    return verify_connected_subgraph() && verify_unique_continents();
+}
+
 /**
  * Verify that each country has only a single continent
  * @return true or false
  */
-bool Map::validate_unique_continents() const {
+bool Map::verify_unique_continents() const {
     map<string, string> country_continent;
 
     for (Continent* continent: continents) {

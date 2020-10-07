@@ -47,9 +47,6 @@ void MapLoader::parse(string file_name) {
             while (getline(file_reader, line) &&  !line.empty()) {
                 auto* new_continent = new Continent(line);
                 this-> loaded_map-> add_continent(new_continent);
-
-                // Debug - REMOVEME
-                cout << *new_continent << endl;
             }
 
             /* COUNTRIES */

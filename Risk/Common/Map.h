@@ -18,6 +18,7 @@ public:
     vector<Continent*> get_continents();
     void add_country(Country* new_country);
     void add_continent(Continent* new_continent);
-    bool validate();
-    bool validate_unique_continents() const;
+    bool validate() const;
+    bool verify_connected_subgraph() const;
+    bool verify_unique_continents() const;
 };
