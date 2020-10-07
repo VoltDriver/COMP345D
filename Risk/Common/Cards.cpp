@@ -8,7 +8,7 @@
 
 // Card
 
-std::string Card::toString() {
+std::string Card::toString() const {
     // Mapping the type enum values to textual names.
     std::map<CardType,std::string> cardTypeMap;
     cardTypeMap[Bomb] = "Bomb";
@@ -45,7 +45,7 @@ Card& Card::operator=(const Card &card) {
 }
 
 std::ostream &operator<<(std::ostream &out, const Card& card) {
-    return out << *card.type;
+    return out << card.toString();
 }
 
 std::istream &operator>>(std::istream &in, const Card &card) {
@@ -104,16 +104,16 @@ Card * Deck::draw() {
     // There's other ways to do it, but this is efficient and does not require seeding with Time.
     std::random_device randomDevice;
     std::mt19937 mt(randomDevice());
-    std::uniform_int_distribution<int> distribution(0,this->Cards->size());
+    std::uniform_int_distribution<int> distribution(0,this->cards->size());
     int randomIndex = distribution(mt);
 
     // Drawing the card at the index generated.
-    auto iterator = std::next(this->Cards->begin(), randomIndex);
+    auto iterator = std::next(this->cards->begin(), randomIndex);
     // Copying the card to the heap, so that we have a deep copy.
     Card* pulled = new Card(*iterator);
 
     // Removing the card from the deck.
-    Cards->erase(iterator);
+    cards->erase(iterator);
 
     // Returning the card we pulled.
     return pulled;
@@ -121,7 +121,7 @@ Card * Deck::draw() {
 
 // Returns the number of cards left in the deck.
 int Deck::remainingCards() {
-    return Cards->size();
+    return cards->size();
 }
 
 // Initializes the deck of cards, with a certain amount of each type of card in it.
@@ -139,10 +139,23 @@ void Deck::reset() {
         cards->push_back(*new Card(Diplomacy));
     }
 
-    delete this->Cards;
+    delete this->cards;
 
     // Setting the deck's content to the new list of cards.
-    this->Cards = cards;
+    this->cards = cards;
+}
+
+// Adds a new card to the deck, with the specified type.
+void Deck::addCard(CardType& type) {
+    // Creating a new card.
+    Card* newCard = new Card(type);
+    // Pushing it into the deck.
+    this->cards->push_back(*newCard);
+}
+
+// Adds the passed card to the deck.
+void Deck::addCard(Card &card) {
+    this->cards->push_back(card);
 }
 
 // Initializes a deck of cards, that starts with a certain amount of each type of card in it.
@@ -160,26 +173,26 @@ Deck::Deck(){
     }
 
     // Setting the deck's content to the new list of cards.
-    this->Cards = cards;
+    this->cards = cards;
 }
 
 Deck::Deck(const Deck &deck) {
     // Copies the passed deck's content.
-    std::list<Card>* cards = new std::list<Card>(deck.Cards->begin(), deck.Cards->end());
+    std::list<Card>* cards = new std::list<Card>(deck.cards->begin(), deck.cards->end());
 
     // Assign it to this deck.
-    this->Cards = cards;
+    this->cards = cards;
 }
 
 Deck & Deck::operator=(const Deck &deck) {
     // Copies the passed deck's content.
-    std::list<Card>* cards = new std::list<Card>(deck.Cards->begin(), deck.Cards->end());
+    std::list<Card>* cards = new std::list<Card>(deck.cards->begin(), deck.cards->end());
 
     // Clear up our current cards.
-    delete this->Cards;
+    delete this->cards;
 
     // Assign it to this deck.
-    this->Cards = cards;
+    this->cards = cards;
 
     return *this;
 }
@@ -190,7 +203,7 @@ std::istream& operator>>(std::istream& in, const Deck& deck)
     Card card;
     in >> card;
     // Pushing card in deck.
-    deck.Cards->push_back(card);
+    deck.cards->push_back(card);
 
     // Returning the stream
     return in;
@@ -202,7 +215,7 @@ std::ostream& operator<<(std::ostream& out, const Deck& deck)
     std::list<Card>::iterator iterator;
 
     // Iterating through the deck
-    for (iterator = deck.Cards->begin(); iterator != deck.Cards->end(); ++iterator) {
+    for (iterator = deck.cards->begin(); iterator != deck.cards->end(); ++iterator) {
         // Output the card to the stream, using it's textual type.
         out << iterator->toString()<< " ";
     }
@@ -222,7 +235,7 @@ void Hand::removeCard(CardType& type) {
     bool cardFound = false;
 
     // Iterating through the hand
-    for (iterator = this->Cards->begin(); iterator != this->Cards->end(); ++iterator) {
+    for (iterator = this->cards->begin(); iterator != this->cards->end(); ++iterator) {
         // If we find a card that matches the type, we break the loop.
         if(*iterator->type == type)
         {
@@ -233,31 +246,31 @@ void Hand::removeCard(CardType& type) {
 
     // Remove the card found.
     if(cardFound)
-        this->Cards->erase(iterator);
+        this->cards->erase(iterator);
 }
 
 // Initializes a hand of cards, empty at the start.
 Hand::Hand(){
-    this->Cards = new std::list<Card>();
+    this->cards = new std::list<Card>();
 }
 
 Hand::Hand(const Hand &Hand) {
     // Copies the passed hand's content.
-    std::list<Card>* cards = new std::list<Card>(Hand.Cards->begin(), Hand.Cards->end());
+    std::list<Card>* cards = new std::list<Card>(Hand.cards->begin(), Hand.cards->end());
 
     // Assign it to this hand.
-    this->Cards = cards;
+    this->cards = cards;
 }
 
 Hand & Hand::operator=(const Hand &Hand) {
     // Copies the passed hand's content.
-    std::list<Card>* cards = new std::list<Card>(Hand.Cards->begin(), Hand.Cards->end());
+    std::list<Card>* cards = new std::list<Card>(Hand.cards->begin(), Hand.cards->end());
 
     // Clear up our current cards.
-    delete this->Cards;
+    delete this->cards;
 
     // Assign it to this hand.
-    this->Cards = cards;
+    this->cards = cards;
 
     return *this;
 }
@@ -268,7 +281,7 @@ std::istream& operator>>(std::istream& in, const Hand& Hand)
     Card card;
     in >> card;
     // Pushing card in hand.
-    Hand.Cards->push_back(card);
+    Hand.cards->push_back(card);
 
     // Returning the stream
     return in;
@@ -280,7 +293,7 @@ std::ostream& operator<<(std::ostream& out, const Hand& Hand)
     std::list<Card>::iterator iterator;
 
     // Iterating through the hand
-    for (iterator = Hand.Cards->begin(); iterator != Hand.Cards->end(); ++iterator) {
+    for (iterator = Hand.cards->begin(); iterator != Hand.cards->end(); ++iterator) {
         // Output the card to the stream, using its textual type.
         out << iterator->toString() << " ";
     }
@@ -291,7 +304,7 @@ std::ostream& operator<<(std::ostream& out, const Hand& Hand)
 
 
 int Hand::remainingCards() {
-    return this->Cards->size();
+    return this->cards->size();
 }
 
 
@@ -304,7 +317,7 @@ std::string *Hand::listAllCards() {
     std::list<Card>::iterator iterator;
 
     // Iterating through the hand
-    for (iterator = this->Cards->begin(); iterator != this->Cards->end(); ++iterator) {
+    for (iterator = this->cards->begin(); iterator != this->cards->end(); ++iterator) {
         // Add the card's type to the result string.
         *result += iterator->toString() + " ";
     }
@@ -317,10 +330,18 @@ void Hand::addCard(CardType& type) {
     // Creating a new card.
     Card* newCard = new Card(type);
     // Pushing it into the hand.
-    this->Cards->push_back(*newCard);
+    this->cards->push_back(*newCard);
 }
 
 // Adds the passed card to the hand.
 void Hand::addCard(Card &card) {
-    this->Cards->push_back(card);
+    this->cards->push_back(card);
+}
+
+// Plays the specified card from the hand, putting it back into the specified deck.
+Order Hand::playCard(Card card, Deck deck) {
+    removeCard(*card.type);
+    Order* newOrder = card.play();
+    deck.addCard(card);
+    return *newOrder;
 }

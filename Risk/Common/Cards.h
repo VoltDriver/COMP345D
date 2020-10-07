@@ -11,7 +11,7 @@ class Card {
     public:
         CardType* type;
 
-        std::string toString();
+        std::string toString() const;
 
         Order* play();
         Card();
@@ -30,12 +30,14 @@ class Card {
 
 class Deck {
     private:
-        std::list<Card>* Cards;
+        std::list<Card>* cards;
 
     public:
         Card* draw();
         int remainingCards();
         void reset();
+        void addCard(CardType& type);
+        void addCard(Card& card);
 
         Deck();
 
@@ -52,13 +54,14 @@ class Deck {
 
 class Hand {
     private:
-        std::list<Card>* Cards;
+        std::list<Card>* cards;
     public:
         int remainingCards();
         std::string* listAllCards();
         void addCard(CardType& type);
         void addCard(Card& card);
         void removeCard(CardType& type);
+        Order playCard(Card card, Deck deck);
 
         Hand();
 
