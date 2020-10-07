@@ -19,6 +19,7 @@ public:
     void add_country(Country* new_country);
     void add_continent(Continent* new_continent);
     bool validate() const;
-    bool verify_connected_subgraph() const;
+    bool verify_map_connected_subgraph() const;
+    bool verify_continent_connected_subgraph() const;
     bool verify_unique_continents() const;
 };

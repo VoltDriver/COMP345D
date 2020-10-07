@@ -102,6 +102,11 @@ void MapLoader::parse(string file_name) {
                 }
             }
         }
+
+        cout << "MAP IS CONNECTED SUBGRAPH?: " << map.verify_map_connected_subgraph() << endl;
+        cout << "CONTINENTS IS CONNECTED SUBGRAPH?: " << map.verify_continent_connected_subgraph() << endl;
+        cout << "Countries all have unique continents?: " << map.verify_unique_continents() << endl;
+
 }
 
 MapLoader::MapLoader() = default;
