@@ -8,8 +8,8 @@ Player::Player() = default;
 
 
 /* Methods */
-void issue_order(Order* order) {
-    orders->push_back(order);
+void Player::issue_order(Order* order) {
+    orders.push_back(order);
 }
 
 vector<Country *> Player::to_defend() {

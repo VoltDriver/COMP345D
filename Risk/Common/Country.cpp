@@ -13,10 +13,12 @@ Country::Country(string &raw_country) {
     this->continent_id = std::stoi(country_data.at(2));
 }
 
-Country::Country(const Country &obj) {
-    this->id = obj.get_id();
-    this->name = obj.get_name();
-    this->continent_id = obj.get_continent_id();
+Country::Country(const Country &c) {
+    this->id = *(new int(c.id));
+    this->name = *(new string(c.name));
+    this->continent_id = *(new int(c.continent_id));
+    this->bordering_countries = c.bordering_countries;
+    this->continent = c.continent;
 }
 
 
@@ -83,8 +85,13 @@ ostream &operator<<(std::ostream &strm, const Country &country) {
                 << ")";
 }
 
+Country& Country::operator=(const Country& c) {
+    this->id = *(new int(c.id));
+    this->name = *(new string(c.name));
+    this->continent_id = *(new int(c.continent_id));
+    this->bordering_countries = c.bordering_countries;
 
-
-
+    return *this;
+}
 
 

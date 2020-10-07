@@ -8,12 +8,14 @@
 
 using namespace std;
 
+class Player;
+
 class Country {
 private:
     int id, continent_id;
     string name;
     Continent* continent = nullptr;
-    // Player* player = nullptr;
+    Player* player = nullptr;
     vector<Country*> bordering_countries;
     friend ostream& operator<<(ostream&, const Country&);
 
@@ -30,4 +32,6 @@ public:
     void add_bordering_country(Country*);
     string bordering_countries_tostring() const;
     bool borders_country(Country* country) const;
+
+    Country& operator=(const Country &c);
 };

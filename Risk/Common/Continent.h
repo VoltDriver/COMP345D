@@ -21,4 +21,6 @@ public:
     string get_name() const;
     vector<Country*> get_countries() const;
     void add_country(Country* country);
+
+    Continent& operator=(const Continent &c);
 };

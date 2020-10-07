@@ -59,21 +59,24 @@ void MapLoader::parse(string file_name) {
             int country_index = 1;
             while (getline(file_reader, line) &&  !line.empty()) {
                 auto* new_country = new Country(line);
+
+                // Verify that the continent id is valid
+                if(new_country->get_continent_id() > map.get_continents().size()) {
+                    throw invalid_argument("Country with invalid continent id");
+                }
+
                 Continent* current_continent = map.get_continents()[new_country->get_continent_id() - 1];
                 current_continent->add_country(new_country);
                 new_country->set_continent(current_continent);
 
                 // If the ID defined for the country doesn't match our accumulator, they are not in order from 1 to n
                 if (new_country-> get_id() !=  country_index) {
-                    cout << "\nERROR at: " << line << endl;
                     throw invalid_argument("Reason: Countries are not listed in order.\n");
                 }
 
-                this-> loaded_map-> add_country(new_country);
+                this->loaded_map->add_country(new_country);
 
                 country_index++;
-                // Debug
-                cout << *new_country << endl;
             }
 
             /* BORDERS */
@@ -83,21 +86,24 @@ void MapLoader::parse(string file_name) {
             vector<Country*> all_countries = map.get_countries();
             while (getline(file_reader, line) &&  !line.empty()) {
                 const vector<string> split_string = split(line);
-                Country* current = all_countries[stoi(split_string[0]) - 1];
 
-                for (int i = 1; i < split_string.size(); i++ ) {
-                    current-> add_bordering_country(all_countries[stoi(split_string[i]) - 1]);
+                // Verify that the country id actually exists
+                const int country_id = stoi(split_string[0]);
+                if (country_id > all_countries.size()) {
+                    throw invalid_argument("Initial country index out of range");
                 }
 
-                // Debug - REMOVEME
-                cout << "border data: " <<  line << endl;
-            }
+                Country* current = all_countries[country_id - 1];
 
-            // Debug - REMOVEME
-            bool map_validate = map.validate();
-            bool map_validate_unique_continents = map.validate_unique_continents();
-            cout << "\nAll countries are linked IS VALID?: " << map_validate << endl;
-            cout << "Each country belongs to one and only one continent IS VALID?: " << map_validate_unique_continents << "\n" << endl;
+                for (int i = 1; i < split_string.size(); i++ ) {
+                    const int bordering_country_id = stoi(split_string[i]);
+                    if (bordering_country_id > all_countries.size()) {
+                        throw invalid_argument("Bordering country id doesn't exist!");
+                    }
+
+                    current-> add_bordering_country(all_countries[stoi(split_string[i]) - 1]);
+                }
+            }
         }
 }
 
