@@ -13,7 +13,7 @@ int main() {
     }
 
     MapLoader loader2 = MapLoader();
-    cout << "\n*********** Test2: loaded Brasil map successfully ***********\n" << endl;
+    cout << "\n*********** Test2: loaded Brazil map successfully ***********\n" << endl;
     try {
         loader2.parse("../Resource/test_success2.map");
     } catch (const std::exception &e) {
@@ -36,12 +36,12 @@ int main() {
         cout << e.what() << endl;
     }
 
-//    MapLoader loader5 = MapLoader();
-//    cout << "\n*********** Test:  ***********\n" << endl;
-//    try {
-//        loader5.parse("../Resource/test_finding_territory_error.map");
-//    } catch (const std::exception &e) {
-//        cout << e.what() << endl;
-//    }
+    MapLoader loader5 = MapLoader();
+    cout << "\n*********** Test:  ***********\n" << endl;
+    try {
+        loader5.parse("../Resource/test_finding_territory_error.map");
+    } catch (const std::exception &e) {
+        cout << e.what() << endl;
+    }
     return 0;
 }

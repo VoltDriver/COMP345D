@@ -42,8 +42,10 @@ Map MapLoader::parse(string file_name) {
         else {
             /* CONTINENTS */
             // Skip file contents until we reach the continent section of the file
-            while (getline(file_reader, line) &&  line !=  "[continents]") {
-//                throw invalid_argument("Error loading map -> Reason: Cannot find continents.");
+            while (getline(file_reader, line) &&  line !=  "[continents]") {}
+            // if we reach end of file and have not found "[continents]", then there is an error
+            if (file_reader.eof()) {
+                throw invalid_argument("Error loading map -> Reason: Cannot find continents.");
             }
 
             // Iterate and process each line defined under [continents]
@@ -53,9 +55,11 @@ Map MapLoader::parse(string file_name) {
             }
 
             /* COUNTRIES */
-            // Skip file contents until we reach the continent section of the file
-            while (getline(file_reader, line) &&  line !=  "[countries]") {
-//                throw invalid_argument("Error loading map -> Reason: Cannot find territories.");
+            // Skip file contents until we reach the countries section of the file
+            while (getline(file_reader, line) &&  line !=  "[countries]") {}
+            // if we reach end of file and have not found "[countries]", then there is an error
+            if (file_reader.eof()) {
+                throw invalid_argument("Error loading map -> Reason: Cannot find territories.");
             }
 
             int territory_index = 1;
@@ -83,8 +87,10 @@ Map MapLoader::parse(string file_name) {
 
             /* BORDERS */
             // Skip file contents until we reach the continent section of the file
-            while (getline(file_reader, line) &&  line !=  "[borders]") {
-//                throw invalid_argument("Error loading map -> Reason: Cannot find borders.");
+            while (getline(file_reader, line) &&  line !=  "[borders]") {}
+            // if we reach end of file and have not found "[borders]", then there is an error
+            if (file_reader.eof()) {
+                throw invalid_argument("Error loading map -> Reason: Cannot find borders.");
             }
 
             vector<Territory*> all_territories = map.get_territories();
@@ -110,24 +116,30 @@ Map MapLoader::parse(string file_name) {
             }
         }
 
-        if (map.verify_map_connected_subgraph()) {
+        /* VALIDATION */
+        // check if map is a connected graph
+        if (map.verify_map_connected_graph()) {
             cout << "Map is a connected graph." << endl;
         }
         else {
             throw invalid_argument("Error loading map -> Reason: Map is not a connected graph.");
         }
+        // check if continents are a connected subgraph
         if (map.verify_continent_connected_subgraph()) {
             cout << "Continents are connected subgraphs." << endl;
         }
         else {
             throw invalid_argument("Error loading map -> Reason: Continents are not connected subgraphs.");
         }
+        // check if territories are connected by at most 1 continent
         if (map.verify_unique_continents()) {
             cout << "Territories all have unique continents." << endl;
         }
         else {
             throw invalid_argument("Error loading map -> Reason: Territories do not have unique continents.");
         }
+
+        // validated map object is returned
         return *loaded_map;
 }
 

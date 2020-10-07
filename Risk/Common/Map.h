@@ -19,7 +19,7 @@ public:
     void add_territory(Territory* new_territory);
     void add_continent(Continent* new_continent);
     bool validate() const;
-    bool verify_map_connected_subgraph() const;
+    bool verify_map_connected_graph() const;
     bool verify_continent_connected_subgraph() const;
     bool verify_unique_continents() const;
     void print(std::vector <Territory> const &a);

@@ -36,7 +36,7 @@ void Map::add_continent(Continent *new_continent) {
  *
  * Traverse each territory and its borders and check that every node has been visited by the end
  */
-bool Map::verify_map_connected_subgraph() const {
+bool Map::verify_map_connected_graph() const {
     int total_territories = territories.size();
     // Arrays to keep track of territories and continents that have been visited
     bool* visited_territories = new bool[total_territories];
@@ -88,13 +88,13 @@ bool Map::verify_map_connected_subgraph() const {
 }
 
 bool Map::validate() const {
-    return verify_map_connected_subgraph() && verify_unique_continents() && verify_continent_connected_subgraph();
+    return verify_map_connected_graph() && verify_unique_continents() && verify_continent_connected_subgraph();
 }
 
 /**
  * Check that each continent is a connected subgraph
  *
- * Functionally equivalent to verify_map_connected_subgraph(), except we treat each continent
+ * Functionally equivalent to verify_map_connected_graph(), except we treat each continent
  * and its territories as its own map.
  */
 bool Map::verify_continent_connected_subgraph() const {

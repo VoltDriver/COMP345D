@@ -33,25 +33,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7ca97671-161b-47fb-8107-3fc1d41fb1cc" name="Default Changelist" comment="Worked on Player class.&#10;Modified validation in MapLoader. &#10;MapDriver is done.">
-      <change afterPath="$PROJECT_DIR$/Resource/test_success3.map" afterDir="false" />
+    <list default="true" id="7ca97671-161b-47fb-8107-3fc1d41fb1cc" name="Default Changelist" comment="Renamed Country/Countries to Territory/Territories">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Common/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/Continent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Continent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/Continent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Continent.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/Country.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Territory.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/Country.h" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Territory.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Common/Map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Map.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Common/Map.h" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Map.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Common/MapLoader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/MapLoader.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/Player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Player.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/Player.h" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Player.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Driver/MapDriver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Driver/MapDriver.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Driver/MapLoaderDriver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Driver/MapLoaderDriver.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Driver/PlayerDriver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Driver/PlayerDriver.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resource/test_duplicate_country.map" beforeDir="false" afterPath="$PROJECT_DIR$/Resource/test_duplicate_territory.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resource/test_finding_country_error.map" beforeDir="false" afterPath="$PROJECT_DIR$/Resource/test_finding_territory_error.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resource/test_unreachable_country.map" beforeDir="false" afterPath="$PROJECT_DIR$/Resource/test_unreachable_territory.map" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,7 +179,14 @@
       <option name="project" value="LOCAL" />
       <updated>1602015174562</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Renamed Country/Countries to Territory/Territories">
+      <created>1602096754391</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1602096754391</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -213,7 +208,8 @@
     <MESSAGE value="remove jimmy" />
     <MESSAGE value="added some map files and re-organized" />
     <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <MESSAGE value="Renamed Country/Countries to Territory/Territories" />
+    <option name="LAST_COMMIT_MESSAGE" value="Renamed Country/Countries to Territory/Territories" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1022" y="519" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600731194653">
@@ -238,33 +234,33 @@
     </state>
     <state x="1348" y="619" key="FileChooserDialogImpl/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600735276336" />
     <state x="1348" y="619" key="FileChooserDialogImpl/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600553610636" />
-    <state width="1877" height="242" key="GridCell.Tab.0.bottom" timestamp="1602096352131">
+    <state width="1877" height="242" key="GridCell.Tab.0.bottom" timestamp="1602098153967">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="730" height="594" key="GridCell.Tab.0.bottom/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@3840.479.1920.1080" timestamp="1601187838870" />
     <state width="2967" height="317" key="GridCell.Tab.0.bottom/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1602028623291" />
-    <state width="1877" height="242" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1602096352131" />
+    <state width="1877" height="242" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1602098153967" />
     <state width="2967" height="491" key="GridCell.Tab.0.bottom/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
-    <state width="1877" height="242" key="GridCell.Tab.0.center" timestamp="1602096352130">
+    <state width="1877" height="242" key="GridCell.Tab.0.center" timestamp="1602098153967">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="730" height="594" key="GridCell.Tab.0.center/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@3840.479.1920.1080" timestamp="1601187838870" />
     <state width="2967" height="317" key="GridCell.Tab.0.center/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1602028623291" />
-    <state width="1877" height="242" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1602096352130" />
+    <state width="1877" height="242" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1602098153967" />
     <state width="2967" height="491" key="GridCell.Tab.0.center/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
-    <state width="1877" height="242" key="GridCell.Tab.0.left" timestamp="1602096352130">
+    <state width="1877" height="242" key="GridCell.Tab.0.left" timestamp="1602098153967">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="730" height="594" key="GridCell.Tab.0.left/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@3840.479.1920.1080" timestamp="1601187838870" />
     <state width="2967" height="317" key="GridCell.Tab.0.left/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1602028623291" />
-    <state width="1877" height="242" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1602096352130" />
+    <state width="1877" height="242" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1602098153967" />
     <state width="2967" height="491" key="GridCell.Tab.0.left/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
-    <state width="1877" height="242" key="GridCell.Tab.0.right" timestamp="1602096352130">
+    <state width="1877" height="242" key="GridCell.Tab.0.right" timestamp="1602098153967">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="730" height="594" key="GridCell.Tab.0.right/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@3840.479.1920.1080" timestamp="1601187838870" />
     <state width="2967" height="317" key="GridCell.Tab.0.right/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1602028623291" />
-    <state width="1877" height="242" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1602096352130" />
+    <state width="1877" height="242" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1602098153967" />
     <state width="2967" height="491" key="GridCell.Tab.0.right/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
     <state x="666" y="196" key="SettingsEditor" timestamp="1601953502021">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -273,10 +269,10 @@
     <state x="1076" y="509" key="SettingsEditor/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1601144040072" />
     <state x="666" y="196" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1601953502021" />
     <state x="1076" y="509" key="SettingsEditor/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600553973703" />
-    <state x="536" y="272" key="Vcs.Push.Dialog.v2" timestamp="1602015179549">
+    <state x="536" y="272" key="Vcs.Push.Dialog.v2" timestamp="1602096759637">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="536" y="272" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1602015179549" />
+    <state x="536" y="272" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1602096759637" />
     <state x="761" y="453" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1602037721069">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
