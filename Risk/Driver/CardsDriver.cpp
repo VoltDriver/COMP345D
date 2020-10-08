@@ -25,14 +25,26 @@ int main() {
 
     std::cout << "There are " << newHand->remainingCards() << " cards in the hand." << std::endl;
 
-    std::cout << "Drawing a card."<< std::endl;
-    newHand->addCard(*newDeck->draw()->type);
-    std::cout << "Drawing a card."<< std::endl;
-    newHand->addCard(*newDeck->draw());
+    for (int i = 0; i < 10; ++i) {
+        std::cout << "Drawing a card."<< std::endl;
+        newDeck->draw(newHand);
+    }
 
     std::cout << "There are " << newHand->remainingCards() << " cards in the hand." << std::endl;
-    std::cout << "The cards are... " << *newHand << std::endl;
     std::cout << "The cards are... " << *newHand->listAllCards() << std::endl;
+
+    std::cout << "There are " << newDeck->remainingCards() << " cards in the deck." << std::endl;
+
+    int amountOfCards = newHand->remainingCards();
+
+    for (int i = 0; i < amountOfCards; ++i) {
+        Card currentCard = newHand->cards->front();
+
+        std::cout << "Playing a card: "<< currentCard.toString() << std::endl;
+        currentCard.play(newHand, newDeck);
+        std::cout << "There are " << newHand->remainingCards() << " cards in the hand." << std::endl;
+        std::cout << "The cards are... " << *newHand->listAllCards() << std::endl;
+    }
 
     std::cout << "There are " << newDeck->remainingCards() << " cards in the deck." << std::endl;
 

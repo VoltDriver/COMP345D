@@ -20,13 +20,21 @@ std::string Card::toString() const {
     return cardTypeMap[*this->type];
 }
 
-Order *Card::play() {
+void Card::play(Hand* hand, Deck* deck) {
     // TODO: Implement this properly.
-    return new Order();
+    // Saving the type temporarily.
+    CardType cardType = *this->type;
+
+    // Adding this card back into the deck.
+    deck->addCard(cardType);
+
+    // Removing the card from the player's hand.
+    // TODO: Should not directly interact with hand. Should go through player first.
+    hand->removeCard(cardType);
 }
 
+// By default, creating a card gives it the type Bomb.
 Card::Card() {
-    // TODO: Check what default type we want.
     type = new CardType(Bomb);
 }
 
@@ -94,10 +102,15 @@ std::istream &operator>>(std::istream &in, const Card &card) {
     return in;
 }
 
+Card::~Card() {
+    delete this->type;
+    this->type = nullptr;
+}
+
 // Deck
 
 // Pulls a card from the remaining cards in the deck.
-Card * Deck::draw() {
+void Deck::draw(Hand* hand) {
 
     // Generating a random index that is in the list.
     // We use Mt19937 and random_device, which seeds the random generator with some random data from the system.
@@ -115,8 +128,8 @@ Card * Deck::draw() {
     // Removing the card from the deck.
     cards->erase(iterator);
 
-    // Returning the card we pulled.
-    return pulled;
+    // Adding the card we pulled to the hand
+    hand->addCard(*pulled);
 }
 
 // Returns the number of cards left in the deck.
@@ -224,6 +237,12 @@ std::ostream& operator<<(std::ostream& out, const Deck& deck)
     return out;
 }
 
+Deck::~Deck() {
+    delete this->cards;
+    this->cards = nullptr;
+}
+
+
 // Hand
 
 // Removes a card from hand that matches the card type passed.
@@ -302,6 +321,11 @@ std::ostream& operator<<(std::ostream& out, const Hand& Hand)
     return out;
 }
 
+Hand::~Hand() {
+    delete this->cards;
+    this->cards = nullptr;
+}
+
 
 int Hand::remainingCards() {
     return this->cards->size();
@@ -336,12 +360,4 @@ void Hand::addCard(CardType& type) {
 // Adds the passed card to the hand.
 void Hand::addCard(Card &card) {
     this->cards->push_back(card);
-}
-
-// Plays the specified card from the hand, putting it back into the specified deck.
-Order Hand::playCard(Card card, Deck deck) {
-    removeCard(*card.type);
-    Order* newOrder = card.play();
-    deck.addCard(card);
-    return *newOrder;
 }

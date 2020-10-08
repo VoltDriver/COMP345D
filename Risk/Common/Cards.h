@@ -7,13 +7,16 @@
 
 enum CardType{ Bomb, Reinforcement, Blockade, Airlift, Diplomacy};
 
+class Hand;
+class Deck;
+
 class Card {
     public:
         CardType* type;
 
         std::string toString() const;
 
-        Order* play();
+        void play(Hand* hand, Deck* deck);
         Card();
         Card(CardType type);
 
@@ -26,6 +29,9 @@ class Card {
         // Stream insertion operators
         friend std::istream& operator>>(std::istream& in, const Card& card);
         friend std::ostream& operator<<(std::ostream& out, const Card& card);
+
+        // Destructor
+        ~Card();
 };
 
 class Deck {
@@ -33,7 +39,7 @@ class Deck {
         std::list<Card>* cards;
 
     public:
-        Card* draw();
+        void draw(Hand* hand);
         int remainingCards();
         void reset();
         void addCard(CardType& type);
@@ -50,18 +56,19 @@ class Deck {
         // Stream insertion operators
         friend std::istream& operator>>(std::istream& in, const Deck& deck);
         friend std::ostream& operator<<(std::ostream& out, const Deck& deck);
+
+        // Destructor
+        ~Deck();
 };
 
 class Hand {
-    private:
-        std::list<Card>* cards;
     public:
+        std::list<Card>* cards;
         int remainingCards();
         std::string* listAllCards();
         void addCard(CardType& type);
         void addCard(Card& card);
         void removeCard(CardType& type);
-        Order playCard(Card card, Deck deck);
 
         Hand();
 
@@ -74,6 +81,9 @@ class Hand {
         // Stream insertion operators
         friend std::istream& operator>>(std::istream& in, const Hand& hand);
         friend std::ostream& operator<<(std::ostream& out, const Hand& hand);
+
+        // Destructor
+        ~Hand();
 };
 
 
