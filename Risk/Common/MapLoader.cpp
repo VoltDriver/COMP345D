@@ -3,7 +3,6 @@
 #include <fstream>
 #include <string>
 
-#include "Continent.h"
 #include "MapLoader.h"
 #include "Util.h"
 

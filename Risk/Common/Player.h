@@ -1,8 +1,10 @@
 #pragma once
 #include <vector>
 
+using namespace std;
+
 #include "Player.h"
-#include "Territory.h"
+#include "Map.h"
 
 class Card;
 class Order {
@@ -16,7 +18,7 @@ private:
     vector<Order*> orders;
     vector<Card*> cards;
 public:
-    Player(vector<Territory*> territories);
+    explicit Player(vector<Territory*> territories);
     Player(const Player &p);
 
     vector<Territory*> to_defend();
