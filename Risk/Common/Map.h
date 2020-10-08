@@ -8,11 +8,15 @@ class Player;
 class Territory;
 
 /**
- *
+ * Represents a continent on a map.
+ * A continent has a bonus reinforcement amount indicated by the army bonus. Bonus will work when a player controls all
+ * countries contained in a continent.
+ * Each continent has a name.
+ * All territories that belong to continent will be in the territories vector.
  */
 class Continent {
 private:
-    int armies = 0;
+    int army_bonus = 0;
     string name;
     vector<Territory*> territories;
     friend ostream& operator<<(ostream&, const Continent&);
@@ -28,7 +32,15 @@ public:
     Continent& operator=(const Continent &c);
 };
 
+
 /**
+ * Represents a territory on a continent.
+ * A territory is assigned an id which is how other territories and its continent will refer to it.
+ * The continent id will indicate which continent on the map that it belongs to.
+ * The armies represent the number of armies that are currently ona territory.
+ * The name will provide the name of the territory.
+ * Each territory will also have bordering countries which will be held in a vector of pointers that point
+ * to the bordering territories.
  *
  */
 class Territory {
@@ -38,6 +50,7 @@ private:
     Continent* continent = nullptr;
     Player* player = nullptr;
     vector<Territory*> bordering_territories;
+
     friend ostream& operator<<(ostream&, const Territory&);
 
 public:
@@ -45,15 +58,16 @@ public:
     explicit Territory(string&);
     Territory(const Territory &obj);
 
-    string get_name() const;
-    int get_id() const;
     int get_continent_id() const;
-    void set_continent(Continent* continent);
+    int get_id() const;
+    string get_name() const;
     Continent* get_continent() const;
     vector<Territory*> get_bordering_territory();
+    void set_continent(Continent* continent);
+
+    bool borders_territory(Territory* bordering_territory) const;
     void add_bordering_territory(Territory *territory);
     string bordering_territories_tostring() const;
-    bool borders_territory(Territory* bordering_territory) const;
 
     Territory& operator=(const Territory &c);
 };

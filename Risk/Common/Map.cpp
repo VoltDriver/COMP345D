@@ -10,6 +10,173 @@
 
 using namespace std;
 
+
+// ######   #######  ##    ## ######## #### ##    ## ######## ##    ## ########
+//##    ## ##     ## ###   ##    ##     ##  ###   ## ##       ###   ##    ##
+//##       ##     ## ####  ##    ##     ##  ####  ## ##       ####  ##    ##
+//##       ##     ## ## ## ##    ##     ##  ## ## ## ######   ## ## ##    ##
+//##       ##     ## ##  ####    ##     ##  ##  #### ##       ##  ####    ##
+//##    ## ##     ## ##   ###    ##     ##  ##   ### ##       ##   ###    ##
+// ######   #######  ##    ##    ##    #### ##    ## ######## ##    ##    ##
+
+
+/* Constructors */
+// parameterized constructor
+Continent::Continent(string &raw_continent) {
+    const vector<string> continent_data = split(raw_continent);
+    name = continent_data.at(0);
+}
+
+// copy constructor
+Continent::Continent(const Continent &c) {
+    this->name = *(new string(c.name));
+    this->territories = c.territories;
+    this->army_bonus = *(new int(c.army_bonus));
+}
+
+/* Accessors & Mutators */
+string Continent::get_name() const {
+    return name;
+}
+
+vector<Territory *> Continent::get_territories() const {
+    return territories;
+}
+
+/* Methods */
+void Continent::add_territory(Territory *territory) {
+    territories.push_back(territory);
+}
+
+/* Overloaders */
+// stream insertion operator
+ostream &operator<<(std::ostream& strm, const Continent &continent) {
+    return strm << "Continent("
+                << "name: " << continent.name
+                << ")";
+}
+// assignment operator
+Continent& Continent::operator=(const Continent& c) {
+    for (Territory *territory: territories) {
+        delete territory;
+    }
+    this->name = *(new string(c.name));
+    this->territories = c.territories;
+    this->army_bonus = *(new int(c.army_bonus));
+
+    return *this;
+}
+
+
+//######## ######## ########  ########  #### ########  #######  ########  ##    ##
+//   ##    ##       ##     ## ##     ##  ##     ##    ##     ## ##     ##  ##  ##
+//   ##    ##       ##     ## ##     ##  ##     ##    ##     ## ##     ##   ####
+//   ##    ######   ########  ########   ##     ##    ##     ## ########     ##
+//   ##    ##       ##   ##   ##   ##    ##     ##    ##     ## ##   ##      ##
+//   ##    ##       ##    ##  ##    ##   ##     ##    ##     ## ##    ##     ##
+//   ##    ######## ##     ## ##     ## ####    ##     #######  ##     ##    ##
+
+/* Constructors */
+// parameterized constructor
+Territory::Territory(int id, string name, int continent) {
+    this->id = id;
+    this->name = name;
+    this->continent_id = continent;
+}
+
+// parameterized constructor
+Territory::Territory(string &raw_territory) {
+    const vector<string> territory_data = split(raw_territory);
+    this->id = std::stoi(territory_data.at(0));
+    this->name = territory_data.at(1);
+    this->continent_id = std::stoi(territory_data.at(2));
+}
+
+// copy constructor
+Territory::Territory(const Territory &c) {
+    this->id = *(new int(c.id));
+    this->name = *(new string(c.name));
+    this->continent_id = *(new int(c.continent_id));
+    this->bordering_territories = c.bordering_territories;
+    this->continent = new Continent(*c.continent);
+}
+
+/* Accessors & Mutators */
+string Territory::get_name() const {
+    return name;
+}
+
+int Territory::get_id() const {
+    return id;
+}
+
+int Territory::get_continent_id() const {
+    return continent_id;
+}
+
+void Territory::set_continent(Continent *continent) {
+    this->continent = continent;
+}
+
+Continent *Territory::get_continent() const {
+    return continent;
+}
+
+vector<Territory *> Territory::get_bordering_territory() {
+    return this->bordering_territories;
+}
+
+/* Methods */
+void Territory::add_bordering_territory(Territory *territory) {
+    bordering_territories.push_back(territory);
+}
+
+string Territory::bordering_territories_tostring() const {
+    string territory_list = "(";
+    for (Territory *territory: bordering_territories) {
+        territory_list += territory->get_name();
+
+        if (territory != bordering_territories.back()) {
+            territory_list += ", ";
+        }
+    }
+
+    territory_list += ")";
+    return territory_list;
+}
+
+bool Territory::borders_territory(Territory *comparator) const {
+    return std::any_of(
+            bordering_territories.begin(),
+            bordering_territories.end(),
+            [&](const Territory *bordering_territory) { return bordering_territory == comparator; });
+}
+
+/* Overloaders */
+// stream insertion operator
+ostream &operator<<(std::ostream &strm, const Territory &territory) {
+    return strm << "Territory("
+                << "id: " << territory.id << ", "
+                << "name: " << territory.name << ", "
+                << "continent: " << territory.continent->get_name() << ", "
+                << "borders: " << territory.bordering_territories_tostring()
+                << ")";
+}
+// assignment operator
+Territory& Territory::operator=(const Territory& c) {
+    for (Territory *border: bordering_territories) {
+        delete border;
+    }
+
+    this->id = *(new int(c.id));
+    this->name = *(new string(c.name));
+    this->continent_id = *(new int(c.continent_id));
+    this->bordering_territories = c.bordering_territories;
+
+    return *this;
+}
+
+
 //##     ##    ###    ########
 //###   ###   ## ##   ##     ##
 //#### ####  ##   ##  ##     ##
@@ -17,9 +184,13 @@ using namespace std;
 //##     ## ######### ##
 //##     ## ##     ## ##
 //##     ## ##     ## ##
+
 /* Constructors */
 
+
+/* Destructor */
 Map::~Map() {
+    // deletes all territory objects stored on heap.
     for (Territory *territory: territories) {
         delete territory;
     }
@@ -48,9 +219,8 @@ void Map::add_continent(Continent *new_continent) {
 }
 
 /**
- * Check that the entire map is a connected subgraph
- *
- * Traverse each territory and its borders and check that every node has been visited by the end
+ * Check that the entire map is a connected subgraph.
+ * Traverse each territory and its borders and check that every node has been visited by the end.
  */
 bool Map::verify_map_connected_graph() const {
     int total_territories = territories.size();
@@ -103,13 +273,16 @@ bool Map::verify_map_connected_graph() const {
     return true;
 }
 
+/**
+ * Validates if map is a connected graph, continents are a connected subgraph and that continents are unique.
+ * @return true or false
+ */
 bool Map::validate() const {
     return verify_map_connected_graph() && verify_unique_continents() && verify_continent_connected_subgraph();
 }
 
 /**
  * Check that each continent is a connected subgraph
- *
  * Functionally equivalent to verify_map_connected_graph(), except we treat each continent
  * and its territories as its own map.
  */
@@ -191,162 +364,4 @@ bool Map::verify_unique_continents() const {
         }
     }
     return true;
-}
-
-//######## ######## ########  ########  #### ########  #######  ########  ##    ##
-//   ##    ##       ##     ## ##     ##  ##     ##    ##     ## ##     ##  ##  ##
-//   ##    ##       ##     ## ##     ##  ##     ##    ##     ## ##     ##   ####
-//   ##    ######   ########  ########   ##     ##    ##     ## ########     ##
-//   ##    ##       ##   ##   ##   ##    ##     ##    ##     ## ##   ##      ##
-//   ##    ##       ##    ##  ##    ##   ##     ##    ##     ## ##    ##     ##
-//   ##    ######## ##     ## ##     ## ####    ##     #######  ##     ##    ##
-
-/* Constructors */
-Territory::Territory(int id, string name, int continent) {
-    this->id = id;
-    this->name = name;
-    this->continent_id = continent;
-}
-
-Territory::Territory(string &raw_territory) {
-    const vector<string> territory_data = split(raw_territory);
-    this->id = std::stoi(territory_data.at(0));
-    this->name = territory_data.at(1);
-    this->continent_id = std::stoi(territory_data.at(2));
-}
-
-Territory::Territory(const Territory &c) {
-    this->id = *(new int(c.id));
-    this->name = *(new string(c.name));
-    this->continent_id = *(new int(c.continent_id));
-    this->bordering_territories = c.bordering_territories;
-    this->continent = new Continent(*c.continent);
-}
-
-/* Accessors & Mutators */
-string Territory::get_name() const {
-    return name;
-}
-
-int Territory::get_id() const {
-    return id;
-}
-
-int Territory::get_continent_id() const {
-    return continent_id;
-}
-
-void Territory::set_continent(Continent *continent) {
-    this->continent = continent;
-}
-
-Continent *Territory::get_continent() const {
-    return continent;
-}
-
-vector<Territory *> Territory::get_bordering_territory() {
-    return this->bordering_territories;
-}
-
-/* Methods */
-void Territory::add_bordering_territory(Territory *territory) {
-    bordering_territories.push_back(territory);
-}
-
-string Territory::bordering_territories_tostring() const {
-    string territory_list = "(";
-    for (Territory *territory: bordering_territories) {
-        territory_list += territory->get_name();
-
-        if (territory != bordering_territories.back()) {
-            territory_list += ", ";
-        }
-    }
-
-    territory_list += ")";
-    return territory_list;
-}
-
-bool Territory::borders_territory(Territory *comparator) const {
-    return std::any_of(
-            bordering_territories.begin(),
-            bordering_territories.end(),
-            [&](const Territory *bordering_territory) { return bordering_territory == comparator; });
-}
-
-/* Overloaders */
-ostream &operator<<(std::ostream &strm, const Territory &territory) {
-    return strm << "Territory("
-                << "id: " << territory.id << ", "
-                << "name: " << territory.name << ", "
-                << "continent: " << territory.continent->get_name() << ", "
-                << "borders: " << territory.bordering_territories_tostring()
-                << ")";
-}
-
-Territory& Territory::operator=(const Territory& c) {
-    for (Territory *border: bordering_territories) {
-        delete border;
-    }
-
-    this->id = *(new int(c.id));
-    this->name = *(new string(c.name));
-    this->continent_id = *(new int(c.continent_id));
-    this->bordering_territories = c.bordering_territories;
-
-    return *this;
-}
-
-// ######   #######  ##    ## ######## #### ##    ## ######## ##    ## ########
-//##    ## ##     ## ###   ##    ##     ##  ###   ## ##       ###   ##    ##
-//##       ##     ## ####  ##    ##     ##  ####  ## ##       ####  ##    ##
-//##       ##     ## ## ## ##    ##     ##  ## ## ## ######   ## ## ##    ##
-//##       ##     ## ##  ####    ##     ##  ##  #### ##       ##  ####    ##
-//##    ## ##     ## ##   ###    ##     ##  ##   ### ##       ##   ###    ##
-// ######   #######  ##    ##    ##    #### ##    ## ######## ##    ##    ##
-
-/* Constructors */
-Continent::Continent(string &raw_continent) {
-    const vector<string> continent_data = split(raw_continent);
-    name = continent_data.at(0);
-}
-
-Continent::Continent(const Continent &c) {
-    this->name = *(new string(c.name));
-    this->territories = c.territories;
-    this->armies = *(new int(c.armies));
-}
-
-/* Accessors & Mutators */
-string Continent::get_name() const {
-    return name;
-}
-
-vector<Territory *> Continent::get_territories() const {
-    return territories;
-}
-
-
-/* Methods */
-void Continent::add_territory(Territory *territory) {
-    territories.push_back(territory);
-}
-
-/* Overloaders */
-ostream &operator<<(std::ostream& strm, const Continent &continent) {
-    return strm << "Continent("
-                << "name: " << continent.name
-                << ")";
-}
-
-Continent& Continent::operator=(const Continent& c) {
-    for (Territory *territory: territories) {
-        delete territory;
-    }
-
-    this->name = *(new string(c.name));
-    this->territories = c.territories;
-    this->armies = *(new int(c.armies));
-
-    return *this;
 }

@@ -33,15 +33,19 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7ca97671-161b-47fb-8107-3fc1d41fb1cc" name="Default Changelist" comment="update">
+    <list default="true" id="7ca97671-161b-47fb-8107-3fc1d41fb1cc" name="Default Changelist" comment="MapDriverLoader is good, can add more test cases if needed.">
+      <change afterPath="$PROJECT_DIR$/Resource/test_initial_territory_index_error.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resource/test_missing data.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resource/test_missing_border_info.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Common/Map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Map.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Common/Map.h" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Map.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Common/MapLoader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/MapLoader.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/MapLoader.h" beforeDir="false" afterPath="$PROJECT_DIR$/Common/MapLoader.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Driver/MapDriver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Driver/MapDriver.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Player.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Player.h" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Player.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Driver/MapLoaderDriver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Driver/MapLoaderDriver.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Driver/PlayerDriver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Driver/PlayerDriver.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resource/test.map" beforeDir="false" afterPath="$PROJECT_DIR$/Resource/test_bordering_territory_index_error.map" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,11 +95,6 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.MapLoaderDriver">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Common" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="COMP345RISK" TARGET_NAME="Common" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -124,6 +123,11 @@
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <list>
@@ -159,6 +163,7 @@
       <workItem from="1601992745972" duration="16795000" />
       <workItem from="1602018433969" duration="9308000" />
       <workItem from="1602076776449" duration="10904000" />
+      <workItem from="1602159357924" duration="4653000" />
     </task>
     <task id="LOCAL-00001" summary="remove jimmy">
       <created>1601493804368</created>
@@ -248,36 +253,36 @@
     </state>
     <state x="1348" y="619" key="FileChooserDialogImpl/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600735276336" />
     <state x="1348" y="619" key="FileChooserDialogImpl/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600553610636" />
-    <state width="1877" height="302" key="GridCell.Tab.0.bottom" timestamp="1602124188865">
-      <screen x="3840" y="479" width="1920" height="1080" />
+    <state width="1877" height="157" key="GridCell.Tab.0.bottom" timestamp="1602165908804">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="730" height="594" key="GridCell.Tab.0.bottom/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@3840.479.1920.1080" timestamp="1601187838870" />
     <state width="2967" height="317" key="GridCell.Tab.0.bottom/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1602028623291" />
-    <state width="1877" height="211" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1602100585441" />
+    <state width="1877" height="157" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1602165908804" />
     <state width="1877" height="302" key="GridCell.Tab.0.bottom/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@3840.479.1920.1080" timestamp="1602124188865" />
     <state width="2967" height="491" key="GridCell.Tab.0.bottom/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
-    <state width="1877" height="302" key="GridCell.Tab.0.center" timestamp="1602124188865">
-      <screen x="3840" y="479" width="1920" height="1080" />
+    <state width="1877" height="157" key="GridCell.Tab.0.center" timestamp="1602165908804">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="730" height="594" key="GridCell.Tab.0.center/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@3840.479.1920.1080" timestamp="1601187838870" />
     <state width="2967" height="317" key="GridCell.Tab.0.center/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1602028623291" />
-    <state width="1877" height="211" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1602100585441" />
+    <state width="1877" height="157" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1602165908804" />
     <state width="1877" height="302" key="GridCell.Tab.0.center/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@3840.479.1920.1080" timestamp="1602124188865" />
     <state width="2967" height="491" key="GridCell.Tab.0.center/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
-    <state width="1877" height="302" key="GridCell.Tab.0.left" timestamp="1602124188865">
-      <screen x="3840" y="479" width="1920" height="1080" />
+    <state width="1877" height="157" key="GridCell.Tab.0.left" timestamp="1602165908803">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="730" height="594" key="GridCell.Tab.0.left/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@3840.479.1920.1080" timestamp="1601187838870" />
     <state width="2967" height="317" key="GridCell.Tab.0.left/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1602028623291" />
-    <state width="1877" height="211" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1602100585441" />
+    <state width="1877" height="157" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1602165908803" />
     <state width="1877" height="302" key="GridCell.Tab.0.left/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@3840.479.1920.1080" timestamp="1602124188865" />
     <state width="2967" height="491" key="GridCell.Tab.0.left/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
-    <state width="1877" height="302" key="GridCell.Tab.0.right" timestamp="1602124188865">
-      <screen x="3840" y="479" width="1920" height="1080" />
+    <state width="1877" height="157" key="GridCell.Tab.0.right" timestamp="1602165908804">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="730" height="594" key="GridCell.Tab.0.right/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@3840.479.1920.1080" timestamp="1601187838870" />
     <state width="2967" height="317" key="GridCell.Tab.0.right/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1602028623291" />
-    <state width="1877" height="211" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1602100585441" />
+    <state width="1877" height="157" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1602165908804" />
     <state width="1877" height="302" key="GridCell.Tab.0.right/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@3840.479.1920.1080" timestamp="1602124188865" />
     <state width="2967" height="491" key="GridCell.Tab.0.right/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
     <state x="666" y="196" key="SettingsEditor" timestamp="1601953502021">
@@ -303,5 +308,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="736" y="305" key="refactoring.ChangeSignatureDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1602094032530" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1602127661273">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1602127661273" />
   </component>
 </project>

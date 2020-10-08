@@ -14,7 +14,7 @@ using namespace std;
  * .map files broken into sections:
  *
  * Continents, delimited by [continents] - ORDER IS IMPORTANT, CONTINENT IDS BASED ON POSITION
- *  Continent_Name / Number of armies / Color
+ *  Continent_Name / Number of army_bonus / Color
  *  EX: North_America 6 red
  *
  * Countries. delimited by [countries]
@@ -40,13 +40,23 @@ Map* MapLoader::parse(string file_name) {
             /* CONTINENTS */
             // Skip file contents until we reach the continent section of the file
             while (getline(file_reader, line) &&  line !=  "[continents]") {}
-            // if we reach end of file and have not found "[continents]", then there is an error
             if (file_reader.eof()) {
                 throw invalid_argument("Error loading map -> Reason: Cannot find continents.");
             }
 
             // Iterate and process each line defined under [continents]
             while (getline(file_reader, line) &&  !line.empty()) {
+                vector<string> split_string = split(line);
+
+                // Verify that all data for territories in map file are available
+                if (split_string.size() != 3) {
+                    throw invalid_argument("Error loading map -> Reason: Missing data for continent.");
+                }
+                for (string x: split_string) {
+                    if (x == "") {
+                        throw invalid_argument("Error loading map -> Reason: Missing data for continent.");
+                    }
+                }
                 auto* new_continent = new Continent(line);
                 map-> add_continent(new_continent);
             }
@@ -54,13 +64,25 @@ Map* MapLoader::parse(string file_name) {
             /* COUNTRIES */
             // Skip file contents until we reach the countries section of the file
             while (getline(file_reader, line) &&  line !=  "[countries]") {}
-            // if we reach end of file and have not found "[countries]", then there is an error
             if (file_reader.eof()) {
                 throw invalid_argument("Error loading map -> Reason: Cannot find territories.");
             }
 
+            // Iterate and process each line defined under [countries]
             int territory_index = 1;
             while (getline(file_reader, line) &&  !line.empty()) {
+                vector<string> split_string = split(line);
+
+                // Verify that all data for territories in map file are available
+                if (split_string.size() != 5) {
+                    throw invalid_argument("Error loading map -> Reason: Missing data for territory.");
+                }
+                for (string x: split_string) {
+                    if (x == "") {
+                        throw invalid_argument("Error loading map -> Reason: Missing data for territory.");
+                    }
+                }
+
                 auto* new_territory = new Territory(line);
 
                 // Verify that the continent id is valid
@@ -85,19 +107,29 @@ Map* MapLoader::parse(string file_name) {
             /* BORDERS */
             // Skip file contents until we reach the continent section of the file
             while (getline(file_reader, line) &&  line !=  "[borders]") {}
-            // if we reach end of file and have not found "[borders]", then there is an error
             if (file_reader.eof()) {
                 throw invalid_argument("Error loading map -> Reason: Cannot find borders.");
             }
 
+            // Iterate and process each line defined under [borders]
             vector<Territory*> all_territories = map->get_territories();
             while (getline(file_reader, line) &&  !line.empty()) {
                 const vector<string> split_string = split(line);
 
+                // Verify that borders in map file per country exist
+                if (split_string.size() < 2) {
+                    throw invalid_argument("Error loading map -> Reason: Territory is missing its borders or territory id is missing.");
+                }
+                for (string x: split_string) {
+                    if (x == "") {
+                        throw invalid_argument("Error loading map -> Reason: Territory is missing its borders or territory id is missing.");
+                    }
+                }
+
                 // Verify that the territory id actually exists
                 const int territory_id = stoi(split_string[0]);
                 if (territory_id > all_territories.size()) {
-                    throw invalid_argument("Initial territory index out of range");
+                    throw invalid_argument("Error loading map -> Reason: Initial territory index out of range.");
                 }
 
                 Territory* current = all_territories[territory_id - 1];
@@ -105,7 +137,7 @@ Map* MapLoader::parse(string file_name) {
                 for (int i = 1; i < split_string.size(); i++ ) {
                     const int bordering_territory_id = stoi(split_string[i]);
                     if (bordering_territory_id > all_territories.size()) {
-                        throw invalid_argument("Bordering territory id doesn't exist!");
+                        throw invalid_argument("Error loading map -> Reason: Bordering territory id doesn't exist.");
                     }
 
                     current->add_bordering_territory(all_territories[stoi(split_string[i]) - 1]);

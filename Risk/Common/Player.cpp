@@ -2,14 +2,21 @@
 #include "Player.h"
 
 /* Constructors */
-//Player::Player() = default;
+Order::Order() = default;
+Card::Card() = default;
 
-Player::Player(vector<Territory*> territories) {
+// parameterized constructor
+Player::Player(vector<Territory*> territories, vector<Order*> orders, vector<Card*> cards) {
     this->territories = territories;
+    this->orders = orders;
+    this->cards = cards;
 }
 
+// copy constructor
 Player::Player(const Player &p) {
     this->territories = p.territories;
+    this->orders = p.orders;
+    this->cards = p.cards;
 }
 
 /* Accessors & Mutators */
@@ -29,4 +36,25 @@ vector<Territory *> Player::to_attack() {
     return territories;
 }
 
+
+
 /* Overloaders */
+//stream insertion operator
+
+// assignment operator
+Player& Player::operator=(const Player& p) {
+    for (Territory *territory: territories) {
+        delete territory;
+    }
+    for (Order *order: orders) {
+        delete order;
+    }
+    for (Card *card: cards) {
+        delete card;
+    }
+    this->territories = p.territories;
+    this->orders = p.orders;
+    this->cards = p.cards;
+
+    return *this;
+}
