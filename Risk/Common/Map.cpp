@@ -330,6 +330,10 @@ ostream &operator<<(std::ostream& strm, const Continent &continent) {
 }
 
 Continent& Continent::operator=(const Continent& c) {
+    for (Territory *territory: territories) {
+        delete territory;
+    }
+
     this->name = *(new string(c.name));
     this->territories = c.territories;
     this->armies = *(new int(c.armies));
