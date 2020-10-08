@@ -2,8 +2,14 @@
 #include "Player.h"
 
 /* Constructors */
-Order::Order() = default;
-Card::Card() = default;
+Order::Order(string order) {
+    this->order = order;
+};
+
+Card::Card(string card) {
+    this->card = card;
+};
+
 
 // parameterized constructor
 Player::Player(vector<Territory*> territories, vector<Order*> orders, vector<Card*> cards) {
@@ -18,6 +24,9 @@ Player::Player(const Player &p) {
     this->orders = p.orders;
     this->cards = p.cards;
 }
+
+/* Destructor */
+
 
 /* Accessors & Mutators */
 
@@ -36,10 +45,24 @@ vector<Territory *> Player::to_attack() {
     return territories;
 }
 
+string Order::get_order() const {
+    return order;
+}
 
+string Card::get_card() const {
+    return card;
+}
 
 /* Overloaders */
 //stream insertion operator
+ostream &operator<<(std::ostream &strm, const Player &player) {
+    return strm << "Player("
+                << "id: " << territory.id << ", "
+                << "name: " << territory.name << ", "
+                << "continent: " << territory.continent->get_name() << ", "
+                << "borders: " << territory.bordering_territories_tostring()
+                << ")";
+}
 
 // assignment operator
 Player& Player::operator=(const Player& p) {

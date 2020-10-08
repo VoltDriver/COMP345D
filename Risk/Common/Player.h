@@ -5,6 +5,20 @@ using namespace std;
 
 #include "Map.h"
 
+
+/**
+ * Place holder class for orders.
+ */
+class Order {
+private:
+    string order;
+public:
+    Order(string order);
+
+    string get_order() const;
+};
+
+
 /**
  * Place holder class for cards.
  */
@@ -12,19 +26,11 @@ class Card{
 private:
     string card = "card";
 public:
-    Card();
+    Card(string card);
+
+    string get_card() const;
 };
 
-
-/**
- * Place holder class for orders.
- */
-class Order {
-private:
-    string order = "order";
-public:
-    Order();
-};
 
 /**
  * Represents a player.
@@ -42,7 +48,7 @@ public:
     vector<Territory*> to_defend();
     vector<Territory*> to_attack();
     void issue_order(Order* order);
-    void display_territories(vector<Territory*> &t);
+
 
     Player& operator=(const Player &p);
 };

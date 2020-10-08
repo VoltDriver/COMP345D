@@ -41,7 +41,6 @@ public:
  * The name will provide the name of the territory.
  * Each territory will also have bordering countries which will be held in a vector of pointers that point
  * to the bordering territories.
- *
  */
 class Territory {
 private:
@@ -73,7 +72,9 @@ public:
 };
 
 /**
- *
+ * Represents a map.
+ * A map contains a vector of territory and continent objects.
+ * It also has functions that help validate map files.
  */
 class Map {
 private:

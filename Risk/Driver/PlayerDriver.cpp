@@ -10,16 +10,21 @@ int main() {
     vector<Territory*> territories = {ter1, ter2, ter3};
 
     // creating some arbitrary vector of orders
-    auto *ord = new Order();
-    vector<Order*> orders = {ord};
+    auto *ord1 = new Order("this is an order");
+    vector<Order*> orders = {ord1};
 
     // creating some arbitrary vector of cards
-    auto *card = new Card();
-    vector<Card*> cards = {card};
+    auto *card1 = new Card("this is a card");
+    vector<Card*> cards = {card1};
 
+    // creating a player object
     auto *player1 = new Player(territories, orders, cards);
 
+    // adding order to list of orders
+    auto *ord2 = new Order("this is another order");
+    player1->issue_order(ord2);
 
+    // return list of territories
     player1->to_defend();
     player1->to_attack();
 
