@@ -29,7 +29,4 @@ vector<Territory *> Player::to_attack() {
     return territories;
 }
 
-
-
 /* Overloaders */
-

@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Common/Player.h"
-#include "Common/Territory.h"
 
 int main() {
     auto *a = new Territory(1, "Canada", 1);

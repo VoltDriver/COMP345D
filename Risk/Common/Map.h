@@ -33,7 +33,7 @@ public:
  */
 class Territory {
 private:
-    int id, continent_id, armies;
+    int id, continent_id, armies = 0;
     string name;
     Continent* continent = nullptr;
     Player* player = nullptr;
@@ -67,6 +67,8 @@ private:
     vector<Territory*> territories;
 
 public:
+    ~Map();
+
     vector<Territory*> get_territories();
     vector<Continent*> get_continents();
     void add_territory(Territory* new_territory);

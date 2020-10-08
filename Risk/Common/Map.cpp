@@ -19,6 +19,16 @@ using namespace std;
 //##     ## ##     ## ##
 /* Constructors */
 
+Map::~Map() {
+    for (Territory *territory: territories) {
+        delete territory;
+    }
+
+    for (Continent *continent: continents) {
+        delete continent;
+    }
+}
+
 /* Accessors & Mutators */
 vector<Territory *> Map::get_territories() {
     return territories;

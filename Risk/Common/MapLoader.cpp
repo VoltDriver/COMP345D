@@ -7,7 +7,6 @@
 #include "Util.h"
 
 using namespace std;
-
 /**
  * Parses a .map file into a Map entity with continents and territories linked
  *
@@ -28,9 +27,8 @@ using namespace std;
  *
  * @param fileName Name of file to open
  */
-Map MapLoader::parse(string file_name) {
-        Map map;
-        loaded_map = &map;
+Map* MapLoader::parse(string file_name) {
+        Map *map = new Map();
 
         ifstream file_reader(file_name);
         string line;
@@ -50,7 +48,7 @@ Map MapLoader::parse(string file_name) {
             // Iterate and process each line defined under [continents]
             while (getline(file_reader, line) &&  !line.empty()) {
                 auto* new_continent = new Continent(line);
-                this-> loaded_map-> add_continent(new_continent);
+                map-> add_continent(new_continent);
             }
 
             /* COUNTRIES */
@@ -66,11 +64,11 @@ Map MapLoader::parse(string file_name) {
                 auto* new_territory = new Territory(line);
 
                 // Verify that the continent id is valid
-                if(new_territory->get_continent_id() > map.get_continents().size()) {
+                if(new_territory->get_continent_id() > map->get_continents().size()) {
                     throw invalid_argument("Error loading map -> Reason: Territory with invalid continent id.");
                 }
 
-                Continent* current_continent = map.get_continents()[new_territory->get_continent_id() - 1];
+                Continent* current_continent = map->get_continents()[new_territory->get_continent_id() - 1];
                 current_continent->add_territory(new_territory);
                 new_territory->set_continent(current_continent);
 
@@ -79,7 +77,7 @@ Map MapLoader::parse(string file_name) {
                     throw invalid_argument("Error loading map -> Reason: Territories are not listed in order.");
                 }
 
-                this->loaded_map->add_territory(new_territory);
+                map->add_territory(new_territory);
 
                 territory_index++;
             }
@@ -92,7 +90,7 @@ Map MapLoader::parse(string file_name) {
                 throw invalid_argument("Error loading map -> Reason: Cannot find borders.");
             }
 
-            vector<Territory*> all_territories = map.get_territories();
+            vector<Territory*> all_territories = map->get_territories();
             while (getline(file_reader, line) &&  !line.empty()) {
                 const vector<string> split_string = split(line);
 
@@ -117,21 +115,21 @@ Map MapLoader::parse(string file_name) {
 
         /* VALIDATION */
         // check if map is a connected graph
-        if (map.verify_map_connected_graph()) {
+        if (map->verify_map_connected_graph()) {
             cout << "Map is a connected graph." << endl;
         }
         else {
             throw invalid_argument("Error loading map -> Reason: Map is not a connected graph.");
         }
         // check if continents are a connected subgraph
-        if (map.verify_continent_connected_subgraph()) {
+        if (map->verify_continent_connected_subgraph()) {
             cout << "Continents are connected subgraphs." << endl;
         }
         else {
             throw invalid_argument("Error loading map -> Reason: Continents are not connected subgraphs.");
         }
         // check if territories are connected by at most 1 continent
-        if (map.verify_unique_continents()) {
+        if (map->verify_unique_continents()) {
             cout << "Territories all have unique continents." << endl;
         }
         else {
@@ -139,7 +137,7 @@ Map MapLoader::parse(string file_name) {
         }
 
         // validated map object is returned
-        return *loaded_map;
+        return map;
 }
 
 MapLoader::MapLoader() = default;
