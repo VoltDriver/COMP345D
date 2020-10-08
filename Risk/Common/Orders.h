@@ -6,64 +6,64 @@ using namespace std;
 #define UNTITLED_ORDERS_H
 
 
-class Orders {
+class Order {
+
 public:
     int id;
-    Orders();
-    Orders(int id);
+    Order(int anID);
 
 
     int getID();
-    bool validate();
-    void execute();
+    virtual bool validate();
+    virtual void execute();
 
 
 };
 
-class Deploy: public Orders{
+class Deploy: public Order{
 public:
-    Deploy();
-
-    bool validate();
-    void execute();
-};
-
-class Advance:public Orders{
-public:
-    Advance();
+    Deploy(int anID);
 
     bool validate();
     void execute();
 };
 
-class Bomb:public Orders{
+class Advance:public Order{
 public:
-    Bomb();
+    Advance(int anID);
 
     bool validate();
     void execute();
 };
 
-class Blockade:public Orders{
+class Bomb:public Order{
 public:
-    Blockade();
+    Bomb(int anID);
+
+    bool validate();
+    void execute();
+};
+
+class Blockade:public Order{
+public:
+    Blockade(int anID);
 
     bool validate();
     void execute();
 };
 
 
-class Airlift:public Orders{
+class Airlift:public Order{
 public:
-    Airlift();
+    Airlift(int anID);
 
     bool validate();
     void execute();
 };
 
-class Negotiate:public Orders{
+class Negotiate:public Order{
 public:
-    Negotiate();
+    Negotiate(int anID);
 
     bool validate();
     void execute();
@@ -72,17 +72,26 @@ public:
 
 class OrdersList{
 public:
-    OrdersList(vector<Orders> &list);
+    OrdersList();
+    OrdersList(vector<Order*> list);
 
 
-    int remove(Orders order);
-    void move(Orders order, int pos);
-    void add(Orders order);
+    int remove(Order *order);
+    void move(Order *order, int pos);
+    void add(Order *order);
 
-    vector<Orders> *myList;
+    vector<Order*> myList;
 
 
 
+};
+
+class ID{
+private:
+    static int currentID;
+public:
+    int getID();
+    ID();
 };
 
 
