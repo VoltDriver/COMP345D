@@ -4,11 +4,11 @@
 /* Constructors */
 Order::Order(string order) {
     this->order = order;
-};
+}
 
 Card::Card(string card) {
     this->card = card;
-};
+}
 
 
 // parameterized constructor
@@ -27,7 +27,6 @@ Player::Player(const Player &p) {
 
 /* Destructor */
 Player::~Player() {
-    // deletes all territory objects stored on heap.
     for (Territory *territory: territories) {
         delete territory;
     }
@@ -65,10 +64,12 @@ vector<Territory *> Player::to_attack() {
 /* Overloaders */
 //stream insertion operator
 ostream &operator<<(std::ostream &strm, const Player &player) {
-    return strm << "Player("
-                << "Territory info: "
-//                << (Territory&)player.territories
-                << ")";
+    strm << "Player(" << "Territory info: { ";
+
+    for (Territory *territory: player.territories) {
+        strm << *territory << (territory == player.territories.back() ? "" : ", ");
+    }
+    return strm << " }";
 }
 
 // assignment operator
