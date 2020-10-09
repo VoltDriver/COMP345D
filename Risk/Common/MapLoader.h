@@ -4,12 +4,12 @@
 #include "Map.h"
 
 class MapLoader {
-private:
-    Map* loaded_map = nullptr;
-
 public:
+    /* Constructors */
     MapLoader();
-    void parse(string);
+
+    /* Methods */
+    static Map* parse(string);
 };
 
 
