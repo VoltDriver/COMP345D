@@ -41,9 +41,12 @@ private:
     vector<Order*> orders;
     vector<Card*> cards;
 
+    friend ostream& operator<<(ostream&, const Player&);
+
 public:
     explicit Player(vector<Territory*> territories, vector<Order*> orders, vector<Card*> cards);
     Player(const Player &p);
+    ~Player();
 
     vector<Territory*> to_defend();
     vector<Territory*> to_attack();

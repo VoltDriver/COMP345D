@@ -28,5 +28,8 @@ int main() {
     player1->to_defend();
     player1->to_attack();
 
+    cout << *player1;
+
+    delete player1;
     return 0;
 }

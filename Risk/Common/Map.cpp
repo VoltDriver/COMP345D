@@ -162,6 +162,7 @@ ostream &operator<<(std::ostream &strm, const Territory &territory) {
                 << "borders: " << territory.bordering_territories_tostring()
                 << ")";
 }
+
 // assignment operator
 Territory& Territory::operator=(const Territory& c) {
     for (Territory *border: bordering_territories) {

@@ -26,10 +26,27 @@ Player::Player(const Player &p) {
 }
 
 /* Destructor */
-
+Player::~Player() {
+    // deletes all territory objects stored on heap.
+    for (Territory *territory: territories) {
+        delete territory;
+    }
+    for (Order *order: orders) {
+        delete order;
+    }
+    for (Card *card: cards) {
+        delete card;
+    }
+}
 
 /* Accessors & Mutators */
+string Order::get_order() const {
+    return order;
+}
 
+string Card::get_card() const {
+    return card;
+}
 
 /* Methods */
 void Player::issue_order(Order* order) {
@@ -45,22 +62,12 @@ vector<Territory *> Player::to_attack() {
     return territories;
 }
 
-string Order::get_order() const {
-    return order;
-}
-
-string Card::get_card() const {
-    return card;
-}
-
 /* Overloaders */
 //stream insertion operator
 ostream &operator<<(std::ostream &strm, const Player &player) {
     return strm << "Player("
-                << "id: " << territory.id << ", "
-                << "name: " << territory.name << ", "
-                << "continent: " << territory.continent->get_name() << ", "
-                << "borders: " << territory.bordering_territories_tostring()
+                << "Territory info: "
+//                << (Territory&)player.territories
                 << ")";
 }
 
