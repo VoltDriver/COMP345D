@@ -168,7 +168,7 @@ ostream &operator<<(std::ostream &strm, const Territory &territory) {
                 << "name: " << territory.name << ", "
                 << "continent: " << (!territory.continent ? "()" : territory.continent->get_name()) << ", "
                 << "borders: " << territory.bordering_territories_tostring()
-                << ")";
+                << ")\n";
 }
 
 // assignment operator

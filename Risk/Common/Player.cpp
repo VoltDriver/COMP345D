@@ -57,12 +57,21 @@ vector<Territory *> Player::to_attack() {
 /* Overloaders */
 //stream insertion operator
 ostream &operator<<(std::ostream &strm, const Player &player) {
-    strm << "Player(Territory info: { ";
-
+    strm << "Player Object Data:\n";
+    strm << "Territories \n";
     for (Territory *territory: player.territories) {
-        strm << *territory << (territory == player.territories.back() ? "" : ", ");
+        strm << *territory;
     }
-    return strm << " }";
+    strm << "Orders \n";
+    for (Order *order: player.orders) {
+        strm << order->order << "\n";
+    }
+    strm << "Cards \n";
+    for (Card *card: player.cards) {
+        strm << card->card << "\n";
+    }
+
+    return strm;
 }
 
 // assignment operator

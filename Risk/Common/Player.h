@@ -10,10 +10,9 @@ using namespace std;
  * Place holder class for orders.
  */
 class Order {
-private:
-    string order;
 public:
     Order(string order);
+    string order;
 
 };
 
@@ -22,10 +21,9 @@ public:
  * Place holder class for cards.
  */
 class Card{
-private:
-    string card = "card";
 public:
     Card(string card);
+    string card = "card";
 };
 
 

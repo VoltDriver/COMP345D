@@ -34,8 +34,8 @@ int main() {
         cout << *terrToDef[i];
     }
 
-    cout << "\n\nPrinting player objects" << endl;
-
+    // printing player object info
+    cout << "\nPrinting player objects" << endl;
     cout << *player1;
 
     delete player1;
