@@ -187,7 +187,13 @@ Territory& Territory::operator=(const Territory& c) {
 //##     ## ##     ## ##
 
 /* Constructors */
+Map::Map() = default;
 
+// copy constructor
+Map::Map(const Map &map) {
+    this->territories = territories;
+    this->continents = continents;
+}
 
 /* Destructor */
 Map::~Map() {
@@ -365,4 +371,32 @@ bool Map::verify_unique_continents() const {
         }
     }
     return true;
+}
+
+/* Overloaders */
+// stream insertion operator
+ostream &operator<<(std::ostream& strm, const Map &map) {
+    strm << "Map(" << "Territory info: { ";
+    for (Territory *territory: map.territories) {
+        strm << *territory << (territory == map.territories.back() ? "" : ", ");
+    }
+    strm << "} Continent info: { ";
+    for (Continent *continent: map.continents) {
+        strm << *continent << (continent == map.continents.back() ? "" : ", ");
+    }
+    return strm << " }";
+}
+
+// assignment operator
+Map& Map::operator=(const Map& m) {
+    for (Territory *territory: territories) {
+        delete territory;
+    }
+    for (Continent *continent: continents) {
+        delete continent;
+    }
+    this->territories = m.territories;
+    this->continents = m.continents;
+
+    return *this;
 }

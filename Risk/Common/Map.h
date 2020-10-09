@@ -77,11 +77,12 @@ public:
  * It also has functions that help validate map files.
  */
 class Map {
-private:
+public:
     vector<Continent*> continents;
     vector<Territory*> territories;
 
-public:
+    Map();
+    Map(const Map& map);
     ~Map();
 
     vector<Territory*> get_territories();
@@ -92,4 +93,5 @@ public:
     bool verify_map_connected_graph() const;
     bool verify_continent_connected_subgraph() const;
     bool verify_unique_continents() const;
+    Map& operator=(const Map& m);
 };
