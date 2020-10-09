@@ -15,7 +15,6 @@ private:
 public:
     Order(string order);
 
-    string get_order() const;
 };
 
 
@@ -27,13 +26,11 @@ private:
     string card = "card";
 public:
     Card(string card);
-
-    string get_card() const;
 };
 
 
 /**
- * Represents a player.
+ * Represents a player. A player hold territories, orders and cards.
  */
 class Player {
 private:
@@ -44,14 +41,18 @@ private:
     friend ostream& operator<<(ostream&, const Player&);
 
 public:
+    /* Constructors */
     explicit Player(vector<Territory*> territories, vector<Order*> orders, vector<Card*> cards);
     Player(const Player &p);
+
+    /* Destructor */
     ~Player();
 
+    /* Methods */
     vector<Territory*> to_defend();
     vector<Territory*> to_attack();
     void issue_order(Order* order);
 
-
+    /* Overloaders */
     Player& operator=(const Player &p);
 };

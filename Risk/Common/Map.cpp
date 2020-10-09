@@ -34,6 +34,7 @@ Continent::Continent(const Continent &c) {
     this->army_bonus = *(new int(c.army_bonus));
 }
 
+
 /* Accessors & Mutators */
 string Continent::get_name() const {
     return name;
@@ -43,10 +44,12 @@ vector<Territory *> Continent::get_territories() const {
     return territories;
 }
 
+
 /* Methods */
 void Continent::add_territory(Territory *territory) {
     territories.push_back(territory);
 }
+
 
 /* Overloaders */
 // stream insertion operator
@@ -55,6 +58,8 @@ ostream &operator<<(std::ostream& strm, const Continent &continent) {
                 << "name: " << continent.name
                 << ")";
 }
+
+
 // assignment operator
 Continent& Continent::operator=(const Continent& c) {
     for (Territory *territory: territories) {
@@ -101,6 +106,7 @@ Territory::Territory(const Territory &c) {
     this->continent = new Continent(*c.continent);
 }
 
+
 /* Accessors & Mutators */
 string Territory::get_name() const {
     return name;
@@ -108,6 +114,10 @@ string Territory::get_name() const {
 
 int Territory::get_id() const {
     return id;
+}
+
+Continent *Territory::get_continent() const {
+    return continent;
 }
 
 int Territory::get_continent_id() const {
@@ -118,13 +128,10 @@ void Territory::set_continent(Continent *continent) {
     this->continent = continent;
 }
 
-Continent *Territory::get_continent() const {
-    return continent;
-}
-
 vector<Territory *> Territory::get_bordering_territory() {
     return this->bordering_territories;
 }
+
 
 /* Methods */
 void Territory::add_bordering_territory(Territory *territory) {
@@ -151,6 +158,7 @@ bool Territory::borders_territory(Territory *comparator) const {
             bordering_territories.end(),
             [&](const Territory *bordering_territory) { return bordering_territory == comparator; });
 }
+
 
 /* Overloaders */
 // stream insertion operator
@@ -195,6 +203,7 @@ Map::Map(const Map &map) {
     this->continents = continents;
 }
 
+
 /* Destructor */
 Map::~Map() {
     // deletes all territory objects stored on heap.
@@ -207,6 +216,7 @@ Map::~Map() {
     }
 }
 
+
 /* Accessors & Mutators */
 vector<Territory *> Map::get_territories() {
     return territories;
@@ -215,6 +225,7 @@ vector<Territory *> Map::get_territories() {
 vector<Continent *> Map::get_continents() {
     return continents;
 }
+
 
 /* Methods */
 void Map::add_territory(Territory *new_territory) {
@@ -373,10 +384,11 @@ bool Map::verify_unique_continents() const {
     return true;
 }
 
+
 /* Overloaders */
 // stream insertion operator
 ostream &operator<<(std::ostream& strm, const Map &map) {
-    strm << "Map(" << "Territory info: { ";
+    strm << "Map(Territory info: { ";
     for (Territory *territory: map.territories) {
         strm << *territory << (territory == map.territories.back() ? "" : ", ");
     }

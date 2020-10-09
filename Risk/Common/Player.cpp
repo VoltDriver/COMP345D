@@ -10,7 +10,6 @@ Card::Card(string card) {
     this->card = card;
 }
 
-
 // parameterized constructor
 Player::Player(vector<Territory*> territories, vector<Order*> orders, vector<Card*> cards) {
     this->territories = territories;
@@ -25,6 +24,7 @@ Player::Player(const Player &p) {
     this->cards = p.cards;
 }
 
+
 /* Destructor */
 Player::~Player() {
     for (Territory *territory: territories) {
@@ -38,14 +38,6 @@ Player::~Player() {
     }
 }
 
-/* Accessors & Mutators */
-string Order::get_order() const {
-    return order;
-}
-
-string Card::get_card() const {
-    return card;
-}
 
 /* Methods */
 void Player::issue_order(Order* order) {
@@ -61,10 +53,11 @@ vector<Territory *> Player::to_attack() {
     return territories;
 }
 
+
 /* Overloaders */
 //stream insertion operator
 ostream &operator<<(std::ostream &strm, const Player &player) {
-    strm << "Player(" << "Territory info: { ";
+    strm << "Player(Territory info: { ";
 
     for (Territory *territory: player.territories) {
         strm << *territory << (territory == player.territories.back() ? "" : ", ");

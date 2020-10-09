@@ -25,11 +25,20 @@ int main() {
     player1->issue_order(ord2);
 
     // return list of territories
-    player1->to_defend();
-    player1->to_attack();
+    vector<Territory*> terrToDef = player1->to_defend();
+    vector<Territory*> terrToAtk = player1->to_attack();
+
+    // printing out territories to defend
+    cout << "\nVerifying that terrToDef is able to return a vector of Territories" << endl;
+    for (int i = 0; i < terrToDef.size(); i++) {
+        cout << *terrToDef[i];
+    }
+
+    cout << "\n\nPrinting player objects" << endl;
 
     cout << *player1;
 
     delete player1;
+
     return 0;
 }

@@ -5,7 +5,10 @@
 
 class MapLoader {
 public:
+    /* Constructors */
     MapLoader();
+
+    /* Methods */
     static Map* parse(string);
 };
 

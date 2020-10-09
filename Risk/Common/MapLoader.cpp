@@ -7,6 +7,13 @@
 #include "Util.h"
 
 using namespace std;
+
+
+/* Constructors */
+MapLoader::MapLoader() = default;
+
+
+/* Methods */
 /**
  * Parses a .map file into a Map entity with continents and territories linked
  *
@@ -171,5 +178,3 @@ Map* MapLoader::parse(string file_name) {
         // validated map object is returned
         return map;
 }
-
-MapLoader::MapLoader() = default;
