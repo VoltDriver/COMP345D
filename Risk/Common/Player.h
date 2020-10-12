@@ -1,23 +1,14 @@
-#pragma once
+#ifndef COMP345RISK_PLAYER_H
+#define COMP345RISK_PLAYER_H
+
 #include <vector>
-
-
-using namespace std;
-
 #include "Map.h"
 #include "Orders.h"
 
+class Card;
+class Hand;
 
-
-/**
- * Place holder class for cards.
- */
-class Card{
-public:
-    Card(string card);
-    string card = "card";
-};
-
+using namespace std;
 
 /**
  * Represents a player. A player hold territories, orders and cards.
@@ -26,15 +17,15 @@ class Player {
 private:
     vector<Territory*> territories;
     vector<Order*> orders;
-    vector<Card*> cards;
-
     friend ostream& operator<<(ostream&, const Player&);
 
 public:
-    /* Constructors */
-    explicit Player(vector<Territory*> territories, vector<Order*> orders, vector<Card*> cards);
-    Player(const Player &p);
+    Hand* hand;
 
+    /* Constructors */
+    Player();
+    explicit Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand);
+    Player(const Player &p);
     /* Destructor */
     ~Player();
 
@@ -46,3 +37,5 @@ public:
     /* Overloaders */
     Player& operator=(const Player &p);
 };
+
+#endif //COMP345RISK_PLAYER_H
