@@ -12,3 +12,6 @@ target_link_libraries(MapDriver Common)
 
 add_executable(PlayerDriver PlayerDriver.cpp)
 target_link_libraries(PlayerDriver Common)
+
+add_executable(OrdersDriver OrdersDriver.cpp)
+target_link_libraries(OrdersDriver Common)

@@ -3,13 +3,15 @@ set(SOURCES
         Map.cpp
         MapLoader.cpp
         Player.cpp
-        Util.cpp)
+        Util.cpp
+        Orders.cpp)
 set(HEADERS
         Cards.h
         Map.h
         MapLoader.h
         Player.h
-        Util.h)
+        Util.h
+        Orders.h)
 
 add_library(Common STATIC ${SOURCES} ${HEADERS})
 add_executable(CommonLib Main.cpp)

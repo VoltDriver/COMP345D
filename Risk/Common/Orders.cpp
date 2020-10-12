@@ -5,17 +5,18 @@
 using namespace std;
 
 
-
+//Order class constructor
 Order::Order(int anID) {
     id = anID;
 }
 
+//Copy constructor for Order class
 Order::Order(const Order &order2){
     cout << "Copy Constructor!" << endl;
     id = order2.id;
 }
 
-
+//Assignment operator for Order class
 Order& Order::operator=(const Order &other) {
     cout << "Assignment operator!" << endl;
     if (this != &other){
@@ -25,15 +26,18 @@ Order& Order::operator=(const Order &other) {
     return *this;
 }
 
+//getID() method that returns the id of an Order
 int Order:: getID(){
     return id;
 }
 
+//validate() method for Order that prints out a string and returns true
 bool Order::validate() {
     cout << "Validating..." << endl;
     return true;
 }
 
+//execute() method for Order that prints out a different string depending on the boolean returned by validate()
 void Order::execute() {
     cout << "Order: " << endl;
     if (validate()) {
@@ -45,25 +49,29 @@ void Order::execute() {
     }
 }
 
-
+//Constructor for Deploy class
 Deploy::Deploy(int anID) : Order(anID) {
 
 }
 
+//Copy constructor for Deploy class
 Deploy::Deploy(const Deploy &deploy2) : Order(deploy2) {
 
 }
 
+//Assignment operator for Deploy class
 Deploy& Deploy::operator=(const Deploy &other) {
     this -> Order::operator=(other);
     return *this;
 }
 
+//validate() method for Deploy that prints out a string and returns true
 bool Deploy::validate() {
     cout << "Is social distancing still a thing?" << endl;
     return true;
 }
 
+//execute() method for Deploy that prints out a different string depending on the boolean returned by validate()
 void Deploy::execute() {
     cout << "Deploy: " << endl;
     if (validate()){
@@ -75,24 +83,29 @@ void Deploy::execute() {
     }
 }
 
+//Constructor for Advance class
 Advance::Advance(int anID) : Order(anID){
 
 }
 
+//Copy constructor for Advance class
 Advance::Advance(const Advance &advance2) : Order(advance2) {
 
 }
 
+//Assignment operator for Advance class
 Advance& Advance::operator=(const Advance &other) {
     this -> Order::operator=(other);
     return *this;
 }
 
+//validate() method for Advance that prints out a string and returns true
 bool Advance::validate() {
     cout << "Can I advance?" << endl;
     return true;
 }
 
+//execute() method for Advance that prints out a different string depending on the boolean returned by validate()
 void Advance::execute() {
     cout << "Advance: " << endl;
     if (validate()) {
@@ -105,24 +118,29 @@ void Advance::execute() {
 
 }
 
+//Constructor for Bomb class
 Bomb::Bomb(int anID) : Order(anID){
 
 }
 
+//Copy constructor for Bomb class
 Bomb::Bomb(const Bomb &bomb2) : Order(bomb2) {
 
 }
 
+//Assignment operator for Bomb class
 Bomb& Bomb::operator=(const Bomb &other) {
     this -> Order::operator=(other);
     return *this;
 }
 
+//validate() method for Bomb that prints out a string and returns true
 bool Bomb::validate() {
     cout << "Can this bomb really virtually blow up?" << endl;
     return true;
 }
 
+//execute() method for Bomb that prints out a different string depending on the boolean returned by validate()
 void Bomb::execute() {
     cout << "Bomb: " << endl;
     if(validate()){
@@ -134,24 +152,29 @@ void Bomb::execute() {
     }
 }
 
+//Constructor for Blockade class
 Blockade::Blockade(int anID) : Order(anID){
 
 }
 
+//Copy constructor for Blockade class
 Blockade::Blockade(const Blockade &blockade2) : Order(blockade2) {
 
 }
 
+//Assignment operator for Blockade class
 Blockade & Blockade::operator=(const Blockade &other) {
     this -> Order::operator=(other);
     return *this;
 }
 
+//validate() method for Blockade that prints out a string and returns true
 bool Blockade::validate() {
     cout << "Do you really see a way to block this river or is that a mirage? P.S. Drink some water #HydroHomies" << endl;
     return true;
 }
 
+//execute() method for Blockade that prints out a different string depending on the boolean returned by validate()
 void Blockade::execute() {
     cout << "Blockade: " << endl;
     if (validate()) {
@@ -163,24 +186,29 @@ void Blockade::execute() {
     }
 }
 
+//Constructor for Airlift class
 Airlift::Airlift(int anID) : Order(anID){
 
 }
 
+//Copy constructor for Airlift class
 Airlift::Airlift(const Airlift &airlift2) : Order(airlift2) {
 
 }
 
+//Assignment Operator for Airlift class
 Airlift & Airlift::operator=(const Airlift &other) {
     this -> Order::operator=(other);
     return *this;
 }
 
+//validate() method for Airlift that prints out a string and returns true
 bool Airlift::validate() {
     cout << "I wonder, if I attach balloons to my chair, will I fly?" << endl;
     return true;
 }
 
+//execute() method for Airlift that prints out a different string depending on the boolean returned by validate()
 void Airlift::execute() {
     cout << "Airlift: " << endl;
     if (validate()) {
@@ -192,25 +220,29 @@ void Airlift::execute() {
     }
 }
 
-
+//Constructor for Negotiate class
 Negotiate::Negotiate(int anID) : Order(anID){
 
 }
 
+//copy constructor for Negotiate class
 Negotiate::Negotiate(const Negotiate &negotiate2) : Order(negotiate2) {
 
 }
 
+//Assignment operator for Negotiate class
 Negotiate & Negotiate::operator=(const Negotiate &other) {
     this -> Order::operator=(other);
     return *this;
 }
 
+//validate() method for Negotiate that prints out a string and returns true
 bool Negotiate::validate() {
     cout << "So do we negotiate like the Mexican cartel or..." << endl;
     return false;
 }
 
+//execute() method for Negotiate that prints out a different string depending on the boolean returned by validate()
 void Negotiate::execute() {
     cout << "Negotiate: " << endl;
     if (validate()){
@@ -221,14 +253,17 @@ void Negotiate::execute() {
     }
 }
 
+//OrdersList constructor
 OrdersList::OrdersList() {
     myList = *new vector<Order*>;
 }
 
+//Copy constructor for OrderList class
 OrdersList::OrdersList(const OrdersList &orderList2) {
     myList = orderList2.myList;
 }
 
+//Assignment operator for OrderList class
 OrdersList& OrdersList::operator=(const OrdersList &other) {
     cout << "Assignment Operator!" << endl;
     if (this != &other){
@@ -238,7 +273,7 @@ OrdersList& OrdersList::operator=(const OrdersList &other) {
     return *this;
 }
 
-
+// remove() method that removes the Order specified in the parameter from the vector and shrinks the vector to fit the remaining Orders in it
 int OrdersList::remove(Order *order){
     for(int i =0; i<myList.size(); i++ ){
         if ((*myList.at(i)).getID() == (*order).getID()) {
@@ -250,6 +285,8 @@ int OrdersList::remove(Order *order){
     return 0;
 }
 
+//move() method that takes an Order and a position as parameters
+//The Order in the specified position is removed and the Order specified as parameter is then inserted to the position that has now been freed
 void OrdersList::move(Order *order, int pos){
     std::vector<Order>:: iterator i;
     Order *temp = order;
@@ -257,20 +294,19 @@ void OrdersList::move(Order *order, int pos){
     this->myList.insert(myList.begin()+pos, temp);
 }
 
+//add() method that pushes the Order specified in the parameter to the vector
 void OrdersList::add(Order *order){
     myList.push_back(order);
 }
 
 int ID::currentID;
 
+//ID class constructor
 ID::ID() {
     currentID = 0;
 }
 
-
+//setID() method that creates a new ID for a new Order
 int ID::setID() {
     return currentID++;
 }
-
-
-

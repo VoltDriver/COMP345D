@@ -5,7 +5,7 @@ using namespace std;
 #ifndef UNTITLED_ORDERS_H
 #define UNTITLED_ORDERS_H
 
-
+//Order class
 class Order {
 
 public:
@@ -22,6 +22,7 @@ public:
 
 };
 
+//Deploy class extends Order class
 class Deploy: public Order{
 public:
     Deploy(int anID);
@@ -32,6 +33,7 @@ public:
     void execute();
 };
 
+//Advance class extends Order class
 class Advance:public Order{
 public:
     Advance(int anID);
@@ -42,6 +44,7 @@ public:
     void execute();
 };
 
+//Bomb class extends Order class
 class Bomb:public Order{
 public:
     Bomb(int anID);
@@ -52,6 +55,7 @@ public:
     void execute();
 };
 
+//Blockade class extends Order class
 class Blockade:public Order{
 public:
     Blockade(int anID);
@@ -62,7 +66,7 @@ public:
     void execute();
 };
 
-
+//Airlift class extends Order class
 class Airlift:public Order{
 public:
     Airlift(int anID);
@@ -73,6 +77,7 @@ public:
     void execute();
 };
 
+//Negotiate class extends Order class
 class Negotiate:public Order{
 public:
     Negotiate(int anID);
@@ -83,7 +88,7 @@ public:
     void execute();
 };
 
-
+//Orderslist class
 class OrdersList{
 public:
     OrdersList();
@@ -101,6 +106,7 @@ public:
 
 };
 
+//ID class
 class ID{
 private:
     static int currentID;
