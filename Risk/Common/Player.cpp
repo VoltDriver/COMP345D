@@ -1,10 +1,7 @@
 #include <iostream>
 #include "Player.h"
+#include "Orders.h"
 
-/* Constructors */
-Order::Order(string order) {
-    this->order = order;
-}
 
 Card::Card(string card) {
     this->card = card;
@@ -64,7 +61,7 @@ ostream &operator<<(std::ostream &strm, const Player &player) {
     }
     strm << "Orders \n";
     for (Order *order: player.orders) {
-        strm << order->order << "\n";
+        strm << order->description << "\n";
     }
     strm << "Cards \n";
     for (Card *card: player.cards) {

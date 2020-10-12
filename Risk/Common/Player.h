@@ -1,20 +1,12 @@
 #pragma once
 #include <vector>
 
+
 using namespace std;
 
 #include "Map.h"
+#include "Orders.h"
 
-
-/**
- * Place holder class for orders.
- */
-class Order {
-public:
-    Order(string order);
-    string order;
-
-};
 
 
 /**

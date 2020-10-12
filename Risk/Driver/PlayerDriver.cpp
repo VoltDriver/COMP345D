@@ -1,7 +1,11 @@
 #include <iostream>
 #include "Common/Player.h"
+#include "Common/Orders.h"
 
 int main() {
+
+    ID id;
+
     // creating some arbitrary vector of territory objects
     auto *ter1 = new Territory(1, "Canada", 1);
     auto *ter2 = new Territory(2, "USA", 2);
@@ -10,7 +14,7 @@ int main() {
     vector<Territory*> territories = {ter1, ter2, ter3};
 
     // creating some arbitrary vector of orders
-    auto *ord1 = new Order("this is an order");
+    auto *ord1 = new Order(id.setID());
     vector<Order*> orders = {ord1};
 
     // creating some arbitrary vector of cards
@@ -21,7 +25,7 @@ int main() {
     auto *player1 = new Player(territories, orders, cards);
 
     // adding order to list of orders
-    auto *ord2 = new Order("this is another order");
+    auto *ord2 = new Deploy(id.setID());
     player1->issue_order(ord2);
 
     // return list of territories

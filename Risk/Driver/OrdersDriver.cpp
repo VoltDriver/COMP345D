@@ -71,10 +71,6 @@ int main(){
     }
     cout << endl;
 
-//    for (int i = 0; i < ol2.myList.size(); i++){
-//        cout << "Copied: " << (*ol2.myList.at(i)).getID() << endl;
-//    }
-//    cout << endl;
 
     //Using the copy constructor to create a copy of order called order2 which takes the same id=0 of order
     Order order2 = *order;

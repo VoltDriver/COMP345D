@@ -8,12 +8,14 @@ using namespace std;
 //Order class constructor
 Order::Order(int anID) {
     id = anID;
+    description = "This is a generic order. It does nothing but encapsulates all other orders.";
 }
 
 //Copy constructor for Order class
 Order::Order(const Order &order2){
     cout << "Copy Constructor!" << endl;
-    id = order2.id;
+    this->id = order2.id;
+    this->description = order2.description;
 }
 
 //Assignment operator for Order class
@@ -24,6 +26,12 @@ Order& Order::operator=(const Order &other) {
         delete &other;
     }
     return *this;
+}
+
+// Stream insertion operator for all Order classes
+ostream &operator<<(ostream &strm, const Order &order) {
+    strm << order.description;
+    return strm;
 }
 
 //getID() method that returns the id of an Order
@@ -39,7 +47,7 @@ bool Order::validate() {
 
 //execute() method for Order that prints out a different string depending on the boolean returned by validate()
 void Order::execute() {
-    cout << "Order: " << endl;
+    cout << *this << endl;
     if (validate()) {
         cout << "Executing..." << endl;
         cout << "Executed!" << endl;
@@ -51,7 +59,7 @@ void Order::execute() {
 
 //Constructor for Deploy class
 Deploy::Deploy(int anID) : Order(anID) {
-
+    description = "This is a deploy order. It allows you to mobilize an army to attack another.";
 }
 
 //Copy constructor for Deploy class
@@ -73,7 +81,7 @@ bool Deploy::validate() {
 
 //execute() method for Deploy that prints out a different string depending on the boolean returned by validate()
 void Deploy::execute() {
-    cout << "Deploy: " << endl;
+    cout << *this << endl;
     if (validate()){
         cout << "Your fake troops are mobilizing" << endl;
         cout << "Your fake troops have arrived to your fake fight in your fake life. Get ready for war General!" << endl;
@@ -85,7 +93,7 @@ void Deploy::execute() {
 
 //Constructor for Advance class
 Advance::Advance(int anID) : Order(anID){
-
+    description = "This is an advance order. It allows you to mobilize an army to a vacant territory.";
 }
 
 //Copy constructor for Advance class
@@ -107,7 +115,7 @@ bool Advance::validate() {
 
 //execute() method for Advance that prints out a different string depending on the boolean returned by validate()
 void Advance::execute() {
-    cout << "Advance: " << endl;
+    cout << *this << endl;
     if (validate()) {
         cout << "Proceeding to virtually move forward." << endl;
         cout << "Have successfully virtually moved forward (probably more steps than you walked today #SocialDistancing)! "<< endl;
@@ -120,7 +128,7 @@ void Advance::execute() {
 
 //Constructor for Bomb class
 Bomb::Bomb(int anID) : Order(anID){
-
+    description =  "This is a bomb order. It allows you to drop a bomb on another player's army.";
 }
 
 //Copy constructor for Bomb class
@@ -142,7 +150,7 @@ bool Bomb::validate() {
 
 //execute() method for Bomb that prints out a different string depending on the boolean returned by validate()
 void Bomb::execute() {
-    cout << "Bomb: " << endl;
+    cout << *this << endl;
     if(validate()){
         cout << "Detonating bomb" << endl;
         cout << "*BOOM*" << endl;
@@ -154,7 +162,7 @@ void Bomb::execute() {
 
 //Constructor for Blockade class
 Blockade::Blockade(int anID) : Order(anID){
-
+    description = "This is a blockade order. It allows you to form a blockade and defend a particular territory.";
 }
 
 //Copy constructor for Blockade class
@@ -176,7 +184,7 @@ bool Blockade::validate() {
 
 //execute() method for Blockade that prints out a different string depending on the boolean returned by validate()
 void Blockade::execute() {
-    cout << "Blockade: " << endl;
+    cout << *this << endl;
     if (validate()) {
         cout << "Guess it wasn't a mirage. No LSD was consumed on this day" << endl;
         cout << "Blocked" << endl;
@@ -188,7 +196,7 @@ void Blockade::execute() {
 
 //Constructor for Airlift class
 Airlift::Airlift(int anID) : Order(anID){
-
+    description = "This is an airlift order. This allows you to fly your army over a larger distance.";
 }
 
 //Copy constructor for Airlift class
@@ -210,7 +218,7 @@ bool Airlift::validate() {
 
 //execute() method for Airlift that prints out a different string depending on the boolean returned by validate()
 void Airlift::execute() {
-    cout << "Airlift: " << endl;
+    cout << *this << endl;
     if (validate()) {
         cout << "Up" << endl;
     }
@@ -222,7 +230,7 @@ void Airlift::execute() {
 
 //Constructor for Negotiate class
 Negotiate::Negotiate(int anID) : Order(anID){
-
+    description = "This is a negotiate order. It allows you to make a deal with an opposing player.";
 }
 
 //copy constructor for Negotiate class
@@ -244,7 +252,7 @@ bool Negotiate::validate() {
 
 //execute() method for Negotiate that prints out a different string depending on the boolean returned by validate()
 void Negotiate::execute() {
-    cout << "Negotiate: " << endl;
+    cout << *this << endl;
     if (validate()){
         cout << "You used the wrong order then buddy" << endl;
     }

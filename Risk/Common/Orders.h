@@ -1,5 +1,6 @@
 #include <list>
 #include <vector>
+#include <string>
 using namespace std;
 
 #ifndef UNTITLED_ORDERS_H
@@ -10,9 +11,11 @@ class Order {
 
 public:
     int id;
+    string description;
     Order(int anID);
     Order(const Order &order2);
     Order& operator=(const Order& other);
+    friend ostream& operator<<(ostream&, const Order&);
 
 
     int getID();
@@ -29,6 +32,7 @@ public:
     Deploy(const Deploy &deploy2);
     Deploy& operator=(const Deploy& other);
 
+
     bool validate();
     void execute();
 };
@@ -39,6 +43,7 @@ public:
     Advance(int anID);
     Advance(const Advance &advance2);
     Advance& operator=(const Advance& other);
+
 
     bool validate();
     void execute();
@@ -51,6 +56,7 @@ public:
     Bomb(const Bomb &bomb2);
     Bomb& operator=(const Bomb& other);
 
+
     bool validate();
     void execute();
 };
@@ -62,6 +68,7 @@ public:
     Blockade(const Blockade &blockade2);
     Blockade& operator=(const Blockade& other);
 
+
     bool validate();
     void execute();
 };
@@ -72,6 +79,7 @@ public:
     Airlift(int anID);
     Airlift(const Airlift &airlift2);
     Airlift& operator=(const Airlift& other);
+
 
     bool validate();
     void execute();
@@ -94,7 +102,6 @@ public:
     OrdersList();
     OrdersList(const OrdersList &orderList2);
     OrdersList& operator=(const OrdersList& other);
-
 
     int remove(Order *order);
     void move(Order *order, int pos);
