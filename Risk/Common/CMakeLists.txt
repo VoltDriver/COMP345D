@@ -1,16 +1,14 @@
 set(SOURCES
-        Map.cpp
         Cards.cpp
-        Continent.cpp
-        Country.cpp
+        Map.cpp
         MapLoader.cpp
+        Player.cpp
         Util.cpp)
 set(HEADERS
-        Map.h
         Cards.h
-        Continent.h
-        Country.h
+        Map.h
         MapLoader.h
+        Player.h
         Util.h)
 
 add_library(Common STATIC ${SOURCES} ${HEADERS})
