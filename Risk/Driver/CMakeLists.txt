@@ -7,5 +7,5 @@ target_link_libraries(MapLoaderDriver Common)
 add_executable(MapDriver MapDriver.cpp)
 target_link_libraries(MapDriver Common)
 
-add_executable(CardsDriver CardsDriver.cpp)
+add_executable(CardsDriver CardsDriver.cpp OrdersDriver.cpp)
 target_link_libraries(CardsDriver Common)
