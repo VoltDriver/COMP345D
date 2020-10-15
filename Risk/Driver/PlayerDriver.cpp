@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Common/Player.h"
 #include "Common/Orders.h"
+#include "Common/Cards.h"
 
 int main() {
 
@@ -17,12 +18,13 @@ int main() {
     auto *ord1 = new Order(id.setID());
     vector<Order*> orders = {ord1};
 
-    // creating some arbitrary vector of cards
-    auto *card1 = new Card("this is a card");
-    vector<Card*> cards = {card1};
+    // creating some arbitrary hand of cards
+    auto *card1 = new Card(Bomb);
+    auto *hand1 = new Hand();
+    hand1->addCard(*card1);
 
     // creating a player object
-    auto *player1 = new Player(territories, orders, cards);
+    auto *player1 = new Player(territories, orders, hand1);
 
     // adding order to list of orders
     auto *ord2 = new Deploy(id.setID());

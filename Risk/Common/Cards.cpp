@@ -1,14 +1,16 @@
-#include "Cards.h"
 #include <string>
 #include <map>
 #include <algorithm>
 #include <stdexcept>
 #include <list>
 #include <random>
+#include "Cards.h"
+#include "Player.h"
 
 // Card
 
 std::string Card::toString() const {
+
     // Mapping the type enum values to textual names.
     std::map<CardType,std::string> cardTypeMap;
     cardTypeMap[Bomb] = "Bomb";
@@ -17,24 +19,29 @@ std::string Card::toString() const {
     cardTypeMap[Airlift] = "Airlift";
     cardTypeMap[Diplomacy] = "Diplomacy";
 
+    // Returning the name of the type associated with this card.
     return cardTypeMap[*this->type];
 }
 
-void Card::play(Hand* hand, Deck* deck) {
-    // TODO: Implement this properly.
+void Card::play(Player* player, Deck* deck) {
     // Saving the type temporarily.
     CardType cardType = *this->type;
+
+    // Creating an order in the player's orders
+    ID id = *new ID();
+    Order* order = new Order(id.setID());
+    order->description = "This is a special order of type " + this->toString() + ".";
+    player->issue_order(order);
 
     // Adding this card back into the deck.
     deck->addCard(cardType);
 
     // Removing the card from the player's hand.
-    // TODO: Should not directly interact with hand. Should go through player first.
-    hand->removeCard(cardType);
+    player->hand->removeCard(cardType);
 }
 
-// By default, creating a card gives it the type Bomb.
 Card::Card() {
+    // By default, creating a card gives it the type Bomb.
     type = new CardType(Bomb);
 }
 
@@ -47,12 +54,16 @@ Card::Card(CardType type) : type(new CardType(type)) {
 }
 
 Card& Card::operator=(const Card &card) {
+    // Cleaning up
     delete this->type;
+
+    // Assigning the new type.
     this->type = new CardType(*card.type);
     return *this;
 }
 
 std::ostream &operator<<(std::ostream &out, const Card& card) {
+    // Outputting the card in string format using its relevant method.
     return out << card.toString();
 }
 
@@ -103,6 +114,7 @@ std::istream &operator>>(std::istream &in, const Card &card) {
 }
 
 Card::~Card() {
+    // Cleaning up.
     delete this->type;
     this->type = nullptr;
 }
@@ -117,7 +129,7 @@ void Deck::draw(Hand* hand) {
     // There's other ways to do it, but this is efficient and does not require seeding with Time.
     std::random_device randomDevice;
     std::mt19937 mt(randomDevice());
-    std::uniform_int_distribution<int> distribution(0,this->cards->size());
+    std::uniform_int_distribution<int> distribution(0,this->cards->size() - 1);
     int randomIndex = distribution(mt);
 
     // Drawing the card at the index generated.
@@ -125,11 +137,11 @@ void Deck::draw(Hand* hand) {
     // Copying the card to the heap, so that we have a deep copy.
     Card* pulled = new Card(*iterator);
 
-    // Removing the card from the deck.
-    cards->erase(iterator);
-
     // Adding the card we pulled to the hand
     hand->addCard(*pulled);
+
+    // Removing the card from the deck.
+    cards->erase(iterator);
 }
 
 // Returns the number of cards left in the deck.
@@ -144,6 +156,7 @@ void Deck::reset() {
     std::list<Card>* cards = new std::list<Card>();
 
     // Pushing a certain amount of each card type into the deck.
+    // Currently, we chose 10 of each type.
     for (int i = 0; i < 10; ++i) {
         cards->push_back(*new Card(Bomb));
         cards->push_back(*new Card(Reinforcement));
@@ -152,6 +165,7 @@ void Deck::reset() {
         cards->push_back(*new Card(Diplomacy));
     }
 
+    // Cleaning up.
     delete this->cards;
 
     // Setting the deck's content to the new list of cards.
@@ -245,8 +259,6 @@ Deck::~Deck() {
 
 // Hand
 
-// Removes a card from hand that matches the card type passed.
-// If no match is found for the card type passed, then nothing happens.
 void Hand::removeCard(CardType& type) {
     // Creating an iterator
     std::list<Card>::iterator iterator;
@@ -265,11 +277,19 @@ void Hand::removeCard(CardType& type) {
 
     // Remove the card found.
     if(cardFound)
+    {
         this->cards->erase(iterator);
+    }
+    else
+    {
+        // If no match is found for the card type passed, then nothing happens.
+        // We still want to warn of the error, so we output to console.
+        cout << "ERROR: Card not found in player's hand. Could not delete.";
+    }
 }
 
-// Initializes a hand of cards, empty at the start.
 Hand::Hand(){
+    // Initializes a hand of cards, empty at the start.
     this->cards = new std::list<Card>();
 }
 
@@ -322,17 +342,17 @@ std::ostream& operator<<(std::ostream& out, const Hand& Hand)
 }
 
 Hand::~Hand() {
+    // Cleaning up.
     delete this->cards;
     this->cards = nullptr;
 }
 
 
 int Hand::remainingCards() {
+    // We use the size property to return the number of elements remaining.
     return this->cards->size();
 }
 
-
-// Outputs all cards in the hand into a string, naming their type.
 std::string *Hand::listAllCards() {
     // Creating a string to accumulate the cards in.
     auto *result = new std::string("");
@@ -349,7 +369,6 @@ std::string *Hand::listAllCards() {
     return result;
 }
 
-// Adds a new card to the hand, with the specified type.
 void Hand::addCard(CardType& type) {
     // Creating a new card.
     Card* newCard = new Card(type);
@@ -357,7 +376,8 @@ void Hand::addCard(CardType& type) {
     this->cards->push_back(*newCard);
 }
 
-// Adds the passed card to the hand.
+
 void Hand::addCard(Card &card) {
+    // Add the passed card to the hand.
     this->cards->push_back(card);
 }

@@ -1,24 +1,27 @@
 #include <iostream>
 #include "Player.h"
+#include "Cards.h"
 #include "Orders.h"
 
-
-Card::Card(string card) {
-    this->card = card;
+// default constructor
+Player::Player() {
+    this->territories = vector<Territory*>();
+    this->orders = vector<Order*>();
+    this->hand = new Hand();
 }
 
 // parameterized constructor
-Player::Player(vector<Territory*> territories, vector<Order*> orders, vector<Card*> cards) {
+Player::Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand) {
     this->territories = territories;
     this->orders = orders;
-    this->cards = cards;
+    this->hand = hand;
 }
 
 // copy constructor
 Player::Player(const Player &p) {
     this->territories = p.territories;
     this->orders = p.orders;
-    this->cards = p.cards;
+    this->hand = p.hand;
 }
 
 
@@ -30,9 +33,7 @@ Player::~Player() {
     for (Order *order: orders) {
         delete order;
     }
-    for (Card *card: cards) {
-        delete card;
-    }
+    delete hand;
 }
 
 
@@ -64,8 +65,8 @@ ostream &operator<<(std::ostream &strm, const Player &player) {
         strm << order->description << "\n";
     }
     strm << "Cards \n";
-    for (Card *card: player.cards) {
-        strm << card->card << "\n";
+    for (const Card& card: *player.hand->cards) {
+        strm << card << "\n";
     }
 
     return strm;
@@ -79,12 +80,10 @@ Player& Player::operator=(const Player& p) {
     for (Order *order: orders) {
         delete order;
     }
-    for (Card *card: cards) {
-        delete card;
-    }
+    delete hand;
     this->territories = p.territories;
     this->orders = p.orders;
-    this->cards = p.cards;
+    this->hand = p.hand;
 
     return *this;
 }
