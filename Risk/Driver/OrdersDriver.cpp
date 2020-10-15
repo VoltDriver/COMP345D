@@ -31,12 +31,7 @@ int main(){
     ol2 = *ol;
 
     //printing out the copied OrdersList
-    for (int i = 0; i < ol2.myList.size(); i++){
-        cout << "Copied: " << (*ol2.myList.at(i)).getID() << endl;
-    }
-    cout << endl;
-
-    cout << endl;
+    cout << "Copied: \n" << ol2;
 
 
     //printing out the stream insertion operators for each of the Orders in ol2
@@ -48,28 +43,21 @@ int main(){
     }
 
     //printing out the Orders ids before using the move() method
-    for (int i = 0; i < ol2.myList.size(); i++){
-        cout << "Before move(): " << (*ol2.myList.at(i)).getID() << endl;
-    }
-    cout << endl;
+    cout << "Before move(): \n" << ol2;
+
 
     //Moving the Order airlift of id 5 to position 3
     ol2.move(airlift,3);
 
     //printing out the OrdersList after the use of the move() method
-    for (int i = 0; i < ol2.myList.size(); i++){
-        cout << "After move(): " << (*ol2.myList.at(i)).getID() << endl;
-    }
-    cout << endl;
+    cout << "After move(): \n" << ol2;
+
 
     //removing the Deploy Order of id 1 from the OrdersList
     ol2.remove(deploy);
 
     //Printing out the OrdersList after the use of remove() method
-    for (int i = 0; i < ol2.myList.size(); i++){
-        cout << "After remove(): " << (*ol2.myList.at(i)).getID() << endl;
-    }
-    cout << endl;
+    cout << "After remove(): \n" << ol2;
 
 
     //Using the copy constructor to create a copy of order called order2 which takes the same id=0 of order

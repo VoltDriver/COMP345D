@@ -8,7 +8,6 @@ using namespace std;
 
 //Order class
 class Order {
-
 public:
     int id;
     string description;
@@ -102,6 +101,8 @@ public:
     OrdersList();
     OrdersList(const OrdersList &orderList2);
     OrdersList& operator=(const OrdersList& other);
+    friend ostream& operator<<(ostream&, const OrdersList&);
+    ~OrdersList();
 
     int remove(Order *order);
     void move(Order *order, int pos);

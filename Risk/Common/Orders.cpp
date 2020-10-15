@@ -281,6 +281,22 @@ OrdersList& OrdersList::operator=(const OrdersList &other) {
     return *this;
 }
 
+//Stream insertion for OrdersList
+ostream &operator<<(ostream &strm, const OrdersList &ordersList) {
+    for (int i = 0; i < ordersList.myList.size(); i++){
+        strm << (*ordersList.myList.at(i)).getID() << endl;
+    }
+    strm << endl;
+    return strm;
+}
+
+// Destructor for OrdersList
+OrdersList::~OrdersList() {
+    for (Order* order: myList) {
+        delete order;
+    }
+}
+
 // remove() method that removes the Order specified in the parameter from the vector and shrinks the vector to fit the remaining Orders in it
 int OrdersList::remove(Order *order){
     for(int i =0; i<myList.size(); i++ ){
