@@ -72,8 +72,7 @@ int main(){
     Deploy *deploy2 = new Deploy(id.setID());
     *deploy2 = *deploy;
 
-    //Showing that deploy has successfully been copied to deploy2, that deploy2 has the same id of deploy and that deploy has indeed been deleted
-    cout << "deploy successfully deleted(outputs empty address): " << deploy->getID() << endl;
+    //Showing that deploy has successfully been copied to deploy2
     cout << "deploy2 ID: " << deploy2->getID() << endl;
 
 }

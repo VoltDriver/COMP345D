@@ -23,7 +23,6 @@ Order& Order::operator=(const Order &other) {
     cout << "Assignment operator!" << endl;
     if (this != &other){
         this->id = other.id;
-        delete &other;
     }
     return *this;
 }
