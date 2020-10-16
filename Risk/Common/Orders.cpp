@@ -275,8 +275,10 @@ OrdersList::OrdersList(const OrdersList &orderList2) {
 OrdersList& OrdersList::operator=(const OrdersList &other) {
     cout << "Assignment Operator!" << endl;
     if (this != &other){
+        for (Order* order: myList) {
+            delete order;
+        }
         this->myList = other.myList;
-        delete &other;
     }
     return *this;
 }
