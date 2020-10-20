@@ -113,4 +113,5 @@ public:
 
     /* Overloaders */
     Map& operator=(const Map& m);
+    friend ostream& operator<<(ostream&, const Map&);
 };
