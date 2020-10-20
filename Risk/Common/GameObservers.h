@@ -1,0 +1,12 @@
+
+
+#ifndef COMP345RISK_GAMEOBSERVERS_H
+#define COMP345RISK_GAMEOBSERVERS_H
+
+
+class GameObservers {
+
+};
+
+
+#endif //COMP345RISK_GAMEOBSERVERS_H
