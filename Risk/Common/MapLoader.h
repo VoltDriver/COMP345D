@@ -9,7 +9,7 @@ public:
     MapLoader();
 
     /* Methods */
-    static Map* parse(string);
+    static Map* parse(string file_name, bool verbose = true);
 };
 
 

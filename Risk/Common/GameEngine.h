@@ -1,27 +1,40 @@
+#pragma once
 
+#include <vector>
 
-#ifndef COMP345RISK_GAMEENGINE_H
-#define COMP345RISK_GAMEENGINE_H
+class Player;
 
+class Deck;
+
+class Map;
 
 class GameEngine {
-    public:
+public:
     // TODO: STUB METHOD. To be implemented.
-        void issueOrdersPhase();
-    // TODO: STUB METHOD. To be implemented.
-        void mainGameLoop();
-    // TODO: STUB METHOD. To be implemented.
-        void startupPhase();
-    // TODO: STUB METHOD. To be implemented.
-        void gameStart();
-    // TODO: STUB METHOD. To be implemented.
-        void reinforcementPhase();
-    // TODO: STUB METHOD. To be implemented.
-        void issuingOrdersPhase();
-    // TODO: STUB METHOD. To be implemented.
-        void executeOrdersPhase();
+    void issueOrdersPhase();
 
+    // TODO: STUB METHOD. To be implemented.
+    void mainGameLoop();
+
+    // TODO: STUB METHOD. To be implemented.
+    void startupPhase();
+
+    // TODO: STUB METHOD. To be implemented.
+    void gameStart();
+
+    // TODO: STUB METHOD. To be implemented.
+    void reinforcementPhase();
+
+    // TODO: STUB METHOD. To be implemented.
+    void issuingOrdersPhase();
+
+    // TODO: STUB METHOD. To be implemented.
+    void executeOrdersPhase();
+
+private:
+    bool phase_observer_flag;
+    bool stat_observer_flag;
+    std::vector<Player *> players;
+    Map *map;
+    Deck *deck;
 };
-
-
-#endif //COMP345RISK_GAMEENGINE_H
