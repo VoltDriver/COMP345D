@@ -31,7 +31,7 @@ void Card::play(Player* player, Deck* deck) {
     ID id = *new ID();
     Order* order = new Order(id.setID());
     order->description = "This is a special order of type " + this->toString() + ".";
-    player->issue_order(order);
+    player->addOrder(order);
 
     // Adding this card back into the deck.
     deck->addCard(cardType);

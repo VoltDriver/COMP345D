@@ -40,6 +40,11 @@ string Continent::get_name() const {
     return name;
 }
 
+int Continent::get_army_bonus() const
+{
+    return army_bonus;
+}
+
 vector<Territory *> Continent::get_territories() const {
     return territories;
 }

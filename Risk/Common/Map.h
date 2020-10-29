@@ -29,6 +29,7 @@ public:
 
     /* Accessors & Mutators */
     string get_name() const;
+    int get_army_bonus() const;
     vector<Territory*> get_territories() const;
 
     /* Methods */
