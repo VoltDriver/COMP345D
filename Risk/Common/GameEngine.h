@@ -23,20 +23,15 @@ class GameEngine {
         list<Player> players;
         Map map;
     public:
-    // TODO: STUB METHOD. To be implemented.
         void mainGameLoop();
     // TODO: STUB METHOD. To be implemented.
         void startupPhase();
     // TODO: STUB METHOD. To be implemented.
         void gameStart();
-    // TODO: STUB METHOD. To be implemented.
         void reinforcementPhase();
-    // TODO: STUB METHOD. To be implemented.
         void issueOrdersPhase();
     // TODO: STUB METHOD. To be implemented.
         void executeOrdersPhase();
-
-        Order queryOrderFromUser();
 };
 
 

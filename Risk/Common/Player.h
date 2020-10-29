@@ -18,6 +18,7 @@ class Player {
 private:
     vector<Territory*> territories;
     vector<Order*> orders;
+    int reinforcementPool;
     friend ostream& operator<<(ostream&, const Player&);
 
 public:
@@ -36,7 +37,7 @@ public:
     vector<Territory*> to_defend();
     vector<Territory*> to_attack();
     void addOrder(Order* order);
-    void issueOrder();
+    bool issueOrder();
 
 
     /* Overloaders */

@@ -27,6 +27,7 @@ void GameEngine::mainGameLoop() {
         reinforcementPhase();
 
         // Issuing Orders Phase
+        issueOrdersPhase();
 
         // Orders Execution Phase
 
@@ -40,7 +41,7 @@ void GameEngine::mainGameLoop() {
 }
 
 void GameEngine::reinforcementPhase() {
-    for(const Player& player : players)
+    for(Player& player : players)
     {
         int reinforcement = 0;
 
@@ -84,14 +85,44 @@ void GameEngine::reinforcementPhase() {
         }
 
         // Place the reinforcements in the players' pools.
-        //TODO: Implement this.
+        player.reinforcementPool += reinforcement;
     }
 }
 
 void GameEngine::issueOrdersPhase() {
 
+    std::map<string, bool> playerTurns = std::map<string, bool>();
+
+    // Initializing the map
+    for(Player& player : players)
+    {
+        playerTurns[player.name] = true;
+    }
+
+    // Going round robin until all turns are done.
+    int amountOfPlayersDone = 0;
+
+    while(amountOfPlayersDone != players.size())
+    {
+        for(Player& player : players)
+        {
+            // If a player did not end his turn yet...
+            if(playerTurns[player.name])
+            {
+                // ... it is prompted to play.
+                playerTurns[player.name] = player.issueOrder();
+
+                // If it decided to end it's turn just now...
+                if(!playerTurns[player.name])
+                {
+                    // ... we add it to the number of players that are done.
+                    amountOfPlayersDone++;
+                }
+            }
+        }
+    }
+
+    // Everyone has played.
 }
 
-Order GameEngine::queryOrderFromUser() {
 
-}
