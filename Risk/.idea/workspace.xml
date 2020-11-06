@@ -20,10 +20,10 @@
   </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="COMP345RISK" targetName="MapDriver" />
+      <config projectName="COMP345RISK" targetName="Common" />
       <config projectName="COMP345RISK" targetName="MapLoaderDriver" />
       <config projectName="COMP345RISK" targetName="CommonLib" />
-      <config projectName="COMP345RISK" targetName="Common" />
+      <config projectName="COMP345RISK" targetName="MapDriver" />
       <config projectName="COMP345RISK" targetName="OrdersDriver" />
       <config projectName="COMP345RISK" targetName="CardsDriver" />
       <config projectName="COMP345RISK" targetName="PlayerDriver" />
@@ -68,9 +68,6 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="OCResolveContextSettings">
-    <option name="configuration" value="0-Debug-Common" />
-  </component>
   <component name="ProjectId" id="1hkRZXI2uIxd5tCafR94A1bRSdj" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -93,6 +90,11 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.CardsDriver">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CardsDriver" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="COMP345RISK" TARGET_NAME="CardsDriver" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="COMP345RISK" RUN_TARGET_NAME="CardsDriver">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -128,9 +130,9 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <list>

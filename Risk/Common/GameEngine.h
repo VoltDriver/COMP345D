@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Orders.h"
 #include "Map.h"
+#include <cstdlib>
 
 class ContinentOwnership_DataObject {
     public:

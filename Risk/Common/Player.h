@@ -24,6 +24,7 @@ private:
 public:
     string name;
     Hand* hand;
+    int orderOfPlay;
 
     /* Constructors */
     Player();

@@ -125,4 +125,76 @@ void GameEngine::issueOrdersPhase() {
     // Everyone has played.
 }
 
+void GameEngine::startupPhase(){
+    list<Player>::iterator it;
+    vector<int> ordersOfPlay;
+    switch(players.size()){
+        case 2:
+            cout << "40 initial armies for every player!" << endl;
+            ordersOfPlay = {1,2};
+            for(it = players.begin(); it != players.end(); ++it){
+                it->reinforcementPool = 40;
+                int random = rand() % (ordersOfPlay.size()-1);
+                it->orderOfPlay = ordersOfPlay[random];
+                ordersOfPlay.erase(ordersOfPlay.begin() + random);
+                ordersOfPlay.shrink_to_fit();
+            }
+
+            break;
+        case 3:
+            cout << "35 initial armies for every player!" << endl;
+            ordersOfPlay = {1,2,3};
+            for(it = players.begin(); it != players.end(); ++it){
+                it->reinforcementPool = 35;
+                int random = rand() % (ordersOfPlay.size()-1);
+                it->orderOfPlay = ordersOfPlay[random];
+                ordersOfPlay.erase(ordersOfPlay.begin() + random);
+                ordersOfPlay.shrink_to_fit();
+            }
+            break;
+        case 4:
+            cout << "30 initial armies for every player!" << endl;
+            ordersOfPlay = {1,2,3,4};
+            for(it = players.begin(); it != players.end(); ++it){
+                it->reinforcementPool = 30;
+                int random = rand() % (ordersOfPlay.size()-1);
+                it->orderOfPlay = ordersOfPlay[random];
+                ordersOfPlay.erase(ordersOfPlay.begin() + random);
+                ordersOfPlay.shrink_to_fit();
+            }
+            break;
+        case 5:
+            cout << "25 initial armies for every player!" << endl;
+            ordersOfPlay = {1,2,3,4,5};
+            for(it = players.begin(); it != players.end(); ++it){
+                it->reinforcementPool = 35;
+                int random = rand() % (ordersOfPlay.size()-1);
+                it->orderOfPlay = ordersOfPlay[random];
+                ordersOfPlay.erase(ordersOfPlay.begin() + random);
+                ordersOfPlay.shrink_to_fit();
+            }
+            break;
+    }
+
+    /*
+    for(auto territory: map.territories){
+        int random = rand() % (players.size()-1);
+        advance(it, random);
+        it->territories.push_back(territory);
+    }
+    */
+    vector<Territory*> copyOfMapTerritories = map.territories;
+    while(copyOfMapTerritories.size() != 0){
+        for(it = players.begin(); it != players.end(); ++it){
+            int random = rand() % (copyOfMapTerritories.size()-1);
+            it->territories.push_back(copyOfMapTerritories[random]);
+            copyOfMapTerritories.erase(copyOfMapTerritories.begin() + random);
+            copyOfMapTerritories.shrink_to_fit();
+        }
+    }
+
+
+}
+
+
 
