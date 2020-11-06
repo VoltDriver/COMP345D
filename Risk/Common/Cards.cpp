@@ -34,14 +34,64 @@ void Card::play(Player* player, Deck* deck) {
     {
         case Bomb:
         {
+            // Bomb
+
+            // List the territories the player can choose
+            cout << "In which territory would you like to launch your bomb?"<< endl;
+            std::map<int, Territory*> territoryToNumberMap = map<int, Territory*>();
+            int counter = 0;
+            for(Territory* t : player->to_attack())
+            {
+                territoryToNumberMap[counter] = t;
+
+                cout << counter << ": " << t->get_name() << " (" << t->get_armies() << " troops)" << endl;
+                counter++;
+            }
+
+            // Read input and validate it.
+            int territoryChoice = -1;
+            while(territoryChoice<0 || territoryChoice > player->to_attack().size())
+                cin >> territoryChoice;
+
+            // TODO: Create the order properly... And implement a constructor that makes them automatically.
+            auto* bombOrder = new class::Bomb(id.setID());
+            player->addOrder(bombOrder);
+
+            cout << "Bomb order issued." << endl;
             break;
         }
         case Reinforcement:
         {
+            // TODO: Find out what it means, and implement.
             break;
         }
         case Blockade:
         {
+            // Blockade
+
+            // List the territories the player can choose
+            cout << "In which territory would you like to set up your blockade?"<< endl;
+            std::map<int, Territory*> territoryToNumberMap = map<int, Territory*>();
+            int counter = 0;
+            for(Territory* t : player->to_defend())
+            {
+                territoryToNumberMap[counter] = t;
+
+                cout << counter << ": " << t->get_name() << " (" << t->get_armies() << " troops)" << endl;
+                counter++;
+            }
+
+            // Read input and validate it.
+            int territoryChoice = -1;
+            while(territoryChoice<0 || territoryChoice > player->to_attack().size())
+                cin >> territoryChoice;
+
+            // TODO: Create the order properly... And implement a constructor that makes them automatically.
+            auto* blockadeOrder = new class::Blockade(id.setID());
+            player->addOrder(blockadeOrder);
+
+            cout << "Blockade order issued." << endl;
+            break;
             break;
         }
         case Airlift:
@@ -98,7 +148,7 @@ void Card::play(Player* player, Deck* deck) {
                 cin >> destinationTerritoryChoice;
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
-            auto* airliftOrder = new class Airlift(0);
+            auto* airliftOrder = new class::Airlift(id.setID());
             player->addOrder(airliftOrder);
 
             cout << "Airlift order issued." << endl;
@@ -106,6 +156,7 @@ void Card::play(Player* player, Deck* deck) {
         }
         case Diplomacy:
         {
+            // TODO: Implement properly.
             break;
         }
 

@@ -31,6 +31,7 @@ void GameEngine::mainGameLoop() {
         issueOrdersPhase();
 
         // Orders Execution Phase
+        executeOrdersPhase();
 
         // Checking if the game is over
         for(Player player : players)
@@ -142,6 +143,47 @@ void GameEngine::issueOrdersPhase() {
     }
 
     // Everyone has played.
+}
+
+void GameEngine::executeOrdersPhase() {
+    // Contains whether a player is done with their orders or not. True if not done.
+    std::map<string, bool> playerOrdersStatus = std::map<string, bool>();
+
+    // Initializing the map
+    for(Player& player : players)
+    {
+        playerOrdersStatus[player.name] = true;
+    }
+
+    // Going round robin until all orders are done.
+    int amountOfPlayersDone = 0;
+
+    while(amountOfPlayersDone != players.size())
+    {
+        for(Player& player : players)
+        {
+            // If a player still has orders...
+            if(playerOrdersStatus[player.name])
+            {
+                // ... it executes an order
+                /* TODO: replace with ordersList. Also, check that once an order is executed, it is removed from the
+                list of a player's orders. */
+                player.orders[0]->execute();
+
+                if(player.orders.empty())
+                    playerOrdersStatus[player.name] = false;
+
+                // If it has no more orders...
+                if(!playerOrdersStatus[player.name])
+                {
+                    // ... we add it to the number of players that are done.
+                    amountOfPlayersDone++;
+                }
+            }
+        }
+    }
+
+    // Every order has been executed.
 }
 
 
