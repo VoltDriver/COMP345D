@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Orders.h"
 #include "Map.h"
+#include "Cards.h"
 
 class ContinentOwnership_DataObject {
     public:
@@ -21,7 +22,9 @@ class ContinentOwnership_DataObject {
 class GameEngine {
     private:
         list<Player> players;
-        Map map;
+        Map* map;
+        Deck* deck;
+
     public:
         void mainGameLoop();
     // TODO: STUB METHOD. To be implemented.

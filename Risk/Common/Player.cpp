@@ -62,7 +62,7 @@ void Player::addOrder(Order* order) {
 }
 
 /// Prompts the player to issue an order. Returns True if an order was issued, false otherwise.
-bool Player::issueOrder() {
+bool Player::issueOrder(Deck* deck) {
     int actionNumber = -1;
 
     cout << this->name << ", which order would you like to issue? (input the number)" << endl;
@@ -82,7 +82,6 @@ bool Player::issueOrder() {
     {
         cout << "0: Deploy " << endl;
         cout << "1: Advance " << endl;
-        cout << "Here are the other actions you can take:" << endl;
         cout << "2: Play a card" << endl;
         cout << "3: End your turn." << endl;
 
@@ -124,6 +123,7 @@ bool Player::issueOrder() {
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
             Deploy* deployOrder = new Deploy(0);
+            addOrder(deployOrder);
 
             cout << "Deploy order issued." << endl;
             break;
@@ -164,7 +164,7 @@ bool Player::issueOrder() {
             // TODO: Differentiate between friendly territories and enemy territories, and use toAttack() method.
             for(Territory* t : sourceTerritoryToNumberMap[sourceTerritoryChoice]->get_bordering_territory())
             {
-                destinationTerritoryToNumberMap[counter] = t;
+                destinationTerritoryToNumberMap[counter2] = t;
 
                 cout << counter2 << ": " << t->get_name() << " (" << t->get_armies() << " troops)" << endl;
                 counter2++;
@@ -177,6 +177,7 @@ bool Player::issueOrder() {
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
             Advance* advanceOrder = new Advance(0);
+            addOrder(advanceOrder);
 
             cout << "Advance order issued." << endl;
             break;
@@ -205,82 +206,9 @@ bool Player::issueOrder() {
                 cin >> cardChoice;
 
             // Playing the card.
-
             Card* card = cardsToNumbers[cardChoice];
 
-            switch(*card->type)
-            {
-                case Bomb:
-                {
-                    break;
-                }
-                case Reinforcement:
-                {
-                    break;
-                }
-                case Blockade:
-                {
-                    break;
-                }
-                case Airlift:
-                {
-                    // TODO: Should be implemented in a card's play method.
-                    // List the territories the player can choose as starting point
-                    cout << "From which territory would you like to select troops from?"<< endl;
-                    std::map<int, Territory*> sourceTerritoryToNumberMap = map<int, Territory*>();
-                    int counter = 0;
-                    for(Territory* t : to_defend())
-                    {
-                        sourceTerritoryToNumberMap[counter] = t;
-
-                        cout << counter << ": " << t->get_name() << " (" << t->get_armies() << " troops)" << endl;
-                    }
-
-                    // Read input and validate it.
-                    int sourceTerritoryChoice = -1;
-                    while(sourceTerritoryChoice<0 || sourceTerritoryChoice > to_defend().size())
-                        cin >> sourceTerritoryChoice;
-
-                    cout << "How many troops would you like to move? (" << sourceTerritoryToNumberMap[sourceTerritoryChoice]->get_armies() << " remaining in your territory.)" << endl;
-
-                    // Read input and validate it.
-                    int troopNumber = -1;
-                    while(troopNumber<0 || troopNumber > this->reinforcementPool)
-                        cin >> troopNumber;
-
-                    // List the territories the player can choose to advance to
-                    cout << "To which territory would you like to advance your troops to?"<< endl;
-                    std::map<int, Territory*> destinationTerritoryToNumberMap = map<int, Territory*>();
-                    int counter2 = 0;
-
-                    for(Territory* t : to_attack())
-                    {
-                        destinationTerritoryToNumberMap[counter] = t;
-
-                        cout << counter2 << ": " << t->get_name() << " (" << t->get_armies() << " troops)" << endl;
-                    }
-
-                    // Read input and validate it.
-                    int destinationTerritoryChoice = -1;
-                    while(destinationTerritoryChoice<0 || destinationTerritoryChoice > to_defend().size())
-                        cin >> destinationTerritoryChoice;
-
-                    // TODO: Create the order properly... And implement a constructor that makes them automatically.
-                    auto* airliftOrder = new class Airlift(0);
-
-                    cout << "Airlift order issued." << endl;
-                    break;
-                }
-                case Diplomacy:
-                {
-                    break;
-                }
-
-                default:
-                    throw exception("Invalid card type to play.");
-                    break;
-            }
-
+            card->play(this, deck);
             break;
         }
         case 3:

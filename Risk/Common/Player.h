@@ -37,7 +37,7 @@ public:
     vector<Territory*> to_defend();
     vector<Territory*> to_attack();
     void addOrder(Order* order);
-    bool issueOrder();
+    bool issueOrder(Deck* deck);
 
 
     /* Overloaders */
@@ -45,6 +45,7 @@ public:
 
     /* Friend classes */
     friend class GameEngine;
+    friend class Card;
 };
 
 #endif //COMP345RISK_PLAYER_H

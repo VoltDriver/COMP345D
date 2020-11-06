@@ -20,6 +20,7 @@ ContinentOwnership_DataObject::ContinentOwnership_DataObject(Continent* c, int a
 
 void GameEngine::mainGameLoop() {
     bool gameOver = false;
+    string winningPlayer = "";
 
     while(!gameOver)
     {
@@ -34,10 +35,27 @@ void GameEngine::mainGameLoop() {
         // Checking if the game is over
         for(Player player : players)
         {
-            if(player.territories.size() == map.get_territories().size())
+            if(player.territories.size() == map->get_territories().size())
+            {
                 gameOver = true;
+                winningPlayer = player.name;
+            }
+        }
+
+        // Checking if a player has lost
+        auto it = players.begin();
+        while(it != players.end())
+        {
+            auto current = it++;
+            if(current->territories.empty())
+            {
+                cout << current->name << " has lost!";
+                players.erase(current);
+            }
         }
     }
+
+    cout << "The game is over! " << winningPlayer << " has won.";
 }
 
 void GameEngine::reinforcementPhase() {
@@ -91,6 +109,7 @@ void GameEngine::reinforcementPhase() {
 
 void GameEngine::issueOrdersPhase() {
 
+    // Contains whether a player is done with their turn or not. True if not done.
     std::map<string, bool> playerTurns = std::map<string, bool>();
 
     // Initializing the map
@@ -110,7 +129,7 @@ void GameEngine::issueOrdersPhase() {
             if(playerTurns[player.name])
             {
                 // ... it is prompted to play.
-                playerTurns[player.name] = player.issueOrder();
+                playerTurns[player.name] = player.issueOrder(this->deck);
 
                 // If it decided to end it's turn just now...
                 if(!playerTurns[player.name])
