@@ -4,9 +4,11 @@
 #include <vector>
 #include "Map.h"
 #include "Orders.h"
+#include "GameEngine.h"
 
 class Card;
 class Hand;
+class Deck;
 
 using namespace std;
 
@@ -17,14 +19,17 @@ class Player {
 private:
     vector<Territory*> territories;
     vector<Order*> orders;
+    int reinforcementPool;
     friend ostream& operator<<(ostream&, const Player&);
 
 public:
+    string name;
     Hand* hand;
 
     /* Constructors */
     Player();
     explicit Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand);
+    explicit Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand, string name);
     Player(const Player &p);
     /* Destructor */
     ~Player();
@@ -32,10 +37,16 @@ public:
     /* Methods */
     vector<Territory*> to_defend();
     vector<Territory*> to_attack();
-    void issue_order(Order* order);
+    void addOrder(Order* order);
+    bool issueOrder(Deck* deck);
+
 
     /* Overloaders */
     Player& operator=(const Player &p);
+
+    /* Friend classes */
+    friend class GameEngine;
+    friend class Card;
 };
 
 #endif //COMP345RISK_PLAYER_H

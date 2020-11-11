@@ -29,6 +29,7 @@ public:
 
     /* Accessors & Mutators */
     string get_name() const;
+    int get_army_bonus() const;
     vector<Territory*> get_territories() const;
 
     /* Methods */
@@ -68,6 +69,8 @@ public:
     int get_continent_id() const;
     int get_id() const;
     string get_name() const;
+    int get_armies() const;
+    void set_armies(int);
     vector<Territory*> get_bordering_territory();
     Continent* get_continent() const;
     void set_continent(Continent* continent);

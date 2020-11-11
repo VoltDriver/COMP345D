@@ -4,6 +4,7 @@
 #include "Orders.h"
 #include <list>
 #include <iostream>
+#include <cmath>
 
 class Player;
 

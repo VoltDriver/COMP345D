@@ -28,7 +28,7 @@ int main() {
 
     // adding order to list of orders
     auto *ord2 = new Deploy(id.setID());
-    player1->issue_order(ord2);
+    player1->addOrder(ord2);
 
     // return list of territories
     vector<Territory*> terrToDef = player1->to_defend();
