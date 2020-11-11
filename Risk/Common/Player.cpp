@@ -19,6 +19,9 @@ Player::Player() {
 // parameterized constructors
 Player::Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand) {
     this->territories = territories;
+    for (int i = 0; i < territories.size(); i++){
+        territories.at(i)->setPlayer(this);
+    }
     this->orders = orders;
     this->hand = hand;
     this->name = "";

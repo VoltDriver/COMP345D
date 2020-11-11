@@ -57,8 +57,11 @@ void Order::execute() {
 }
 
 //Constructor for Deploy class
-Deploy::Deploy(int anID) : Order(anID) {
+Deploy::Deploy(int anID, int armies, Territory* target, Player* player) : Order(anID) {
     description = "This is a deploy order. It allows you to mobilize an army to attack another.";
+    this->armies = armies;
+    this->target = target;
+    this->player = player;
 }
 
 //Copy constructor for Deploy class
@@ -74,19 +77,20 @@ Deploy& Deploy::operator=(const Deploy &other) {
 
 //validate() method for Deploy that prints out a string and returns true
 bool Deploy::validate() {
-    cout << "Is social distancing still a thing?" << endl;
-    return true;
+    if (target->getPlayerName().compare(player->name) == 0 && armies > 0)
+            return true;
+    else
+        return false;
 }
 
 //execute() method for Deploy that prints out a different string depending on the boolean returned by validate()
 void Deploy::execute() {
     cout << *this << endl;
     if (validate()){
-        cout << "Your fake troops are mobilizing" << endl;
-        cout << "Your fake troops have arrived to your fake fight in your fake life. Get ready for war General!" << endl;
+        target->set_armies(target->get_armies()+armies);
     }
     else{
-        cout << "The rona still be out there. Wear protection!!!!";
+        cout << "This deploy order is not valid";
     }
 }
 
@@ -126,8 +130,10 @@ void Advance::execute() {
 }
 
 //Constructor for Bomb class
-Bomb::Bomb(int anID) : Order(anID){
+Bomb::Bomb(int anID, Territory* target, Player* player) : Order(anID){
     description =  "This is a bomb order. It allows you to drop a bomb on another player's army.";
+    this->target = target;
+    this->player = player;
 }
 
 //Copy constructor for Bomb class
@@ -136,32 +142,42 @@ Bomb::Bomb(const Bomb &bomb2) : Order(bomb2) {
 }
 
 //Assignment operator for Bomb class
-Bomb& Bomb::operator=(const Bomb &other) {
+class Bomb& Bomb::operator=(const Bomb &other) {
     this -> Order::operator=(other);
     return *this;
 }
 
 //validate() method for Bomb that prints out a string and returns true
 bool Bomb::validate() {
-    cout << "Can this bomb really virtually blow up?" << endl;
-    return true;
+    if (target->getPlayer() != nullptr) {
+        if (target->getPlayerName().compare(player->name) != 0)
+            return true;
+        else
+            return false;
+    }
+    else
+        return false;
 }
 
 //execute() method for Bomb that prints out a different string depending on the boolean returned by validate()
 void Bomb::execute() {
     cout << *this << endl;
     if(validate()){
-        cout << "Detonating bomb" << endl;
-        cout << "*BOOM*" << endl;
+        if (target->get_armies() > 1)
+            target->set_armies((target->get_armies()/2));
+        else
+            target->set_armies(0);
     }
     else {
-        cout << "Bomba failed!" << endl;
+        cout << "This bomb order is invalid!" << endl;
     }
 }
 
 //Constructor for Blockade class
-Blockade::Blockade(int anID) : Order(anID){
+Blockade::Blockade(int anID, Territory* target, Player* player) : Order(anID){
     description = "This is a blockade order. It allows you to form a blockade and defend a particular territory.";
+    this->target = target;
+    this->player = player;
 }
 
 //Copy constructor for Blockade class
@@ -170,60 +186,75 @@ Blockade::Blockade(const Blockade &blockade2) : Order(blockade2) {
 }
 
 //Assignment operator for Blockade class
-Blockade & Blockade::operator=(const Blockade &other) {
+class Blockade & Blockade::operator=(const Blockade &other) {
     this -> Order::operator=(other);
     return *this;
 }
 
 //validate() method for Blockade that prints out a string and returns true
 bool Blockade::validate() {
-    cout << "Do you really see a way to block this river or is that a mirage? P.S. Drink some water #HydroHomies" << endl;
-    return true;
+    if (target->getPlayerName().compare(player->name) == 0)
+        return true;
+    else
+        return false;
 }
 
 //execute() method for Blockade that prints out a different string depending on the boolean returned by validate()
 void Blockade::execute() {
     cout << *this << endl;
     if (validate()) {
-        cout << "Guess it wasn't a mirage. No LSD was consumed on this day" << endl;
-        cout << "Blocked" << endl;
+        target->set_armies(2*target->get_armies());
+        target->setPlayer(nullptr);
+// Remember to remove territory from player vector
     }
     else{
-        cout << "Too much LSD buddy. Stay calm, be safe!" << endl;
+        cout << "Not a valid order" << endl;
     }
 }
 
 //Constructor for Airlift class
-Airlift::Airlift(int anID) : Order(anID){
+Airlift::Airlift(int anID, int armies, Territory* source, Territory* target, Player* player) : Order(anID){
     description = "This is an airlift order. This allows you to fly your army over a larger distance.";
+    this->armies = armies;
+    this->source = source;
+    this->target = target;
+    this->player = player;
 }
 
 //Copy constructor for Airlift class
 Airlift::Airlift(const Airlift &airlift2) : Order(airlift2) {
-
+    this->armies = airlift2.armies;
+    this->source = airlift2.source;
+    this->target = airlift2.target;
+    this->player = airlift2.player;
 }
 
 //Assignment Operator for Airlift class
-Airlift & Airlift::operator=(const Airlift &other) {
+class Airlift & Airlift::operator=(const Airlift &other) {
     this -> Order::operator=(other);
     return *this;
 }
 
 //validate() method for Airlift that prints out a string and returns true
 bool Airlift::validate() {
-    cout << "I wonder, if I attach balloons to my chair, will I fly?" << endl;
-    return true;
+    if (source->getPlayerName().compare(player->name) == 0 && source->get_armies() >= armies && armies > 0)
+        return true;
+    else
+        return false;
 }
 
 //execute() method for Airlift that prints out a different string depending on the boolean returned by validate()
 void Airlift::execute() {
     cout << *this << endl;
     if (validate()) {
-        cout << "Up" << endl;
+        if (target->getPlayerName().compare(player->name) == 0)
+            target->set_armies(target->get_armies()+armies);
+        else{
+            cout << "Need to code attack" << endl;
+        }
     }
     else {
-        cout << "Look up..." << endl;
-        cout << "Are you kidding me? You really thought that would work?" << endl;
+        cout << "This airlift order is not valid" << endl;
     }
 }
 

@@ -7,6 +7,7 @@
 
 #include "Map.h"
 #include "Util.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -135,6 +136,22 @@ int Territory::get_armies() const {
 
 void Territory::set_armies(int amount) {
      armies = amount;
+}
+
+void Territory::setPlayer(Player *player) {
+    this->player = player;
+}
+
+Player* Territory::getPlayer() {
+    return player;
+}
+
+string Territory::getPlayerName() {
+    if (this->player == nullptr)
+        return nullptr;
+    else {
+        return this->player->name;
+    }
 }
 
 void Territory::set_continent(Continent *continent) {

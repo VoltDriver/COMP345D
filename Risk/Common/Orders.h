@@ -1,7 +1,13 @@
+#pragma once
 #include <list>
 #include <vector>
 #include <string>
+#include "Player.h"
+#include "Map.h"
+
 using namespace std;
+class Player;
+class Territory;
 
 #ifndef UNTITLED_ORDERS_H
 #define UNTITLED_ORDERS_H
@@ -27,9 +33,12 @@ public:
 //Deploy class extends Order class
 class Deploy: public Order{
 public:
-    Deploy(int anID);
+    Deploy(int anID, int armies, Territory* target, Player* player);
     Deploy(const Deploy &deploy2);
     Deploy& operator=(const Deploy& other);
+    int armies;
+    Territory* target;
+    Player* player;
 
 
     bool validate();
@@ -51,9 +60,11 @@ public:
 //Bomb class extends Order class
 class Bomb:public Order{
 public:
-    Bomb(int anID);
+    Bomb(int anID, Territory* target, Player* player);
     Bomb(const Bomb &bomb2);
     Bomb& operator=(const Bomb& other);
+    Territory* target;
+    Player* player;
 
 
     bool validate();
@@ -63,9 +74,11 @@ public:
 //Blockade class extends Order class
 class Blockade:public Order{
 public:
-    Blockade(int anID);
+    Blockade(int anID, Territory* target, Player* player);
     Blockade(const Blockade &blockade2);
     Blockade& operator=(const Blockade& other);
+    Territory* target;
+    Player* player;
 
 
     bool validate();
@@ -75,10 +88,13 @@ public:
 //Airlift class extends Order class
 class Airlift:public Order{
 public:
-    Airlift(int anID);
+    Airlift(int anID, int armies, Territory* source, Territory* target, Player* player);
     Airlift(const Airlift &airlift2);
     Airlift& operator=(const Airlift& other);
-
+    int armies;
+    Territory* source;
+    Territory* target;
+    Player* player;
 
     bool validate();
     void execute();

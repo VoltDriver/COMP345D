@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
+#include "Player.h"
 
 using namespace std;
 
@@ -71,6 +72,9 @@ public:
     string get_name() const;
     int get_armies() const;
     void set_armies(int);
+    void setPlayer(Player* player);
+    Player* getPlayer();
+    string getPlayerName();
     vector<Territory*> get_bordering_territory();
     Continent* get_continent() const;
     void set_continent(Continent* continent);
