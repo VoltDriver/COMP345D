@@ -185,5 +185,3 @@ void GameEngine::executeOrdersPhase() {
 
     // Every order has been executed.
 }
-
-
