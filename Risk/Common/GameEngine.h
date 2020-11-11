@@ -17,39 +17,45 @@ class Deck;
 class Map;
 
 class ContinentOwnership_DataObject {
-public:
-    Continent *continent;
-    int armyBonus;
-    int ownedTerritories;
+    private:
+        friend ostream& operator<<(ostream&, const ContinentOwnership_DataObject&);
+    public:
+        Continent *continent;
+        int armyBonus;
+        int ownedTerritories;
 
-    ContinentOwnership_DataObject();
+        ContinentOwnership_DataObject();
+        ContinentOwnership_DataObject(Continent *, int, int);
+        ContinentOwnership_DataObject(const ContinentOwnership_DataObject &c);
 
-    ContinentOwnership_DataObject(Continent *, int, int);
+        ContinentOwnership_DataObject& operator=(const ContinentOwnership_DataObject &c);
 };
 
 class GameEngine {
-private:
-    list <Player> players;
-    Map *map;
-    Deck *deck;
-    bool phase_observer_flag;
-    bool stat_observer_flag;
+    private:
+        list <Player> players;
+        Map *map;
+        Deck *deck;
+        bool phase_observer_flag;
+        bool stat_observer_flag;
+        friend ostream& operator<<(ostream&, const GameEngine&);
 
-public:
-    void mainGameLoop();
+    public:
+        void mainGameLoop();
 
-    // TODO: STUB METHOD. To be implemented.
-    void issueOrdersPhase();
+        void issueOrdersPhase();
 
-    // TODO: STUB METHOD. To be implemented.
-    void startupPhase();
+        // TODO: STUB METHOD. To be implemented.
+        void startupPhase();
 
-    // TODO: STUB METHOD. To be implemented.
-    void gameStart();
+        void gameStart();
 
-    // TODO: STUB METHOD. To be implemented.
-    void reinforcementPhase();
+        void reinforcementPhase();
 
-    // TODO: STUB METHOD. To be implemented.
-    void executeOrdersPhase();
+        void executeOrdersPhase();
+
+        GameEngine& operator=(const GameEngine &g);
+
+        GameEngine();
+        GameEngine(const GameEngine &g);
 };

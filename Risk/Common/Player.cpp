@@ -61,7 +61,10 @@ void Player::addOrder(Order* order) {
     cout << "order has been added to list of orders" << endl;
 }
 
-/// Prompts the player to issue an order. Returns True if an order was issued, false otherwise.
+/**
+ * Prompts the player to issue an order.
+ * @return True if an order was issued, false otherwise.
+ */
 bool Player::issueOrder(Deck* deck) {
     int actionNumber = -1;
 

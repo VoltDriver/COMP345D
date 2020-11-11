@@ -171,6 +171,30 @@ ContinentOwnership_DataObject::ContinentOwnership_DataObject(Continent *c, int a
     ownedTerritories = ot;
 }
 
+ostream &operator<<(ostream& out, const ContinentOwnership_DataObject& c) {
+    return out << c.continent->get_name() << " " << c.armyBonus << " " << c.ownedTerritories;
+}
+
+ContinentOwnership_DataObject::ContinentOwnership_DataObject(const ContinentOwnership_DataObject &c) {
+    continent = c.continent;
+    armyBonus = c.armyBonus;
+    ownedTerritories = c.ownedTerritories;
+}
+
+ContinentOwnership_DataObject &ContinentOwnership_DataObject::operator=(const ContinentOwnership_DataObject &c) {
+    delete this->continent;
+
+    continent = c.continent;
+    armyBonus = c.armyBonus;
+    ownedTerritories = c.ownedTerritories;
+
+    return *this;
+}
+
+/**
+ * Runs the Warzone game, in a loop, until a player wins.
+ * It calls, in order, the Reinforcement Phase, the Issue Orders Phase, and the Execute Orders Phase.
+ */
 void GameEngine::mainGameLoop() {
     bool gameOver = false;
     string winningPlayer = "";
@@ -207,6 +231,9 @@ void GameEngine::mainGameLoop() {
     cout << "The game is over! " << winningPlayer << " has won.";
 }
 
+/**
+ * Players are given armies according to the territories they own, including continent bonuses.
+ */
 void GameEngine::reinforcementPhase() {
     for (Player &player : players) {
         int reinforcement = 0;
@@ -251,6 +278,9 @@ void GameEngine::reinforcementPhase() {
     }
 }
 
+/**
+ * Players issue orders, in a round robin fashion.
+ */
 void GameEngine::issueOrdersPhase() {
 
     // Contains whether a player is done with their turn or not. True if not done.
@@ -283,6 +313,9 @@ void GameEngine::issueOrdersPhase() {
     // Everyone has played.
 }
 
+/**
+ * Executes orders in the players' lists of orders in a round robin fashion.
+ */
 void GameEngine::executeOrdersPhase() {
     // Contains whether a player is done with their orders or not. True if not done.
     std::map<string, bool> playerOrdersStatus = std::map<string, bool>();
@@ -317,4 +350,42 @@ void GameEngine::executeOrdersPhase() {
     }
 
     // Every order has been executed.
+}
+
+ostream &operator<<(ostream& out, const GameEngine& g) {
+    string players = "";
+    for(Player p : g.players)
+    {
+        players += p.name + " ";
+    }
+    return out << g.map << endl << g.deck << endl << players<< endl << g.stat_observer_flag << " " << g.phase_observer_flag;
+}
+
+GameEngine &GameEngine::operator=(const GameEngine &g) {
+    delete this->map;
+    delete this->deck;
+
+    players = g.players;
+    map = g.map;
+    deck = g.deck;
+    phase_observer_flag = g.phase_observer_flag;
+    stat_observer_flag = g.stat_observer_flag;
+
+    return *this;
+}
+
+GameEngine::GameEngine() {
+    players = list<Player>();
+    map = new Map();
+    deck = new Deck();
+    phase_observer_flag = true;
+    stat_observer_flag = true;
+}
+
+GameEngine::GameEngine(const GameEngine &g) {
+    players = g.players;
+    map = g.map;
+    deck = g.deck;
+    phase_observer_flag = g.phase_observer_flag;
+    stat_observer_flag = g.stat_observer_flag;
 }
