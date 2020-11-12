@@ -57,12 +57,12 @@ private:
 /**
  *
  */
-class StatsObserver : Observer {
-    StatsObserver();
-    StatsObserver(Map* map);
-    ~StatsObserver();
-    void Update();
-    void display();
-private:
-    Map* _map;
-};
+//class StatsObserver : Observer {
+//    StatsObserver();
+//    StatsObserver(Map* map);
+//    ~StatsObserver();
+//    void Update();
+//    void display();
+//private:
+//    Map* _map;
+//};

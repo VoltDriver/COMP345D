@@ -70,3 +70,10 @@ void PhaseObserver::display() {
         cout << "\n-------------------------------------------------------------" << endl;
     }
 }
+
+
+/* StatsObserver Class */
+//StatsObserver::StatsObserver() {}
+//StatsObserver::~StatsObserver() {
+//    _map->remove(this);
+//}
