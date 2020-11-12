@@ -122,7 +122,7 @@ pair<bool, bool> observer_settings() {
 
     observer_stats = input == 'y';
 
-    cout << "\nPhase Oberser has been " << (observer_phase ? "ENABLED" : "DISABLED");
+    cout << "\nPhase Observer has been " << (observer_phase ? "ENABLED" : "DISABLED");
     cout << "\nGame stats Observer has been " << (observer_stats ? "ENABLED" : "DISABLED") << endl;
 
     return make_pair(observer_phase, observer_stats);
@@ -389,3 +389,8 @@ GameEngine::GameEngine(const GameEngine &g) {
     phase_observer_flag = g.phase_observer_flag;
     stat_observer_flag = g.stat_observer_flag;
 }
+
+//void GameEngine::add(Observer* o) {
+//    Subject::add(o);
+//}
+

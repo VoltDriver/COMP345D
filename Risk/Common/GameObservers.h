@@ -5,7 +5,21 @@
 
 using namespace std;
 
-class Observer;
+class GameEngine;
+
+
+/**
+ * The Observer class is basically an interface or abstract class since it contains at least one pure virtual function.
+ * Any observer that is created will have to implement its own Update().
+ */
+class Observer {
+public:
+    ~Observer();
+    virtual void Update() = 0;   // pure virtual function. This forces any subclass to implement Update()
+protected:
+    Observer();
+};
+
 
 /**
  *
@@ -23,24 +37,23 @@ private:
 
 
 /**
- * The Observer class is basically an interface or abstract class since it contains at least one pure virtual function.
- * Any observer that is created will have to implement its own Update().
+ *
  */
-class Observer {
+class PhaseObserver : Observer {
 public:
-    ~Observer();
-	virtual void Update() = 0;   // pure virtual function. This forces any subclass to implement Update()
-protected:
-    Observer();
+    PhaseObserver();
+    PhaseObserver(GameEngine* gameEngine);
+    ~PhaseObserver();
+    void Update();
+    void display();
+private:
+    GameEngine* _gameEngine;
 };
 
 
-
-class PhaseDisplay : Observer {
-
-};
-
-
-class StatsDisplay : Observer {
+/**
+ *
+ */
+class StatsObserver : Observer {
 
 };

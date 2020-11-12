@@ -18,3 +18,6 @@ target_link_libraries(OrdersDriver Common)
 
 add_executable(GameEngineDriver GameEngineDriver.cpp)
 target_link_libraries(GameEngineDriver Common)
+
+add_executable(GameObserversDriver GameObserversDriver.cpp)
+target_link_libraries(GameObserversDriver Common)

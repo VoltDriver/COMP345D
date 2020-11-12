@@ -9,12 +9,14 @@
 #include "Orders.h"
 #include "Map.h"
 #include "Cards.h"
+#include "GameObservers.h"
 
 class Player;
 
 class Deck;
 
 class Map;
+
 
 class ContinentOwnership_DataObject {
     private:
@@ -31,7 +33,7 @@ class ContinentOwnership_DataObject {
         ContinentOwnership_DataObject& operator=(const ContinentOwnership_DataObject &c);
 };
 
-class GameEngine {
+class GameEngine: public Subject {
     private:
         list <Player> players;
         Map *map;
@@ -58,4 +60,6 @@ class GameEngine {
 
         GameEngine();
         GameEngine(const GameEngine &g);
+
+//        void add(Observer* o);
 };
