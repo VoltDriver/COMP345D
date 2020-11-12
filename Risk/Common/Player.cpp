@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <map>
 #include "Player.h"
 #include "Cards.h"
@@ -17,6 +18,14 @@ Player::Player() {
 }
 
 // parameterized constructors
+Player::Player(string name) {
+    this->territories = vector<Territory*>();
+    this->orders = vector<Order*>();
+    this->hand = new Hand();
+    this->name = name;
+    this->reinforcementPool = 0;
+}
+
 Player::Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand) {
     this->territories = territories;
     this->orders = orders;
@@ -229,6 +238,9 @@ vector<Territory *> Player::to_attack() {
     return territories;
 }
 
+int Player::getReinforcementPool() {
+    return reinforcementPool;
+}
 
 /* Overloaders */
 //stream insertion operator

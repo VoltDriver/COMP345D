@@ -122,7 +122,7 @@ pair<bool, bool> observer_settings() {
 
     observer_stats = input == 'y';
 
-    cout << "\nPhase Oberser has been " << (observer_phase ? "ENABLED" : "DISABLED");
+    cout << "\nPhase Observer has been " << (observer_phase ? "ENABLED" : "DISABLED");
     cout << "\nGame stats Observer has been " << (observer_stats ? "ENABLED" : "DISABLED") << endl;
 
     return make_pair(observer_phase, observer_stats);
@@ -152,7 +152,8 @@ void GameEngine::gameStart(bool verbose) {
 
     // Create and set players
     for (int i = 1; i <= num_of_players; i++) {
-        this->players.push_back(Player());
+        string name = "Player " + std::to_string(i);
+        this->players.push_back(Player(name));
     }
 
     // Create and set the deck
@@ -250,7 +251,11 @@ void GameEngine::mainGameLoop() {
  * Players are given armies according to the territories they own, including continent bonuses.
  */
 void GameEngine::reinforcementPhase() {
+    this->phase = "Reinforcement Phase";
+
     for (Player &player : players) {
+        this->currentPlayer = &player;
+
         int reinforcement = 0;
 
         int nbTerritoriesOwned = player.territories.size();
@@ -290,6 +295,7 @@ void GameEngine::reinforcementPhase() {
 
         // Place the reinforcements in the players' pools.
         player.reinforcementPool += reinforcement;
+        Subject::notify();   // Reinforcement Phase
     }
 }
 
@@ -297,6 +303,7 @@ void GameEngine::reinforcementPhase() {
  * Players issue orders, in a round robin fashion.
  */
 void GameEngine::issueOrdersPhase() {
+    this->phase = "Issue Orders Phase";
 
     // Contains whether a player is done with their turn or not. True if not done.
     std::map<string, bool> playerTurns = std::map<string, bool>();
@@ -332,6 +339,8 @@ void GameEngine::issueOrdersPhase() {
  * Executes orders in the players' lists of orders in a round robin fashion.
  */
 void GameEngine::executeOrdersPhase() {
+    this->phase = "Execute Orders Phase";
+
     // Contains whether a player is done with their orders or not. True if not done.
     std::map<string, bool> playerOrdersStatus = std::map<string, bool>();
 
@@ -411,3 +420,21 @@ GameEngine::~GameEngine() {
     delete this->deck;
     delete this->map;
 }
+
+
+bool GameEngine::getPhase_observer_flag() {
+    return phase_observer_flag;
+}
+
+bool GameEngine::getStat_observer_flag(){
+    return stat_observer_flag;
+}
+
+Player* GameEngine::getCurrentPlayer() {
+    return currentPlayer;
+}
+
+string GameEngine::getPhase() {
+    return phase;
+}
+

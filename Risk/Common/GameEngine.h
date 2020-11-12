@@ -4,17 +4,20 @@
 #include <list>
 #include <array>
 #include <map>
+#include <string>
 #include <iostream>
 #include "Player.h"
 #include "Orders.h"
 #include "Map.h"
 #include "Cards.h"
+#include "GameObservers.h"
 
 class Player;
 
 class Deck;
 
 class Map;
+
 
 class ContinentOwnership_DataObject {
     private:
@@ -31,11 +34,13 @@ class ContinentOwnership_DataObject {
         ContinentOwnership_DataObject& operator=(const ContinentOwnership_DataObject &c);
 };
 
-class GameEngine {
+class GameEngine: public Subject {
     private:
         list <Player> players;
+        Player *currentPlayer;
         Map *map;
         Deck *deck;
+        string phase;
         bool phase_observer_flag;
         bool stat_observer_flag;
         friend ostream& operator<<(ostream&, const GameEngine&);
@@ -53,4 +58,14 @@ class GameEngine {
         GameEngine();
         ~GameEngine();
         GameEngine(const GameEngine &g);
+
+
+        bool getPhase_observer_flag();
+
+        bool getStat_observer_flag();
+
+        Player* getCurrentPlayer();
+
+        string getPhase();
+
 };
