@@ -7,6 +7,7 @@
 #include <cmath>
 
 class Player;
+class Map;
 
 /**
  * Enum containing the different types of card available to be drawn from the deck.
@@ -33,10 +34,19 @@ class Card {
 
         /**
          * Plays the card, creating a special order in the associated player and adding the card back to the deck.
+         * This method is meant to be used by an AI player, and will automatically make any decisions.
          * @param player The player who is playing the card.
          * @param deck The deck to put the card back into.
          */
-        void play(Player* player, Deck* deck);
+        void play(Player* player, Deck* deck, Map* map);
+
+        /**
+         * Plays the card, creating a special order in the associated player and adding the card back to the deck.
+         * This method is meant to be used by a human player, and will prompt the user for decisions.
+         * @param player The player who is playing the card.
+         * @param deck The deck to put the card back into.
+         */
+        void playHuman(Player* player, Deck* deck, Map* map);
 
         Card();
 

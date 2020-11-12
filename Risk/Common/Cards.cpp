@@ -23,7 +23,142 @@ std::string Card::toString() const {
     return cardTypeMap[*this->type];
 }
 
-void Card::play(Player* player, Deck* deck) {
+void Card::play(Player* player, Deck* deck, Map* map) {
+    // Saving the type temporarily.
+    CardType cardType = *this->type;
+
+    // Creating an order ID provider
+    ID id = ID();
+
+    // We use Mt19937 and random_device, which seeds the random generator with some random data from the system.
+    // There's other ways to do it, but this is efficient and does not require seeding with Time.
+    std::random_device randomDevice;
+    std::mt19937 mt(randomDevice());
+
+    switch(*this->type)
+    {
+        case Bomb:
+        {
+            // Bomb
+
+            // List the territories the player can choose
+            cout << "In which territory would you like to launch your bomb?"<< endl;
+            std::map<int, Territory*> territoryToNumberMap = std::map<int, Territory*>();
+            int counter = 0;
+            for(Territory* t : player->to_attack())
+            {
+                territoryToNumberMap[counter] = t;
+                counter++;
+            }
+
+            // Generate a random input
+            std::uniform_int_distribution<int> distribution(0,territoryToNumberMap.size() - 1);
+            int territoryChoice = distribution(mt);
+
+            // TODO: Create the order properly... And implement a constructor that makes them automatically.
+            auto* bombOrder = new class::Bomb(id.setID());
+            player->addOrder(bombOrder);
+
+            cout << "Bomb order issued." << endl;
+            break;
+        }
+        case Reinforcement:
+        {
+            // TODO: Check that the amount of armies given is fine, and if we need an ORDER class for it.
+            player->reinforcementPool += 15;
+            cout << "Reinforcements Added.";
+            break;
+        }
+        case Blockade:
+        {
+            // Blockade
+
+            std::map<int, Territory*> territoryToNumberMap = std::map<int, Territory*>();
+            int counter = 0;
+            for(Territory* t : player->to_defend())
+            {
+                territoryToNumberMap[counter] = t;
+                counter++;
+            }
+
+            // Generate a random input
+            std::uniform_int_distribution<int> distribution(0,territoryToNumberMap.size() - 1);
+
+            int territoryChoice = distribution(mt);
+
+            // TODO: Create the order properly... And implement a constructor that makes them automatically.
+            auto* blockadeOrder = new class::Blockade(id.setID());
+            player->addOrder(blockadeOrder);
+
+            cout << "Blockade order issued." << endl;
+            break;
+            break;
+        }
+        case Airlift:
+        {
+            // Choosing a starting point
+            std::map<int, Territory*> sourceTerritoryToNumberMap = std::map<int, Territory*>();
+            int counter = 0;
+            for(Territory* t : player->to_defend())
+            {
+                sourceTerritoryToNumberMap[counter] = t;
+
+                cout << counter << ": " << t->get_name() << " (" << t->get_armies() << " troops)" << endl;
+                counter++;
+            }
+
+            // Generate a random input
+            std::uniform_int_distribution<int> distribution(0,sourceTerritoryToNumberMap.size() - 1);
+
+            int sourceTerritoryChoice = distribution(mt);
+
+            // Choosing randomly a number of troops to move
+            std::uniform_int_distribution<int> distributionTroops(0,player->reinforcementPool);
+
+            int troopNumber = distributionTroops(mt);
+
+            // Choose a territory for the player to advance to.
+            std::map<int, Territory*> destinationTerritoryToNumberMap = std::map<int, Territory*>();
+            int counter2 = 0;
+
+            // Advancing to any territory
+            for(Territory* t : map->territories)
+            {
+                destinationTerritoryToNumberMap[counter2] = t;
+                counter2++;
+            }
+
+            // Choosing randomly a territory to move to
+            std::uniform_int_distribution<int> distributionDestination(0,destinationTerritoryToNumberMap.size() - 1);
+
+            int destinationTerritoryChoice = distributionDestination(mt);
+
+            // TODO: Create the order properly... And implement a constructor that makes them automatically.
+            auto* airliftOrder = new class::Airlift(id.setID());
+            player->addOrder(airliftOrder);
+
+            cout << "Airlift order issued." << endl;
+            break;
+        }
+        case Diplomacy:
+        {
+            // TODO: Implement properly.
+            break;
+        }
+
+        default:
+            throw exception("Invalid card type to play.");
+            break;
+    }
+
+    // Adding this card back into the deck.
+    deck->addCard(cardType);
+
+    // Removing the card from the player's hand.
+    player->hand->removeCard(cardType);
+}
+
+void Card::playHuman(Player* player, Deck* deck, Map* map) {
     // Saving the type temporarily.
     CardType cardType = *this->type;
 
@@ -38,7 +173,7 @@ void Card::play(Player* player, Deck* deck) {
 
             // List the territories the player can choose
             cout << "In which territory would you like to launch your bomb?"<< endl;
-            std::map<int, Territory*> territoryToNumberMap = map<int, Territory*>();
+            std::map<int, Territory*> territoryToNumberMap = std::map<int, Territory*>();
             int counter = 0;
             for(Territory* t : player->to_attack())
             {
@@ -62,7 +197,9 @@ void Card::play(Player* player, Deck* deck) {
         }
         case Reinforcement:
         {
-            // TODO: Find out what it means, and implement.
+            // TODO: Check that the amount of armies given is fine, and if we need an ORDER class for it.
+            player->reinforcementPool += 15;
+            cout << "Reinforcements Added.";
             break;
         }
         case Blockade:
@@ -71,7 +208,7 @@ void Card::play(Player* player, Deck* deck) {
 
             // List the territories the player can choose
             cout << "In which territory would you like to set up your blockade?"<< endl;
-            std::map<int, Territory*> territoryToNumberMap = map<int, Territory*>();
+            std::map<int, Territory*> territoryToNumberMap = std::map<int, Territory*>();
             int counter = 0;
             for(Territory* t : player->to_defend())
             {
@@ -98,7 +235,7 @@ void Card::play(Player* player, Deck* deck) {
         {
             // List the territories the player can choose as starting point
             cout << "From which territory would you like to select troops from?"<< endl;
-            std::map<int, Territory*> sourceTerritoryToNumberMap = map<int, Territory*>();
+            std::map<int, Territory*> sourceTerritoryToNumberMap = std::map<int, Territory*>();
             int counter = 0;
             for(Territory* t : player->to_defend())
             {
@@ -122,22 +259,26 @@ void Card::play(Player* player, Deck* deck) {
 
             // List the territories the player can choose to advance to
             cout << "To which territory would you like to advance your troops to?"<< endl;
-            std::map<int, Territory*> destinationTerritoryToNumberMap = map<int, Territory*>();
+            std::map<int, Territory*> destinationTerritoryToNumberMap = std::map<int, Territory*>();
             int counter2 = 0;
 
             cout << "Territories to attack: " << endl;
-            for(Territory* t : player->to_attack())
+            // Advancing to any territory
+            for(Territory* t : map->territories)
             {
-                destinationTerritoryToNumberMap[counter2] = t;
-
-                cout << counter2 << ": " << t->get_name() << " (" << t->get_armies() << " troops)" << endl;
-                counter2++;
+                if(t->get_player() != player)
+                {
+                    destinationTerritoryToNumberMap[counter2] = t;
+                    cout << counter2 << ": " << t->get_name() << " (" << t->get_armies() << " troops)" << endl;
+                    counter2++;
+                }
             }
+
             cout << "Territories to defend: " << endl;
+
             for(Territory* t : player->to_defend())
             {
                 destinationTerritoryToNumberMap[counter2] = t;
-
                 cout << counter2 << ": " << t->get_name() << " (" << t->get_armies() << " troops)" << endl;
                 counter2++;
             }

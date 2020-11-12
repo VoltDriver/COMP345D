@@ -40,11 +40,12 @@ public:
     vector<Territory*> to_defend();
     vector<Territory*> to_attack();
     void addOrder(Order* order);
-    bool issueOrder(Deck* deck);
+    bool issueOrder(Deck* deck, Map* territoriesMap);
+    bool issueOrderHuman(Deck* deck, Map* territoriesMap);
     int getReinforcementPool();
 
 
-    /* Overloaders */
+    /* Overloads */
     Player& operator=(const Player &p);
 
     /* Friend classes */

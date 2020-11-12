@@ -70,6 +70,7 @@ public:
     int get_id() const;
     string get_name() const;
     int get_armies() const;
+    Player* get_player() const;
     void set_armies(int);
     vector<Territory*> get_bordering_territory();
     Continent* get_continent() const;

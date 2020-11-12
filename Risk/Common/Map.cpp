@@ -198,6 +198,10 @@ Territory& Territory::operator=(const Territory& c) {
     return *this;
 }
 
+Player *Territory::get_player() const {
+    return player;
+}
+
 
 //##     ##    ###    ########
 //###   ###   ## ##   ##     ##

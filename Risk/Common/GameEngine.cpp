@@ -320,7 +320,7 @@ void GameEngine::issueOrdersPhase() {
             // If a player did not end his turn yet...
             if (playerTurns[player.name]) {
                 // ... it is prompted to play.
-                playerTurns[player.name] = player.issueOrder(this->deck);
+                playerTurns[player.name] = player.issueOrder(this->deck, this->map);
 
                 // If it decided to end it's turn just now...
                 if (!playerTurns[player.name]) {

@@ -59,7 +59,7 @@ int main() {
         Card currentCard = newHand->cards->front();
 
         std::cout << "Playing a card: "<< currentCard.toString() << std::endl;
-        currentCard.play(player, newDeck);
+        currentCard.play(player, newDeck, nullptr);
         std::cout << "There are " << newHand->remainingCards() << " cards in the hand." << std::endl;
         std::cout << "The cards are... " << *newHand->listAllCards() << std::endl;
     }
