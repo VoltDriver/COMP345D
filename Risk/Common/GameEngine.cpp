@@ -153,7 +153,7 @@ void GameEngine::gameStart(bool verbose) {
     // Create and set players
     for (int i = 1; i <= num_of_players; i++) {
         string name = "Player " + std::to_string(i);
-        this->players.push_back(Player(name));
+        this->players.emplace_back(name);
     }
 
     // Create and set the deck
@@ -213,7 +213,7 @@ ContinentOwnership_DataObject &ContinentOwnership_DataObject::operator=(const Co
  */
 void GameEngine::mainGameLoop() {
     bool gameOver = false;
-    string winningPlayer = "";
+    string winningPlayer;
 
     while (!gameOver) {
         // Reinforcement Phase
@@ -226,7 +226,7 @@ void GameEngine::mainGameLoop() {
         executeOrdersPhase();
 
         // Checking if the game is over
-        for (Player player : players) {
+        for (const Player& player : players) {
             if (player.territories.size() == map->get_territories().size()) {
                 gameOver = true;
                 winningPlayer = player.name;
@@ -254,6 +254,7 @@ void GameEngine::reinforcementPhase() {
     this->phase = "Reinforcement Phase";
 
     for (Player &player : players) {
+        delete currentPlayer;
         this->currentPlayer = &player;
 
         int reinforcement = 0;
@@ -266,8 +267,6 @@ void GameEngine::reinforcementPhase() {
         std::map<string, ContinentOwnership_DataObject> continentOwnership = std::map<string, ContinentOwnership_DataObject>();
 
         for (Territory *t : player.territories) {
-            ContinentOwnership_DataObject ownership;
-
             // Checking if the continent is already part of the map
             if (continentOwnership.find(t->get_continent()->get_name()) == continentOwnership.end()) {
                 // ... if it's not there, then we add it in.
@@ -378,7 +377,7 @@ void GameEngine::executeOrdersPhase() {
 
 ostream &operator<<(ostream& out, const GameEngine& g) {
     string players;
-    for(Player p : g.players)
+    for(const Player& p : g.players)
     {
         players += p.name + " ";
     }
@@ -401,6 +400,7 @@ GameEngine &GameEngine::operator=(const GameEngine &g) {
 }
 
 GameEngine::GameEngine() {
+    currentPlayer = new Player();
     players = list<Player>();
     map = new Map();
     deck = new Deck();
@@ -409,6 +409,8 @@ GameEngine::GameEngine() {
 }
 
 GameEngine::GameEngine(const GameEngine &g) {
+    delete currentPlayer;
+    currentPlayer = g.currentPlayer;
     players = g.players;
     map = g.map;
     deck = g.deck;
