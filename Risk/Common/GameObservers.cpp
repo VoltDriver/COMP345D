@@ -1,11 +1,14 @@
 #include "GameObservers.h"
 #include "GameEngine.h"
+#include "Player.h"
 #include <iostream>
 #include <string>
+
 
 /* Observer Class */
 Observer::Observer() {}
 Observer::~Observer() {}
+
 
 
 /* Subject Class */
@@ -32,14 +35,17 @@ void Subject::notify() {
 }
 
 
+
 /* PhaseObserver Class */
 PhaseObserver::PhaseObserver() {}
-PhaseObserver::~PhaseObserver() {
-    _gameEngine->remove(this);
-}
+
 PhaseObserver::PhaseObserver(GameEngine* gameEngine) {
     _gameEngine = gameEngine;
     _gameEngine->add(this);   // When a PhaseObserver is created, it will be added to the observers list of the subject.
+}
+
+PhaseObserver::~PhaseObserver() {
+    _gameEngine->remove(this);
 }
 
 void PhaseObserver::Update() {
@@ -72,8 +78,24 @@ void PhaseObserver::display() {
 }
 
 
+
 /* StatsObserver Class */
-//StatsObserver::StatsObserver() {}
-//StatsObserver::~StatsObserver() {
-//    _map->remove(this);
-//}
+StatsObserver::StatsObserver() {}
+
+StatsObserver::StatsObserver(GameEngine* gameEngine) {
+    _gameEngine = gameEngine;
+    _gameEngine->add(this);
+}
+
+StatsObserver::~StatsObserver() {
+    _gameEngine->remove(this);
+}
+
+void StatsObserver::Update() {
+    display();
+}
+
+void StatsObserver::display() {
+    cout << "from Stats Observer" << endl;
+
+}

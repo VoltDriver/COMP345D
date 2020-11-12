@@ -6,6 +6,7 @@
 using namespace std;
 
 class GameEngine;
+class Player;
 
 
 /**
@@ -45,7 +46,7 @@ private:
 class PhaseObserver : Observer {
 public:
     PhaseObserver();
-    PhaseObserver(GameEngine* gameEngine);
+    explicit PhaseObserver(GameEngine* gameEngine);
     ~PhaseObserver();
     void Update();
     void display();
@@ -57,12 +58,13 @@ private:
 /**
  *
  */
-//class StatsObserver : Observer {
-//    StatsObserver();
-//    StatsObserver(Map* map);
-//    ~StatsObserver();
-//    void Update();
-//    void display();
-//private:
-//    Map* _map;
-//};
+class StatsObserver : Observer {
+public:
+    StatsObserver();
+    StatsObserver(GameEngine* gameEngine);
+    ~StatsObserver();
+    void Update();
+    void display();
+private:
+    GameEngine* _gameEngine;
+};
