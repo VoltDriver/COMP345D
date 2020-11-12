@@ -42,20 +42,15 @@ class GameEngine {
 
     public:
         void mainGameLoop();
-
         void issueOrdersPhase();
-
         // TODO: STUB METHOD. To be implemented.
         void startupPhase();
-
-        void gameStart();
-
+        void gameStart(bool verbose = false);
         void reinforcementPhase();
-
         void executeOrdersPhase();
 
         GameEngine& operator=(const GameEngine &g);
-
         GameEngine();
+        ~GameEngine();
         GameEngine(const GameEngine &g);
 };

@@ -49,8 +49,8 @@ string map_select() {
         error = !cin.good() || option < 1 || option > index;
     } while (error);
 
-    cout << "\nYou selected map: " << maps.at(option) << endl;
-    return maps.at(option);
+    cout << "\nYou selected map: " << maps.at(option - 1) << endl;
+    return maps.at(option - 1);
 }
 
 /**
@@ -128,7 +128,7 @@ pair<bool, bool> observer_settings() {
     return make_pair(observer_phase, observer_stats);
 }
 
-void GameEngine::gameStart() {
+void GameEngine::gameStart(bool verbose) {
     const string MAP_DIRECTORY = "../Resource/";
 
     // Display and choose map
@@ -146,6 +146,8 @@ void GameEngine::gameStart() {
         this->map = MapLoader::parse(MAP_DIRECTORY + map_filename, false);
     } catch (const std::exception &e) {
         cout << e.what() << endl;
+
+        throw exception("Invalid map specified");
     }
 
     // Create and set players
@@ -155,6 +157,19 @@ void GameEngine::gameStart() {
 
     // Create and set the deck
     this->deck = new Deck();
+
+    if (verbose) {
+        cout << "\n\n=========== DEBUG OUTPUT ==========" << endl;
+        // Validate map
+        cout << "Running map validation..." << endl;
+        //this->map->validate();
+        auto temp_map = MapLoader::parse(MAP_DIRECTORY + map_filename);
+        delete temp_map;
+
+        // Right number of players/Cards
+        cout << "> There are " << this->players.size() << " player objects." << endl;
+        cout << "> The Deck contains " << this->deck->remainingCards() << " cards." << endl;
+    }
 }
 
 // Continent_ArmyBonus_OwnedTerritories_DataObject
@@ -353,7 +368,7 @@ void GameEngine::executeOrdersPhase() {
 }
 
 ostream &operator<<(ostream& out, const GameEngine& g) {
-    string players = "";
+    string players;
     for(Player p : g.players)
     {
         players += p.name + " ";
@@ -362,14 +377,16 @@ ostream &operator<<(ostream& out, const GameEngine& g) {
 }
 
 GameEngine &GameEngine::operator=(const GameEngine &g) {
-    delete this->map;
-    delete this->deck;
+    if (this != &g) {
+        delete this->map;
+        delete this->deck;
 
-    players = g.players;
-    map = g.map;
-    deck = g.deck;
-    phase_observer_flag = g.phase_observer_flag;
-    stat_observer_flag = g.stat_observer_flag;
+        players = g.players;
+        map = g.map;
+        deck = g.deck;
+        phase_observer_flag = g.phase_observer_flag;
+        stat_observer_flag = g.stat_observer_flag;
+    }
 
     return *this;
 }
@@ -388,4 +405,9 @@ GameEngine::GameEngine(const GameEngine &g) {
     deck = g.deck;
     phase_observer_flag = g.phase_observer_flag;
     stat_observer_flag = g.stat_observer_flag;
+}
+
+GameEngine::~GameEngine() {
+    delete this->deck;
+    delete this->map;
 }

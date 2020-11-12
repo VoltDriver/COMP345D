@@ -155,20 +155,20 @@ Map *MapLoader::parse(string file_name, bool verbose) {
 
         /* VALIDATION */
         // check if map is a connected graph
-        if (verbose && map->verify_map_connected_graph()) {
-            cout << "Map is a connected graph." << endl;
+        if (map->verify_map_connected_graph()) {
+            verbose && (cout << "Map is a connected graph." << endl);
         } else {
             throw invalid_argument("Error loading map -> Reason: Map is not a connected graph.");
         }
         // check if continents are a connected subgraph
-        if (verbose && map->verify_continent_connected_subgraph()) {
-            cout << "Continents are connected subgraphs." << endl;
+        if (map->verify_continent_connected_subgraph()) {
+            verbose && (cout << "Continents are connected subgraphs." << endl);
         } else {
             throw invalid_argument("Error loading map -> Reason: Continents are not connected subgraphs.");
         }
         // check if territories are connected by at most 1 continent
-        if (verbose && map->verify_unique_continents()) {
-            cout << "Territories all have unique continents." << endl;
+        if (map->verify_unique_continents()) {
+            verbose && (cout << "Territories all have unique continents." << endl);
         } else {
             throw invalid_argument("Error loading map -> Reason: Territories do not have unique continents.");
         }
