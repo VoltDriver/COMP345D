@@ -28,9 +28,11 @@ public:
 
     /* Constructors */
     Player();
+    Player(string name);
     explicit Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand);
     explicit Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand, string name);
     Player(const Player &p);
+
     /* Destructor */
     ~Player();
 
@@ -39,6 +41,7 @@ public:
     vector<Territory*> to_attack();
     void addOrder(Order* order);
     bool issueOrder(Deck* deck);
+    int getReinforcementPool();
 
 
     /* Overloaders */

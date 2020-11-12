@@ -1,5 +1,7 @@
 #include "GameObservers.h"
 #include "GameEngine.h"
+#include <iostream>
+#include <string>
 
 /* Observer Class */
 Observer::Observer() {}
@@ -45,5 +47,26 @@ void PhaseObserver::Update() {
 }
 
 void PhaseObserver::display() {
-    cout << "Phase Observer displaying" << endl;
+
+    if (_gameEngine->getPhase() == "Reinforcement Phase") {
+        cout << "" << endl;
+        cout << "-------------------------------------------------------------" << endl;
+        cout << "Phase Observer displaying: " << _gameEngine->getPhase() << " " << _gameEngine->getCurrentPlayer()->name <<endl;
+        cout << "Number of armies to Deploy: " << _gameEngine->getCurrentPlayer()->getReinforcementPool();
+        cout << "\n-------------------------------------------------------------" << endl;
+    }
+
+    if (_gameEngine->getPhase() == "Issue Orders Phase") {
+        cout << "" << endl;
+        cout << "-------------------------------------------------------------" << endl;
+
+        cout << "\n-------------------------------------------------------------" << endl;
+    }
+
+    if (_gameEngine->getPhase() == "Execute Orders Phase") {
+        cout << "" << endl;
+        cout << "-------------------------------------------------------------" << endl;
+
+        cout << "\n-------------------------------------------------------------" << endl;
+    }
 }

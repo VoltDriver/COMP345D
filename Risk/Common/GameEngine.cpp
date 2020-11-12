@@ -22,9 +22,7 @@ const int MINIMUM_REINFORCEMENT = 3;
 string map_select() {
     const string MAP_DIRECTORY = "../Resource/";
     vector<string> maps;
-
     cout << "============== MAP SELECT ==============" << endl;
-
     uint16_t index = 0;
     // Iterate, print and store each file in our map directory
     for (const auto &entry : fs::directory_iterator(MAP_DIRECTORY)) {
@@ -130,7 +128,6 @@ pair<bool, bool> observer_settings() {
 
 void GameEngine::gameStart() {
     const string MAP_DIRECTORY = "../Resource/";
-
     // Display and choose map
     string map_filename = map_select();
     // Select number of players 2-5
@@ -147,12 +144,11 @@ void GameEngine::gameStart() {
     } catch (const std::exception &e) {
         cout << e.what() << endl;
     }
-
     // Create and set players
     for (int i = 1; i <= num_of_players; i++) {
-        this->players.push_back(Player());
+        string name = "Player " + std::to_string(i);
+        this->players.push_back(Player(name));
     }
-
     // Create and set the deck
     this->deck = new Deck();
 }
@@ -235,7 +231,11 @@ void GameEngine::mainGameLoop() {
  * Players are given armies according to the territories they own, including continent bonuses.
  */
 void GameEngine::reinforcementPhase() {
+    this->phase = "Reinforcement Phase";
+
     for (Player &player : players) {
+        this->currentPlayer = &player;
+
         int reinforcement = 0;
 
         int nbTerritoriesOwned = player.territories.size();
@@ -275,6 +275,7 @@ void GameEngine::reinforcementPhase() {
 
         // Place the reinforcements in the players' pools.
         player.reinforcementPool += reinforcement;
+        Subject::notify();   // Reinforcement Phase
     }
 }
 
@@ -282,6 +283,7 @@ void GameEngine::reinforcementPhase() {
  * Players issue orders, in a round robin fashion.
  */
 void GameEngine::issueOrdersPhase() {
+    this->phase = "Issue Orders Phase";
 
     // Contains whether a player is done with their turn or not. True if not done.
     std::map<string, bool> playerTurns = std::map<string, bool>();
@@ -317,6 +319,8 @@ void GameEngine::issueOrdersPhase() {
  * Executes orders in the players' lists of orders in a round robin fashion.
  */
 void GameEngine::executeOrdersPhase() {
+    this->phase = "Execute Orders Phase";
+
     // Contains whether a player is done with their orders or not. True if not done.
     std::map<string, bool> playerOrdersStatus = std::map<string, bool>();
 
@@ -390,7 +394,20 @@ GameEngine::GameEngine(const GameEngine &g) {
     stat_observer_flag = g.stat_observer_flag;
 }
 
-//void GameEngine::add(Observer* o) {
-//    Subject::add(o);
-//}
+
+bool GameEngine::getPhase_observer_flag() {
+    return phase_observer_flag;
+}
+
+bool GameEngine::getStat_observer_flag(){
+    return stat_observer_flag;
+}
+
+Player* GameEngine::getCurrentPlayer() {
+    return currentPlayer;
+}
+
+string GameEngine::getPhase() {
+    return phase;
+}
 

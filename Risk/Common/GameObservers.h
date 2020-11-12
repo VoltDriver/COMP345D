@@ -15,14 +15,16 @@ class GameEngine;
 class Observer {
 public:
     ~Observer();
-    virtual void Update() = 0;   // pure virtual function. This forces any subclass to implement Update()
+    virtual void Update() = 0;
 protected:
     Observer();
 };
 
 
 /**
- *
+ * Any class that inherits Subject will be a model (Channel). Observers can then be added (subscribe) to a particular
+ * channel or be removed. Observers get added to the observer list. And anytime notify is called in the model, then
+ * the observers will get new information and be able to display it.
  */
 class Subject {
 public:
@@ -37,7 +39,8 @@ private:
 
 
 /**
- *
+ * The phase observer will be responsible for displaying new information everytime the phase of the game changes and will
+ * display the turn of a player. Additional useful information will be displayed depending on the different phases.
  */
 class PhaseObserver : Observer {
 public:
@@ -55,5 +58,11 @@ private:
  *
  */
 class StatsObserver : Observer {
-
+    StatsObserver();
+    StatsObserver(Map* map);
+    ~StatsObserver();
+    void Update();
+    void display();
+private:
+    Map* _map;
 };

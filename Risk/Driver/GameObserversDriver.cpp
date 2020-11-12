@@ -5,11 +5,18 @@
 using namespace std;
 
 int main() {
-    cout << "test" << endl;
-
     GameEngine *engine = new GameEngine;
+
     engine->gameStart();
-    PhaseObserver *phaseView = new PhaseObserver(engine);
+
+    if(engine->getPhase_observer_flag()) {
+        PhaseObserver *phaseView = new PhaseObserver(engine);
+    }
+    if(engine->getStat_observer_flag()) {
+
+    }
+
+    engine->mainGameLoop();
 
 
 }
