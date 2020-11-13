@@ -7,7 +7,12 @@ using namespace std;
 int main() {
     GameEngine *engine = new GameEngine;
 
-    engine->gameStart();
+    try {
+        engine->gameStart(true);
+    }
+    catch (exception &e) {
+        cout << "Invalid Map provided, the game will now terminate." << endl;
+    }
 
     if(engine->getPhase_observer_flag()) {
         PhaseObserver *phaseView = new PhaseObserver(engine);

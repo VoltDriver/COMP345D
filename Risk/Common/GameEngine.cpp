@@ -245,6 +245,7 @@ void GameEngine::mainGameLoop() {
     }
 
     cout << "The game is over! " << winningPlayer << " has won.";
+    delete currentPlayer;
 }
 
 /**
@@ -254,7 +255,6 @@ void GameEngine::reinforcementPhase() {
     this->phase = "Reinforcement Phase";
 
     for (Player &player : players) {
-        delete currentPlayer;
         this->currentPlayer = &player;
 
         int reinforcement = 0;
@@ -409,7 +409,6 @@ GameEngine::GameEngine() {
 }
 
 GameEngine::GameEngine(const GameEngine &g) {
-    delete currentPlayer;
     currentPlayer = g.currentPlayer;
     players = g.players;
     map = g.map;
