@@ -22,7 +22,7 @@ public:
     Order& operator=(const Order& other);
     friend ostream& operator<<(ostream&, const Order&);
 
-
+    virtual Order* clone() const;
     int getID();
     virtual bool validate();
     virtual void execute();
@@ -40,7 +40,7 @@ public:
     Territory* target;
     Player* player;
 
-
+    Deploy* clone() const;
     bool validate();
     void execute();
 };
@@ -52,7 +52,7 @@ public:
     Advance(const Advance &advance2);
     Advance& operator=(const Advance& other);
 
-
+    Advance* clone() const;
     bool validate();
     void execute();
 };
@@ -66,7 +66,7 @@ public:
     Territory* target;
     Player* player;
 
-
+    Bomb* clone() const;
     bool validate();
     void execute();
 };
@@ -80,7 +80,7 @@ public:
     Territory* target;
     Player* player;
 
-
+    Blockade* clone() const;
     bool validate();
     void execute();
 };
@@ -96,6 +96,7 @@ public:
     Territory* target;
     Player* player;
 
+    Airlift* clone() const;;
     bool validate();
     void execute();
 };
@@ -107,6 +108,7 @@ public:
     Negotiate(const Negotiate &negotiate2);
     Negotiate& operator=(const Negotiate& other);
 
+    Negotiate* clone() const;
     bool validate();
     void execute();
 };

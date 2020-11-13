@@ -1,6 +1,8 @@
 #include "Orders.h"
 #include <iostream>
 #include <vector>
+#include <random>
+#include <ctime>
 
 using namespace std;
 
@@ -56,6 +58,10 @@ void Order::execute() {
     }
 }
 
+Order* Order::clone() const {
+    return new Order(*this);
+}
+
 //Constructor for Deploy class
 Deploy::Deploy(int anID, int armies, Territory* target, Player* player) : Order(anID) {
     description = "This is a deploy order. It allows you to mobilize an army to attack another.";
@@ -66,18 +72,25 @@ Deploy::Deploy(int anID, int armies, Territory* target, Player* player) : Order(
 
 //Copy constructor for Deploy class
 Deploy::Deploy(const Deploy &deploy2) : Order(deploy2) {
-
+    this->description = deploy2.description;
+    this->armies = deploy2.armies;
+    this->target = deploy2.target;
+    this->player = deploy2.player;
 }
 
 //Assignment operator for Deploy class
 Deploy& Deploy::operator=(const Deploy &other) {
     this -> Order::operator=(other);
+    this->armies = other.armies;
+    this->target = other.target;
+    this->player = other.player;
     return *this;
 }
 
 //validate() method for Deploy that prints out a string and returns true
 bool Deploy::validate() {
-    if (target->getPlayerName().compare(player->name) == 0 && armies > 0)
+    if (target->getPlayer() != nullptr)
+        if (target->getPlayerName().compare(player->name) == 0 && armies > 0)
             return true;
     else
         return false;
@@ -92,6 +105,10 @@ void Deploy::execute() {
     else{
         cout << "This deploy order is not valid";
     }
+}
+
+Deploy* Deploy::clone() const {
+    return new Deploy(*this);
 }
 
 //Constructor for Advance class
@@ -129,6 +146,10 @@ void Advance::execute() {
 
 }
 
+Advance* Advance::clone() const {
+    return new Advance(*this);
+}
+
 //Constructor for Bomb class
 Bomb::Bomb(int anID, Territory* target, Player* player) : Order(anID){
     description =  "This is a bomb order. It allows you to drop a bomb on another player's army.";
@@ -138,7 +159,9 @@ Bomb::Bomb(int anID, Territory* target, Player* player) : Order(anID){
 
 //Copy constructor for Bomb class
 Bomb::Bomb(const Bomb &bomb2) : Order(bomb2) {
-
+    this->description = bomb2.description;
+    this->target = bomb2.target;
+    this->player = bomb2.player;
 }
 
 //Assignment operator for Bomb class
@@ -149,14 +172,11 @@ class Bomb& Bomb::operator=(const Bomb &other) {
 
 //validate() method for Bomb that prints out a string and returns true
 bool Bomb::validate() {
-    if (target->getPlayer() != nullptr) {
-        if (target->getPlayerName().compare(player->name) != 0)
-            return true;
-        else
-            return false;
+    if (target->getPlayer() != nullptr && target->getPlayerName().compare(player->name) == 0) {
+        return false;
     }
     else
-        return false;
+        return true;
 }
 
 //execute() method for Bomb that prints out a different string depending on the boolean returned by validate()
@@ -173,6 +193,10 @@ void Bomb::execute() {
     }
 }
 
+Bomb* Bomb::clone() const {
+    return new Bomb(*this);
+}
+
 //Constructor for Blockade class
 Blockade::Blockade(int anID, Territory* target, Player* player) : Order(anID){
     description = "This is a blockade order. It allows you to form a blockade and defend a particular territory.";
@@ -182,7 +206,8 @@ Blockade::Blockade(int anID, Territory* target, Player* player) : Order(anID){
 
 //Copy constructor for Blockade class
 Blockade::Blockade(const Blockade &blockade2) : Order(blockade2) {
-
+    this->target = blockade2.target;
+    this->player = blockade2.player;
 }
 
 //Assignment operator for Blockade class
@@ -193,7 +218,7 @@ class Blockade & Blockade::operator=(const Blockade &other) {
 
 //validate() method for Blockade that prints out a string and returns true
 bool Blockade::validate() {
-    if (target->getPlayerName().compare(player->name) == 0)
+    if (target->getPlayer() != nullptr && target->getPlayerName().compare(player->name) == 0)
         return true;
     else
         return false;
@@ -210,6 +235,10 @@ void Blockade::execute() {
     else{
         cout << "Not a valid order" << endl;
     }
+}
+
+Blockade* Blockade::clone() const {
+    return new Blockade(*this);
 }
 
 //Constructor for Airlift class
@@ -237,7 +266,7 @@ class Airlift & Airlift::operator=(const Airlift &other) {
 
 //validate() method for Airlift that prints out a string and returns true
 bool Airlift::validate() {
-    if (source->getPlayerName().compare(player->name) == 0 && source->get_armies() >= armies && armies > 0)
+    if (source->getPlayer() != nullptr && source->getPlayerName().compare(player->name) == 0 && source->get_armies() >= armies && armies > 0)
         return true;
     else
         return false;
@@ -247,15 +276,67 @@ bool Airlift::validate() {
 void Airlift::execute() {
     cout << *this << endl;
     if (validate()) {
-        if (target->getPlayerName().compare(player->name) == 0)
-            target->set_armies(target->get_armies()+armies);
-        else{
-            cout << "Need to code attack" << endl;
+        if (target->getPlayer() == nullptr || target->getPlayerName().compare(player->name) != 0) {
+            int startingDefendingArmies = target->get_armies();
+            int startingArmies = armies;
+            int attackingUnitsKilled = 0;
+            int defendingUnitsKilled = 0;
+            srand((unsigned int)time(NULL));
+
+            for (int i = 0; i < armies; i++) {
+                cout << i << "   " << armies << endl;
+                if (i < armies) {
+                    int attackingKillChance = rand() % 10 + 1;
+                    cout << "Chance to kill defending: " << attackingKillChance << endl << endl << endl;
+                    if (attackingKillChance > 4) {
+                        defendingUnitsKilled++;
+                        if (defendingUnitsKilled == target->get_armies())
+                            break;
+                    }
+                }
+            for (int i = 0; i < target->get_armies(); i++) {}
+                cout << i << "   " << target->get_armies() << endl;
+                if (i < target->get_armies()) {
+                    int defendingKillChance = rand() % 10 + 1;
+                    cout << "Chance to kill attacking: " << defendingKillChance << endl << endl << endl;
+                    if (defendingKillChance > 3) {
+                        attackingUnitsKilled++;
+                        if (attackingUnitsKilled == armies)
+                            break;
+                    }
+                }
+            }
+            armies -= attackingUnitsKilled;
+            target->set_armies(target->get_armies() - defendingUnitsKilled);
+            if (armies > 0 && target->get_armies() == 0) {
+                cout << "I have conquered with an army of " << startingArmies << " by killing " << defendingUnitsKilled
+                     << " of the " << startingDefendingArmies << " units and losing " << attackingUnitsKilled
+                     << " units and being left with " << armies << " remaining!" << endl;
+                target->set_armies(armies);
+                Player* p = target->getPlayer();
+                if (p != nullptr)
+                    // Remove from territory vector of p.
+                target->setPlayer(player);
+                player->addTerritory(target);
+            }
+            else if (armies == 0 && target->get_armies() > 0)
+                cout << "I have defended with an army of " << startingDefendingArmies << " by killing "
+                     << attackingUnitsKilled << " of the " << startingArmies << " units and losing "
+                     << defendingUnitsKilled << " units and being left with " << target->get_armies() << " remaining!" << endl;
+            else {
+                //
+            }
         }
+        else
+            target->set_armies(target->get_armies() + armies);
     }
     else {
         cout << "This airlift order is not valid" << endl;
     }
+}
+
+Airlift* Airlift::clone() const {
+    return new Airlift(*this);
 }
 
 //Constructor for Negotiate class
@@ -291,6 +372,10 @@ void Negotiate::execute() {
     }
 }
 
+Negotiate* Negotiate::clone() const {
+    return new Negotiate(*this);
+}
+
 //OrdersList constructor
 OrdersList::OrdersList() {
     myList = *new vector<Order*>;
@@ -298,7 +383,9 @@ OrdersList::OrdersList() {
 
 //Copy constructor for OrderList class
 OrdersList::OrdersList(const OrdersList &orderList2) {
-    myList = orderList2.myList;
+    for (int i = 0; i < orderList2.myList.size(); i++){
+        this->myList.push_back(myList.at(i)->clone());
+    }
 }
 
 //Assignment operator for OrderList class
@@ -308,7 +395,9 @@ OrdersList& OrdersList::operator=(const OrdersList &other) {
         for (Order* order: myList) {
             delete order;
         }
-        this->myList = other.myList;
+        for (int i = 0; i < other.myList.size(); i++){
+            this->myList.push_back(other.myList.at(i)->clone());
+        }
     }
     return *this;
 }

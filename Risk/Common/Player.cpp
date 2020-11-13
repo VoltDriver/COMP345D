@@ -14,10 +14,13 @@ Player::Player() {
     this->hand = new Hand();
     this->name = "";
     this->reinforcementPool = 0;
+    this->conquered = false;
+    this->orderOfPlay = 0;
+    this->friendlyPlayers = vector<Player*>();
 }
 
 // parameterized constructors
-Player::Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand) {
+Player::Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand, int orderOfPlay) {
     this->territories = territories;
     for (int i = 0; i < territories.size(); i++){
         territories.at(i)->setPlayer(this);
@@ -26,14 +29,20 @@ Player::Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand
     this->hand = hand;
     this->name = "";
     this->reinforcementPool = 0;
+    this->conquered = false;
+    this->orderOfPlay = orderOfPlay;
+    this->friendlyPlayers = vector<Player*>();
 }
 
-Player::Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand, string name) {
+Player::Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand, string name, int orderOfPlay) {
     this->territories = territories;
     this->orders = orders;
     this->hand = hand;
     this->name = name;
     this->reinforcementPool = 0;
+    this->conquered = false;
+    this->orderOfPlay = orderOfPlay;
+    this->friendlyPlayers = vector<Player*>();
 }
 
 // copy constructor
@@ -43,6 +52,9 @@ Player::Player(const Player &p) {
     this->hand = p.hand;
     this->name = p.name;
     this->reinforcementPool = p.reinforcementPool;
+    this->conquered = p.conquered;
+    this->orderOfPlay = p.orderOfPlay;
+    this->friendlyPlayers = p.friendlyPlayers;
 }
 
 
@@ -62,6 +74,11 @@ Player::~Player() {
 void Player::addOrder(Order* order) {
     orders.push_back(order);
     cout << "order has been added to list of orders" << endl;
+}
+
+void Player::addTerritory(Territory *territory) {
+    territories.push_back(territory);
+    territory->setPlayer(this);
 }
 
 /// Prompts the player to issue an order. Returns True if an order was issued, false otherwise.
@@ -125,8 +142,8 @@ bool Player::issueOrder(Deck* deck) {
                 cin >> troopNumber;
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
-            Deploy* deployOrder = new Deploy(0);
-            addOrder(deployOrder);
+//            Deploy* deployOrder = new Deploy(0);
+//            addOrder(deployOrder);
 
             cout << "Deploy order issued." << endl;
             break;
@@ -258,10 +275,16 @@ Player& Player::operator=(const Player& p) {
     for (Order *order: orders) {
         delete order;
     }
+    for (Player* player: friendlyPlayers){
+        delete player;
+    }
     delete hand;
     this->territories = p.territories;
     this->orders = p.orders;
     this->hand = p.hand;
+    this->conquered = p.conquered;
+    this->orderOfPlay = p.orderOfPlay;
+    this->friendlyPlayers = p.friendlyPlayers;
 
     return *this;
 }
