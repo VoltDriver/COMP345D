@@ -91,10 +91,27 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
     }
     else
     {
-        // Generate a random input
-        std::uniform_int_distribution<int> distribution(0, NUMBER_OF_POSSIBLE_ACTIONS - 1);
+        list<int> possibleActions = list<int>();
 
-        actionNumber = distribution(mt);
+        // Deploy
+        if(this->reinforcementPool <= 0)
+            possibleActions.push_back(0);
+
+        // Advance
+        possibleActions.push_back(1);
+
+        // Play a card
+        if(this->hand->remainingCards() <= 0)
+            possibleActions.push_back(2);
+
+        // End turn
+        possibleActions.push_back(3);
+
+        // Generate a random input
+        std::uniform_int_distribution<int> distribution(0, possibleActions.size() - 1);
+
+        auto iterator = std::next(possibleActions.begin(), distribution(mt));
+        actionNumber = *iterator ;
     }
 
     // Depending on which action was chosen, create an appropriate order.
@@ -114,6 +131,8 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
             }
 
             // Generate a random input
+            int mapSize = 1;
+
             std::uniform_int_distribution<int> distribution(0,territoryToNumberMap.size() - 1);
 
             int territoryChoice = distribution(mt);
@@ -244,13 +263,34 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap) {
     }
     else
     {
-        cout << "0: Deploy " << endl;
+        list<int> possibleActions = list<int>();
+
+        // Deploy
+        if(this->reinforcementPool <= 0)
+        {
+            possibleActions.push_back(0);
+            cout << "0: Deploy " << endl;
+        }
+
+        // Advance
+        possibleActions.push_back(1);
         cout << "1: Advance " << endl;
-        cout << "2: Play a card" << endl;
+
+        // Play a card
+        if(this->hand->remainingCards() <= 0)
+        {
+            possibleActions.push_back(2);
+            cout << "2: Play a card" << endl;
+        }
+
+        // End turn
+        possibleActions.push_back(3);
         cout << "3: End your turn." << endl;
 
         // Validate input.
-        while(actionNumber<0 || actionNumber >= NUMBER_OF_POSSIBLE_ACTIONS)
+        while(actionNumber<0 ||
+        actionNumber >= NUMBER_OF_POSSIBLE_ACTIONS ||
+        (std::find(possibleActions.begin(), possibleActions.end(), actionNumber) != possibleActions.end()))
             cin >> actionNumber;
     }
 
