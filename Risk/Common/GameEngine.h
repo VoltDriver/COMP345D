@@ -6,6 +6,7 @@
 #include <map>
 #include <string>
 #include <iostream>
+
 #include "Player.h"
 #include "Orders.h"
 #include "Map.h"
@@ -13,9 +14,7 @@
 #include "GameObservers.h"
 
 class Player;
-
 class Deck;
-
 class Map;
 
 
@@ -45,12 +44,22 @@ class GameEngine: public Subject {
         bool stat_observer_flag;
         friend ostream& operator<<(ostream&, const GameEngine&);
 
+        static string map_select();
+        static int player_select();
+        static pair<bool, bool> observer_settings();
+
     public:
+        // Constants
+        static const int MINIMUM_REINFORCEMENT;
+        static const char * MAP_DIRECTORY;
+
         void mainGameLoop();
         void issueOrdersPhase();
         // TODO: STUB METHOD. To be implemented.
         void startupPhase();
         void gameStart(bool verbose = false);
+        void gameStart_Auto(string map = "test_success1.map",
+                            int player_count = 5, bool phase_observer = true, bool stat_observer = true);
         void reinforcementPhase();
         void executeOrdersPhase();
 

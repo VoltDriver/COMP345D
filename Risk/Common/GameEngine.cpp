@@ -13,14 +13,14 @@ namespace fs = std::filesystem;
 using namespace std;
 
 /// Constitutes the minimum amount of reinforcement per turn per player.
-const int MINIMUM_REINFORCEMENT = 3;
+const int GameEngine::MINIMUM_REINFORCEMENT = 3;
+const char * GameEngine::MAP_DIRECTORY = "../Resource/";
 
 /**
  * Displays available map names in Resource directory then prompts user for selection
  * @return Chosen map file name
  */
-string map_select() {
-    const string MAP_DIRECTORY = "../Resource/";
+string GameEngine::map_select() {
     vector<string> maps;
 
     cout << "============== MAP SELECT ==============" << endl;
@@ -57,7 +57,7 @@ string map_select() {
  * Prompts user for number of players. 2-5
  * @return chosen number of players
  */
-int player_select() {
+int GameEngine::player_select() {
     const uint16_t MAX_PLAYERS = 5;
     const uint16_t MIN_PLAYERS = 2;
 
@@ -86,7 +86,7 @@ int player_select() {
  * Prompts user to enable or disable implemented game observers
  * @return Pair containing user selection <phase_observer, stats_observer>
  */
-pair<bool, bool> observer_settings() {
+pair<bool, bool> GameEngine::observer_settings() {
     char input;
     bool error = false, observer_phase = false, observer_stats = false;
 
@@ -128,8 +128,46 @@ pair<bool, bool> observer_settings() {
     return make_pair(observer_phase, observer_stats);
 }
 
+void GameEngine::gameStart_Auto(string map, int player_count, bool phase_observer, bool stat_observer) {
+    this->phase_observer_flag = phase_observer;
+    this->stat_observer_flag = stat_observer;
+
+    // Load and set map
+    try {
+        this->map = MapLoader::parse(MAP_DIRECTORY + map, false);
+    } catch (const std::exception &e) {
+        cout << e.what() << endl;
+
+        throw exception("Invalid map specified");
+    }
+
+    // Create and set players
+    for (int i = 1; i <= player_count; i++) {
+        string name = "Player " + std::to_string(i);
+        this->players.emplace_back(name);
+    }
+
+    // Create and set the deck
+    this->deck = new Deck();
+
+    cout << "\n\n=========== DEBUG OUTPUT ==========" << endl;
+    cout << "Selected map: " << map << endl;
+    cout << "Player count: " << player_count << endl;
+    cout << "Phase obserber: " << (phase_observer ? "Enabled" : "Disabled") << endl;
+    cout << "Stat obserber: " << (stat_observer ? "Enabled" : "Disabled") << endl;
+
+    cout << "> Running map validation..." << endl;
+    // Validate map
+    //this->map->validate();
+    auto temp_map = MapLoader::parse(MAP_DIRECTORY + map);
+    delete temp_map;
+
+    // Cards
+    cout << "The Deck contains " << this->deck->remainingCards() << " cards." << endl;
+    cout << "===================================" << endl;
+}
+
 void GameEngine::gameStart(bool verbose) {
-    const string MAP_DIRECTORY = "../Resource/";
 
     // Display and choose map
     string map_filename = map_select();
@@ -162,14 +200,15 @@ void GameEngine::gameStart(bool verbose) {
     if (verbose) {
         cout << "\n\n=========== DEBUG OUTPUT ==========" << endl;
         // Validate map
-        cout << "Running map validation..." << endl;
+        cout << "> Running map validation..." << endl;
         //this->map->validate();
-        auto temp_map = MapLoader::parse(MAP_DIRECTORY + map_filename);
+        auto temp_map = MapLoader::parse(MAP_DIRECTORY  + map_filename);
         delete temp_map;
 
         // Right number of players/Cards
-        cout << "> There are " << this->players.size() << " player objects." << endl;
-        cout << "> The Deck contains " << this->deck->remainingCards() << " cards." << endl;
+        cout << "There are " << this->players.size() << " player objects." << endl;
+        cout << "The Deck contains " << this->deck->remainingCards() << " cards." << endl;
+        cout << "===================================" << endl;
     }
 }
 
