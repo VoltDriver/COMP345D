@@ -13,7 +13,7 @@ int main() {
         PhaseObserver *phaseView = new PhaseObserver(engine);
     }
     if(engine->getStat_observer_flag()) {
-
+        StatsObserver *statsView = new StatsObserver(engine);
     }
 
     engine->mainGameLoop();

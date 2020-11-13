@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
+#include "GameObservers.h"
 
 using namespace std;
 
