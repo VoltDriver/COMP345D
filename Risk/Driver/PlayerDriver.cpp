@@ -24,10 +24,10 @@ int main() {
     hand1->addCard(*card1);
 
     // creating a player object
-    auto *player1 = new Player(territories, orders, hand1);
+    auto *player1 = new Player(territories, orders, hand1, 0);
 
     // adding order to list of orders
-    auto *ord2 = new Deploy(id.setID());
+    auto *ord2 = new Deploy(id.setID(), 2, territories.at(0), player1);
     player1->addOrder(ord2);
 
     // return list of territories

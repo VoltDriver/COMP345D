@@ -1,5 +1,4 @@
 #include <iostream>
-#include <string>
 #include <map>
 #include <set>
 #include <random>
@@ -17,6 +16,9 @@ Player::Player() {
     this->hand = new Hand();
     this->name = "";
     this->reinforcementPool = 0;
+    this->conquered = false;
+    this->orderOfPlay = 0;
+    this->friendlyPlayers = vector<Player*>();
 }
 
 // parameterized constructors
@@ -28,20 +30,30 @@ Player::Player(string name) {
     this->reinforcementPool = 0;
 }
 
-Player::Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand) {
+
+Player::Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand, int orderOfPlay) {
     this->territories = territories;
+    for (int i = 0; i < territories.size(); i++){
+        territories.at(i)->setPlayer(this);
+    }
     this->orders = orders;
     this->hand = hand;
     this->name = "";
     this->reinforcementPool = 0;
+    this->conquered = false;
+    this->orderOfPlay = orderOfPlay;
+    this->friendlyPlayers = vector<Player*>();
 }
 
-Player::Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand, string name) {
+Player::Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand, string name, int orderOfPlay) {
     this->territories = territories;
     this->orders = orders;
     this->hand = hand;
     this->name = name;
     this->reinforcementPool = 0;
+    this->conquered = false;
+    this->orderOfPlay = orderOfPlay;
+    this->friendlyPlayers = vector<Player*>();
 }
 
 // copy constructor
@@ -51,6 +63,9 @@ Player::Player(const Player &p) {
     this->hand = p.hand;
     this->name = p.name;
     this->reinforcementPool = p.reinforcementPool;
+    this->conquered = p.conquered;
+    this->orderOfPlay = p.orderOfPlay;
+    this->friendlyPlayers = p.friendlyPlayers;
 }
 
 
@@ -62,6 +77,9 @@ Player::~Player() {
     for (Order *order: orders) {
         delete order;
     }
+    for (Player* player: friendlyPlayers){
+        delete player;
+    }
     delete hand;
 }
 
@@ -71,6 +89,30 @@ void Player::addOrder(Order* order) {
     orders.push_back(order);
     cout << "order has been added to list of orders" << endl;
 }
+
+void Player::addTerritory(Territory *territory) {
+    territories.push_back(territory);
+    territory->setPlayer(this);
+}
+
+void Player::removeTerritory(Territory *territory) {
+    for (int i = 0; i < territories.size() ; i++){
+        if (territories.at(i)->get_id() == territory->get_id()) {
+            territories.erase(territories.begin() + i);
+            territories.shrink_to_fit();
+        }
+    }
+}
+
+int Player::getReinforcementPool() {
+    return reinforcementPool;
+}
+
+void Player::setReinforcementPool(int reinforcementPool) {
+    this->reinforcementPool = reinforcementPool;
+}
+
+/// Prompts the player to issue an order. Returns True if an order was issued, false otherwise.
 
 /**
  * Makes a player issue an order. This is meant to be used by an AI player.
@@ -142,8 +184,8 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
             int troopNumber = distributionTroops(mt);
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
-            Deploy* deployOrder = new Deploy(0);
-            addOrder(deployOrder);
+//            Deploy* deployOrder = new Deploy(0);
+//            addOrder(deployOrder);
 
             cout << "Deploy order issued." << endl;
             break;
@@ -326,8 +368,8 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap) {
                 cin >> troopNumber;
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
-            Deploy* deployOrder = new Deploy(0);
-            addOrder(deployOrder);
+//            Deploy* deployOrder = new Deploy(0);
+//            addOrder(deployOrder);
 
             cout << "Deploy order issued." << endl;
             break;
@@ -449,7 +491,7 @@ vector<Territory *> Player::to_attack() {
         for(Territory* adj : t->get_bordering_territory())
         {
             // ... that aren't ours.
-            if(adj->get_player() != this)
+            if(adj->getPlayer() != this)
                 territoriesToAttack.emplace(adj);
         }
     }
@@ -465,9 +507,6 @@ vector<Territory *> Player::to_attack() {
     return setToVector;
 }
 
-int Player::getReinforcementPool() {
-    return reinforcementPool;
-}
 
 /* Overloads */
 //stream insertion operator
@@ -497,10 +536,16 @@ Player& Player::operator=(const Player& p) {
     for (Order *order: orders) {
         delete order;
     }
+    for (Player* player: friendlyPlayers){
+        delete player;
+    }
     delete hand;
     this->territories = p.territories;
     this->orders = p.orders;
     this->hand = p.hand;
+    this->conquered = p.conquered;
+    this->orderOfPlay = p.orderOfPlay;
+    this->friendlyPlayers = p.friendlyPlayers;
 
     return *this;
 }

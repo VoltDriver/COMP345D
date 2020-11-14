@@ -7,7 +7,6 @@
 #include <cmath>
 
 class Player;
-class Map;
 
 /**
  * Enum containing the different types of card available to be drawn from the deck.

@@ -8,6 +8,7 @@
 
 class Card;
 class Hand;
+class Order;
 class Deck;
 
 using namespace std;
@@ -21,6 +22,9 @@ private:
     vector<Order*> orders;
     int reinforcementPool;
     friend ostream& operator<<(ostream&, const Player&);
+    bool conquered;
+    vector<Player*> friendlyPlayers;
+    int orderOfPlay;
 
 public:
     string name;
@@ -29,23 +33,27 @@ public:
     /* Constructors */
     Player();
     Player(string name);
-    explicit Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand);
-    explicit Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand, string name);
+    explicit Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand, int orderOfPlay);
+    explicit Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand, string name, int orderOfPlay);
     Player(const Player &p);
 
     /* Destructor */
     ~Player();
 
     /* Methods */
+    int getReinforcementPool();
+    void setReinforcementPool(int reinforcementPool);
     vector<Territory*> to_defend();
     vector<Territory*> to_attack();
     void addOrder(Order* order);
     bool issueOrder(Deck* deck, Map* territoriesMap);
     bool issueOrderHuman(Deck* deck, Map* territoriesMap);
-    int getReinforcementPool();
+    void addTerritory(Territory* territory);
+    void removeTerritory(Territory* territory);
+    bool issueOrder(Deck* deck);
 
 
-    /* Overloads */
+    /* Overloaders */
     Player& operator=(const Player &p);
 
     /* Friend classes */

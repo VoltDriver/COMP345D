@@ -189,7 +189,7 @@ void Card::playHuman(Player* player, Deck* deck, Map* map) {
                 cin >> territoryChoice;
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
-            auto* bombOrder = new class::Bomb(id.setID());
+            auto* bombOrder = new class::Bomb(id.setID(), territoryToNumberMap.at(territoryChoice), player);
             player->addOrder(bombOrder);
 
             cout << "Bomb order issued." << endl;
@@ -224,7 +224,7 @@ void Card::playHuman(Player* player, Deck* deck, Map* map) {
                 cin >> territoryChoice;
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
-            auto* blockadeOrder = new class::Blockade(id.setID());
+            auto* blockadeOrder = new class::Blockade(id.setID(), territoryToNumberMap.at(territoryChoice), player);
             player->addOrder(blockadeOrder);
 
             cout << "Blockade order issued." << endl;
@@ -289,7 +289,7 @@ void Card::playHuman(Player* player, Deck* deck, Map* map) {
                 cin >> destinationTerritoryChoice;
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
-            auto* airliftOrder = new class::Airlift(id.setID());
+            auto* airliftOrder = new class::Airlift(id.setID(), troopNumber, sourceTerritoryToNumberMap.at(sourceTerritoryChoice), destinationTerritoryToNumberMap.at(destinationTerritoryChoice), player);
             player->addOrder(airliftOrder);
 
             cout << "Airlift order issued." << endl;
