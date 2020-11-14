@@ -25,7 +25,7 @@ int main(){
 //    Bomb *bomb = new Bomb(id.setID(), target, player);
 //    Blockade *blockade = new Blockade(id.setID(), target, player);
     cout << "hello" << endl;
-    Airlift *airlift = new Airlift(id.setID(), armies, source, target, player);
+    class Airlift *airlift = new class Airlift(id.setID(), armies, source, target, player);
     airlift->execute();
 //    Negotiate *negotiate = new Negotiate(id.setID());
 

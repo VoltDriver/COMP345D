@@ -196,7 +196,7 @@ void Bomb::execute() {
     }
 }
 
-Bomb* Bomb::clone() const {
+class Bomb* Bomb::clone() const {
     return new Bomb(*this);
 }
 
@@ -241,7 +241,7 @@ void Blockade::execute() {
     }
 }
 
-Blockade* Blockade::clone() const {
+class Blockade* Blockade::clone() const {
     return new Blockade(*this);
 }
 
@@ -344,7 +344,7 @@ void Airlift::execute() {
     }
 }
 
-Airlift* Airlift::clone() const {
+class Airlift* Airlift::clone() const {
     return new Airlift(*this);
 }
 

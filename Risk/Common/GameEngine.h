@@ -16,6 +16,7 @@
 class Player;
 class Deck;
 class Map;
+class Continent;
 
 
 class ContinentOwnership_DataObject {

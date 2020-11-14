@@ -15,6 +15,7 @@ enum CardType{ Bomb, Reinforcement, Blockade, Airlift, Diplomacy};
 
 class Hand;
 class Deck;
+class Map;
 
 /**
  * Represents a playable card, that can create a special order once played.

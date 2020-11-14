@@ -56,7 +56,7 @@ void Card::play(Player* player, Deck* deck, Map* map) {
             int territoryChoice = distribution(mt);
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
-            auto* bombOrder = new class::Bomb(id.setID());
+            auto* bombOrder = new class::Bomb(id.setID(), player->to_attack().at(territoryChoice), player);
             player->addOrder(bombOrder);
 
             cout << "Bomb order issued." << endl;
@@ -87,7 +87,7 @@ void Card::play(Player* player, Deck* deck, Map* map) {
             int territoryChoice = distribution(mt);
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
-            auto* blockadeOrder = new class::Blockade(id.setID());
+            auto* blockadeOrder = new class::Blockade(id.setID(), player->to_defend().at(territoryChoice), player);
             player->addOrder(blockadeOrder);
 
             cout << "Blockade order issued." << endl;
@@ -134,7 +134,7 @@ void Card::play(Player* player, Deck* deck, Map* map) {
             int destinationTerritoryChoice = distributionDestination(mt);
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
-            auto* airliftOrder = new class::Airlift(id.setID());
+            auto* airliftOrder = new class::Airlift(id.setID(), 0, player->to_defend().at(sourceTerritoryChoice), map->territories.at(destinationTerritoryChoice), player);
             player->addOrder(airliftOrder);
 
             cout << "Airlift order issued." << endl;
@@ -266,7 +266,7 @@ void Card::playHuman(Player* player, Deck* deck, Map* map) {
             // Advancing to any territory
             for(Territory* t : map->territories)
             {
-                if(t->get_player() != player)
+                if(t->getPlayer() != player)
                 {
                     destinationTerritoryToNumberMap[counter2] = t;
                     cout << counter2 << ": " << t->get_name() << " (" << t->get_armies() << " troops)" << endl;
