@@ -32,13 +32,13 @@ public:
 
 //Deploy class extends Order class
 class Deploy: public Order{
+    int armies;
+    Territory* target;
+    Player* player;
 public:
     Deploy(int anID, int armies, Territory* target, Player* player);
     Deploy(const Deploy &deploy2);
     Deploy& operator=(const Deploy& other);
-    int armies;
-    Territory* target;
-    Player* player;
 
     Deploy* clone() const;
     bool validate();
@@ -59,12 +59,12 @@ public:
 
 //Bomb class extends Order class
 class Bomb:public Order{
+    Territory* target;
+    Player* player;
 public:
     Bomb(int anID, Territory* target, Player* player);
     Bomb(const Bomb &bomb2);
     Bomb& operator=(const Bomb& other);
-    Territory* target;
-    Player* player;
 
     Bomb* clone() const;
     bool validate();
@@ -73,12 +73,13 @@ public:
 
 //Blockade class extends Order class
 class Blockade:public Order{
+private:
+    Territory* target;
+    Player* player;
 public:
     Blockade(int anID, Territory* target, Player* player);
     Blockade(const Blockade &blockade2);
     Blockade& operator=(const Blockade& other);
-    Territory* target;
-    Player* player;
 
     Blockade* clone() const;
     bool validate();
@@ -87,14 +88,14 @@ public:
 
 //Airlift class extends Order class
 class Airlift:public Order{
-public:
-    Airlift(int anID, int armies, Territory* source, Territory* target, Player* player);
-    Airlift(const Airlift &airlift2);
-    Airlift& operator=(const Airlift& other);
     int armies;
     Territory* source;
     Territory* target;
     Player* player;
+public:
+    Airlift(int anID, int armies, Territory* source, Territory* target, Player* player);
+    Airlift(const Airlift &airlift2);
+    Airlift& operator=(const Airlift& other);
 
     Airlift* clone() const;;
     bool validate();

@@ -66,6 +66,9 @@ Player::~Player() {
     for (Order *order: orders) {
         delete order;
     }
+    for (Player* player: friendlyPlayers){
+        delete player;
+    }
     delete hand;
 }
 
@@ -79,6 +82,23 @@ void Player::addOrder(Order* order) {
 void Player::addTerritory(Territory *territory) {
     territories.push_back(territory);
     territory->setPlayer(this);
+}
+
+void Player::removeTerritory(Territory *territory) {
+    for (int i = 0; i < territories.size() ; i++){
+        if (territories.at(i)->get_id() == territory->get_id()) {
+            territories.erase(territories.begin() + i);
+            territories.shrink_to_fit();
+        }
+    }
+}
+
+int Player::getReinforcementPool() {
+    return reinforcementPool;
+}
+
+void Player::setReinforcementPool(int reinforcementPool) {
+    this->reinforcementPool = reinforcementPool;
 }
 
 /// Prompts the player to issue an order. Returns True if an order was issued, false otherwise.

@@ -38,10 +38,13 @@ public:
     ~Player();
 
     /* Methods */
+    int getReinforcementPool();
+    void setReinforcementPool(int reinforcementPool);
     vector<Territory*> to_defend();
     vector<Territory*> to_attack();
     void addOrder(Order* order);
     void addTerritory(Territory* territory);
+    void removeTerritory(Territory* territory);
     bool issueOrder(Deck* deck);
 
 

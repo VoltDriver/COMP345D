@@ -90,8 +90,10 @@ Deploy& Deploy::operator=(const Deploy &other) {
 //validate() method for Deploy that prints out a string and returns true
 bool Deploy::validate() {
     if (target->getPlayer() != nullptr)
-        if (target->getPlayerName().compare(player->name) == 0 && armies > 0)
+        if (target->getPlayerName().compare(player->name) == 0 && armies > 0 && armies <= player->getReinforcementPool())
             return true;
+        else
+            return false;
     else
         return false;
 }
@@ -101,6 +103,7 @@ void Deploy::execute() {
     cout << *this << endl;
     if (validate()){
         target->set_armies(target->get_armies()+armies);
+        player->setReinforcementPool(player->getReinforcementPool()-armies);
     }
     else{
         cout << "This deploy order is not valid";
@@ -206,6 +209,7 @@ Blockade::Blockade(int anID, Territory* target, Player* player) : Order(anID){
 
 //Copy constructor for Blockade class
 Blockade::Blockade(const Blockade &blockade2) : Order(blockade2) {
+    this->description = blockade2.description;
     this->target = blockade2.target;
     this->player = blockade2.player;
 }
@@ -252,6 +256,7 @@ Airlift::Airlift(int anID, int armies, Territory* source, Territory* target, Pla
 
 //Copy constructor for Airlift class
 Airlift::Airlift(const Airlift &airlift2) : Order(airlift2) {
+    this->description = airlift2.description;
     this->armies = airlift2.armies;
     this->source = airlift2.source;
     this->target = airlift2.target;
@@ -277,6 +282,7 @@ void Airlift::execute() {
     cout << *this << endl;
     if (validate()) {
         if (target->getPlayer() == nullptr || target->getPlayerName().compare(player->name) != 0) {
+            source->set_armies(source->get_armies()-armies);
             int startingDefendingArmies = target->get_armies();
             int startingArmies = armies;
             int attackingUnitsKilled = 0;
@@ -285,26 +291,23 @@ void Airlift::execute() {
 
             for (int i = 0; i < armies; i++) {
                 cout << i << "   " << armies << endl;
-                if (i < armies) {
-                    int attackingKillChance = rand() % 10 + 1;
-                    cout << "Chance to kill defending: " << attackingKillChance << endl << endl << endl;
-                    if (attackingKillChance > 4) {
-                        defendingUnitsKilled++;
-                        if (defendingUnitsKilled == target->get_armies())
-                            break;
-                    }
+                int attackingKillChance = rand() % 10 + 1;
+                cout << "Chance to kill defending: " << attackingKillChance << endl << endl << endl;
+                if (attackingKillChance > 4) {
+                    defendingUnitsKilled++;
+                    if (defendingUnitsKilled == target->get_armies())
+                        break;
                 }
-            for (int i = 0; i < target->get_armies(); i++) {}
+            }
+            for (int i = 0; i < target->get_armies(); i++) {
                 cout << i << "   " << target->get_armies() << endl;
-                if (i < target->get_armies()) {
-                    int defendingKillChance = rand() % 10 + 1;
-                    cout << "Chance to kill attacking: " << defendingKillChance << endl << endl << endl;
-                    if (defendingKillChance > 3) {
-                        attackingUnitsKilled++;
-                        if (attackingUnitsKilled == armies)
-                            break;
+                int defendingKillChance = rand() % 10 + 1;
+                cout << "Chance to kill attacking: " << defendingKillChance << endl << endl << endl;
+                if (defendingKillChance > 3) {
+                    attackingUnitsKilled++;
+                    if (attackingUnitsKilled == armies)
+                        break;
                     }
-                }
             }
             armies -= attackingUnitsKilled;
             target->set_armies(target->get_armies() - defendingUnitsKilled);
@@ -314,15 +317,21 @@ void Airlift::execute() {
                      << " units and being left with " << armies << " remaining!" << endl;
                 target->set_armies(armies);
                 Player* p = target->getPlayer();
-                if (p != nullptr)
-                    // Remove from territory vector of p.
+                if (p != nullptr) {
+                    p->removeTerritory(target);
+                    target->setPlayer(nullptr);
+                    p = nullptr;
+                }
                 target->setPlayer(player);
                 player->addTerritory(target);
             }
-            else if (armies == 0 && target->get_armies() > 0)
+            else if (target->get_armies() > 0) {
                 cout << "I have defended with an army of " << startingDefendingArmies << " by killing "
                      << attackingUnitsKilled << " of the " << startingArmies << " units and losing "
-                     << defendingUnitsKilled << " units and being left with " << target->get_armies() << " remaining!" << endl;
+                     << defendingUnitsKilled << " units and being left with " << target->get_armies() << " remaining!"
+                     << endl;
+                source->set_armies(source->get_armies() + armies);
+            }
             else {
                 //
             }
