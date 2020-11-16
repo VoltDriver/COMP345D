@@ -588,3 +588,9 @@ string GameEngine::getPhase() {
     return phase;
 }
 
+void GameEngine::start() {
+    gameStart(false);
+    startupPhase();
+    mainGameLoop();
+}
+

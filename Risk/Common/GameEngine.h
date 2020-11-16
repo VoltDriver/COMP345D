@@ -56,13 +56,13 @@ class GameEngine: public Subject {
 
         void mainGameLoop();
         void issueOrdersPhase();
-        // TODO: STUB METHOD. To be implemented.
         void startupPhase();
         void gameStart(bool verbose = false);
         void gameStart_Auto(string map = "test_success1.map",
                             int player_count = 5, bool phase_observer = true, bool stat_observer = true);
         void reinforcementPhase();
         void executeOrdersPhase();
+        void start();
 
         GameEngine& operator=(const GameEngine &g);
         GameEngine();
