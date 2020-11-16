@@ -218,12 +218,15 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
             // Choosing a starting point
             std::map<int, Territory*> sourceTerritoryToNumberMap = map<int, Territory*>();
             int counter = 0;
+
             for(Territory* t : this->to_defend())
             {
-                sourceTerritoryToNumberMap[counter] = t;
-
-                cout << counter << ": " << t->get_name() << " (" << t->get_armies() << " troops)" << endl;
-                counter++;
+                // We can choose a starting point only if it has any armies.
+                if(t->get_armies() > 0)
+                {
+                    sourceTerritoryToNumberMap[counter] = t;
+                    counter++;
+                }
             }
 
             // Generate a random input
@@ -322,7 +325,7 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap) {
     // If some reinforcements are left in the pool of the player, he can only take deploy actions.
     if(this->uncommittedReinforcementPool > 0)
     {
-        // Deploy.
+        // Deploy
         cout << "0: Deploy " << endl;
         cout << "(You have " << this->uncommittedReinforcementPool << " reinforcements left in your pool. You must deploy them before issuing any other order." << endl;
 
@@ -397,7 +400,6 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap) {
             while(troopNumber<0 || troopNumber > this->uncommittedReinforcementPool)
                 cin >> troopNumber;
 
-            // TODO: Create the order properly... And implement a constructor that makes them automatically.
             auto* deployOrder = new Deploy(generator.setID(), troopNumber, territoryToNumberMap[territoryChoice], this);
             addOrder(deployOrder);
 
@@ -417,10 +419,14 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap) {
             int counter = 0;
             for(Territory* t : to_defend())
             {
-                sourceTerritoryToNumberMap[counter] = t;
+                // We can choose a starting point only if there are armies in it.
+                if(t->get_armies() > 0)
+                {
+                    sourceTerritoryToNumberMap[counter] = t;
 
-                cout << counter << ": " << t->get_name() << " (" << t->get_armies() << " troops)" << endl;
-                counter++;
+                    cout << counter << ": " << t->get_name() << " (" << t->get_armies() << " troops)" << endl;
+                    counter++;
+                }
             }
 
             // Read input and validate it.

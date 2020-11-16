@@ -54,7 +54,6 @@ void Card::play(Player* player, Deck* deck, Map* map) {
             std::uniform_int_distribution<int> distribution(0,territoryToNumberMap.size() - 1);
             int territoryChoice = distribution(mt);
 
-            // TODO: Create the order properly... And implement a constructor that makes them automatically.
             auto* bombOrder = new class::Bomb(id.setID(), territoryToNumberMap[territoryChoice], player);
             player->addOrder(bombOrder);
 
@@ -86,7 +85,6 @@ void Card::play(Player* player, Deck* deck, Map* map) {
 
             int territoryChoice = distribution(mt);
 
-            // TODO: Create the order properly... And implement a constructor that makes them automatically.
             auto* blockadeOrder = new class::Blockade(id.setID(), territoryToNumberMap[territoryChoice], player);
             player->addOrder(blockadeOrder);
 
@@ -101,10 +99,13 @@ void Card::play(Player* player, Deck* deck, Map* map) {
             int counter = 0;
             for(Territory* t : player->to_defend())
             {
-                sourceTerritoryToNumberMap[counter] = t;
+                // We can only choose a territory that has armies as a starting point.
+                if(t->get_armies() > 0) {
+                    sourceTerritoryToNumberMap[counter] = t;
 
-                cout << counter << ": " << t->get_name() << " (" << t->get_armies() << " troops)" << endl;
-                counter++;
+                    cout << counter << ": " << t->get_name() << " (" << t->get_armies() << " troops)" << endl;
+                    counter++;
+                }
             }
 
             // Generate a random input
@@ -133,7 +134,6 @@ void Card::play(Player* player, Deck* deck, Map* map) {
 
             int destinationTerritoryChoice = distributionDestination(mt);
 
-            // TODO: Create the order properly... And implement a constructor that makes them automatically.
             auto* airliftOrder = new class::Airlift(id.setID(), 0, sourceTerritoryToNumberMap[sourceTerritoryChoice],
                     destinationTerritoryToNumberMap[destinationTerritoryChoice], player);
             player->addOrder(airliftOrder);
