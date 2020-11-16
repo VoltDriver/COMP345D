@@ -433,6 +433,10 @@ void GameEngine::reinforcementPhase() {
 
         // Place the reinforcements in the players' pools.
         player.reinforcementPool += reinforcement;
+
+        // Adjust the uncommitted reinforcement pool of the player
+        player.uncommittedReinforcementPool += reinforcement;
+
         Subject::notify();   // Reinforcement Phase
     }
 }

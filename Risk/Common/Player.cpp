@@ -16,6 +16,7 @@ Player::Player() {
     this->hand = new Hand();
     this->name = "";
     this->reinforcementPool = 0;
+    this->uncommittedReinforcementPool = 0;
     this->conquered = false;
     this->orderOfPlay = 0;
     this->friendlyPlayers = vector<Player*>();
@@ -28,6 +29,7 @@ Player::Player(string name) {
     this->hand = new Hand();
     this->name = name;
     this->reinforcementPool = 0;
+    this->uncommittedReinforcementPool = 0;
 }
 
 
@@ -40,6 +42,7 @@ Player::Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand
     this->hand = hand;
     this->name = "";
     this->reinforcementPool = 0;
+    this->uncommittedReinforcementPool = 0;
     this->conquered = false;
     this->orderOfPlay = orderOfPlay;
     this->friendlyPlayers = vector<Player*>();
@@ -51,6 +54,7 @@ Player::Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand
     this->hand = hand;
     this->name = name;
     this->reinforcementPool = 0;
+    this->uncommittedReinforcementPool = 0;
     this->conquered = false;
     this->orderOfPlay = orderOfPlay;
     this->friendlyPlayers = vector<Player*>();
@@ -63,6 +67,7 @@ Player::Player(const Player &p) {
     this->hand = p.hand;
     this->name = p.name;
     this->reinforcementPool = p.reinforcementPool;
+    this->uncommittedReinforcementPool = p.uncommittedReinforcementPool;
     this->conquered = p.conquered;
     this->orderOfPlay = p.orderOfPlay;
     this->friendlyPlayers = p.friendlyPlayers;
@@ -104,13 +109,21 @@ void Player::removeTerritory(Territory *territory) {
     }
 }
 
-int Player::getReinforcementPool() {
+int Player::getReinforcementPool() const {
     return reinforcementPool;
 }
 
-void Player::setReinforcementPool(int reinforcementPool) {
-    this->reinforcementPool = reinforcementPool;
+void Player::setReinforcementPool(int newPool) {
+    this->reinforcementPool = newPool;
 }
+
+int Player::getUncommittedReinforcementPool() const {
+    return uncommittedReinforcementPool;
+}
+void Player::setUncommittedReinforcementPool(int newPool) {
+    this->uncommittedReinforcementPool = newPool;
+}
+
 
 /// Prompts the player to issue an order. Returns True if an order was issued, false otherwise.
 
@@ -126,8 +139,11 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
     std::random_device randomDevice;
     std::mt19937 mt(randomDevice());
 
+    // ID Generator
+    ID generator = ID();
+
     // If some reinforcements are left in the pool of the player, he can only take deploy actions.
-    if(this->reinforcementPool > 0)
+    if(this->uncommittedReinforcementPool > 0)
     {
         // Deploy
         actionNumber = 0;
@@ -137,7 +153,16 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
         list<int> possibleActions = list<int>();
 
         // Advance
-        possibleActions.push_back(1);
+        bool advanceAllowed = false;
+        // Checking if an advance can be done
+        for(Territory* t : territories)
+        {
+            if(t->get_armies() > 0)
+                advanceAllowed = true;
+        }
+
+        if(advanceAllowed)
+            possibleActions.push_back(1);
 
         // Play a card
         if(this->hand->remainingCards() > 0)
@@ -170,21 +195,22 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
             }
 
             // Generate a random input
-            int mapSize = 1;
-
             std::uniform_int_distribution<int> distribution(0,territoryToNumberMap.size() - 1);
 
             int territoryChoice = distribution(mt);
 
             // Generate a random input
-            std::uniform_int_distribution<int> distributionTroops(1,this->reinforcementPool);
+            std::uniform_int_distribution<int> distributionTroops(1,this->uncommittedReinforcementPool);
             int troopNumber = distributionTroops(mt);
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
-//            Deploy* deployOrder = new Deploy(0);
-//            addOrder(deployOrder);
+            auto* deployOrder = new Deploy(generator.setID(), troopNumber, territoryToNumberMap[territoryChoice], this);
+            addOrder(deployOrder);
 
             cout << "Deploy order issued." << endl;
+
+            // Adjust the uncommitted reinforcement pool.
+            this->uncommittedReinforcementPool -= troopNumber;
             break;
         }
         case 1:
@@ -241,7 +267,7 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
             int destinationTerritoryChoice = distributionDestination(mt);
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
-            Advance* advanceOrder = new Advance(0);
+            Advance* advanceOrder = new Advance(generator.setID());
             addOrder(advanceOrder);
 
             cout << "Advance order issued." << endl;
@@ -292,12 +318,15 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap) {
     cout << this->name << ", which order would you like to issue? (input the number)" << endl;
     cout << "List of possible orders:" << endl;
 
+    // ID Generator
+    ID generator = ID();
+
     // If some reinforcements are left in the pool of the player, he can only take deploy actions.
-    if(this->reinforcementPool > 0)
+    if(this->uncommittedReinforcementPool > 0)
     {
         // Deploy.
         cout << "0: Deploy " << endl;
-        cout << "(You have " << this->reinforcementPool << " reinforcements left in your pool. You must deploy them before issuing any other order." << endl;
+        cout << "(You have " << this->uncommittedReinforcementPool << " reinforcements left in your pool. You must deploy them before issuing any other order." << endl;
 
         // Validate input.
         while(actionNumber != 0)
@@ -308,8 +337,18 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap) {
         list<int> possibleActions = list<int>();
 
         // Advance
-        possibleActions.push_back(1);
-        cout << "1: Advance " << endl;
+        bool advanceAllowed = false;
+        // Checking if an advance can be done
+        for(Territory* t : territories)
+        {
+            if(t->get_armies() > 0)
+                advanceAllowed = true;
+        }
+
+        if(advanceAllowed) {
+            possibleActions.push_back(1);
+            cout << "1: Advance " << endl;
+        }
 
         // Play a card
         if(this->hand->remainingCards() > 0)
@@ -353,18 +392,21 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap) {
             while(territoryChoice<0 || territoryChoice > to_defend().size())
                 cin >> territoryChoice;
 
-            cout << "How many troops would you like to deploy? (" << this->reinforcementPool << " remaining in your reinforcement pool.)" << endl;
+            cout << "How many troops would you like to deploy? (" << this->uncommittedReinforcementPool << " remaining in your reinforcement pool.)" << endl;
 
             // Read input and validate it.
             int troopNumber = -1;
-            while(troopNumber<0 || troopNumber > this->reinforcementPool)
+            while(troopNumber<0 || troopNumber > this->uncommittedReinforcementPool)
                 cin >> troopNumber;
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
-//            Deploy* deployOrder = new Deploy(0);
-//            addOrder(deployOrder);
+            auto* deployOrder = new Deploy(generator.setID(), troopNumber, territoryToNumberMap[territoryChoice], this);
+            addOrder(deployOrder);
 
             cout << "Deploy order issued." << endl;
+
+            // Adjust the uncommitted reinforcement pool
+            this->uncommittedReinforcementPool -= troopNumber;
             break;
         }
         case 1:
@@ -468,6 +510,7 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap) {
         default:
             throw exception("Invalid action chosen for a player's turn.");
     }
+    return true;
 }
 
 vector<Territory *> Player::to_defend() {
@@ -542,3 +585,5 @@ Player& Player::operator=(const Player& p) {
 
     return *this;
 }
+
+

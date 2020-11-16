@@ -21,6 +21,7 @@ private:
     vector<Territory*> territories;
     vector<Order*> orders;
     int reinforcementPool;
+    int uncommittedReinforcementPool;
     friend ostream& operator<<(ostream&, const Player&);
     bool conquered;
     vector<Player*> friendlyPlayers;
@@ -41,8 +42,10 @@ public:
     ~Player();
 
     /* Methods */
-    int getReinforcementPool();
-    void setReinforcementPool(int reinforcementPool);
+    int getReinforcementPool() const;
+    void setReinforcementPool(int newPool);
+    int getUncommittedReinforcementPool() const;
+    void setUncommittedReinforcementPool(int newPool);
     vector<Territory*> to_defend();
     vector<Territory*> to_attack();
     void addOrder(Order* order);

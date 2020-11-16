@@ -55,7 +55,7 @@ void Card::play(Player* player, Deck* deck, Map* map) {
             int territoryChoice = distribution(mt);
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
-            auto* bombOrder = new class::Bomb(id.setID(), player->to_attack().at(territoryChoice), player);
+            auto* bombOrder = new class::Bomb(id.setID(), territoryToNumberMap[territoryChoice], player);
             player->addOrder(bombOrder);
 
             cout << "Bomb order issued." << endl;
@@ -65,6 +65,7 @@ void Card::play(Player* player, Deck* deck, Map* map) {
         {
             // TODO: Check that the amount of armies given is fine, and if we need an ORDER class for it.
             player->reinforcementPool += 15;
+            player->uncommittedReinforcementPool += 15;
             cout << "Reinforcements Added.";
             break;
         }
@@ -86,7 +87,7 @@ void Card::play(Player* player, Deck* deck, Map* map) {
             int territoryChoice = distribution(mt);
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
-            auto* blockadeOrder = new class::Blockade(id.setID(), player->to_defend().at(territoryChoice), player);
+            auto* blockadeOrder = new class::Blockade(id.setID(), territoryToNumberMap[territoryChoice], player);
             player->addOrder(blockadeOrder);
 
             cout << "Blockade order issued." << endl;
@@ -133,7 +134,8 @@ void Card::play(Player* player, Deck* deck, Map* map) {
             int destinationTerritoryChoice = distributionDestination(mt);
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
-            auto* airliftOrder = new class::Airlift(id.setID(), 0, player->to_defend().at(sourceTerritoryChoice), map->territories.at(destinationTerritoryChoice), player);
+            auto* airliftOrder = new class::Airlift(id.setID(), 0, sourceTerritoryToNumberMap[sourceTerritoryChoice],
+                    destinationTerritoryToNumberMap[destinationTerritoryChoice], player);
             player->addOrder(airliftOrder);
 
             cout << "Airlift order issued." << endl;
@@ -198,6 +200,7 @@ void Card::playHuman(Player* player, Deck* deck, Map* map) {
         {
             // TODO: Check that the amount of armies given is fine, and if we need an ORDER class for it.
             player->reinforcementPool += 15;
+            player->uncommittedReinforcementPool += 15;
             cout << "Reinforcements Added.";
             break;
         }
