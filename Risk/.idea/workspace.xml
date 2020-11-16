@@ -23,16 +23,17 @@
   </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="COMP345RISK" targetName="GameEngineDriver" />
-      <config projectName="COMP345RISK" targetName="MapDriver" />
       <config projectName="COMP345RISK" targetName="GameObserversDriver" />
+      <config projectName="COMP345RISK" targetName="Common" />
       <config projectName="COMP345RISK" targetName="MapLoaderDriver" />
       <config projectName="COMP345RISK" targetName="CommonLib" />
-      <config projectName="COMP345RISK" targetName="Common" />
+      <config projectName="COMP345RISK" targetName="MapDriver" />
       <config projectName="COMP345RISK" targetName="OrdersDriver" />
-      <config projectName="COMP345RISK" targetName="GameStartDriver" />
+      <config projectName="COMP345RISK" targetName="StartUpPhaseDriver" />
       <config projectName="COMP345RISK" targetName="CardsDriver" />
+      <config projectName="COMP345RISK" targetName="GameEngineDriver" />
       <config projectName="COMP345RISK" targetName="PlayerDriver" />
+      <config projectName="COMP345RISK" targetName="GameStartDriver" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
@@ -41,11 +42,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7ca97671-161b-47fb-8107-3fc1d41fb1cc" name="Default Changelist" comment="Updated orders execute and validate method">
+    <list default="true" id="7ca97671-161b-47fb-8107-3fc1d41fb1cc" name="Default Changelist" comment="Added copy constructors, stream insertion operators and assignment operators">
+      <change afterPath="$PROJECT_DIR$/Driver/StartUpPhaseDriver.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Common/GameEngine.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/GameEngine.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/GameObservers.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/GameObservers.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/GameObservers.h" beforeDir="false" afterPath="$PROJECT_DIR$/Common/GameObservers.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Driver/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Driver/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Driver/GameObserversDriver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Driver/GameObserversDriver.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +84,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../risk-master1" />
-    <property name="settings.editor.selected.configurable" value="fileTemplates" />
+    <property name="settings.editor.selected.configurable" value="CPPToolchains" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -93,6 +95,11 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.GameObserversDriver">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CardsDriver" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="COMP345RISK" TARGET_NAME="CardsDriver" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="COMP345RISK" RUN_TARGET_NAME="CardsDriver">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -143,6 +150,16 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="StartUpPhaseDriver" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="COMP345RISK" TARGET_NAME="StartUpPhaseDriver" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="COMP345RISK" RUN_TARGET_NAME="StartUpPhaseDriver">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="CMake Application.CardsDriver" />
       <item itemvalue="CMake Application.CommonLib" />
@@ -154,6 +171,7 @@
       <item itemvalue="CMake Application.MapLoaderDriver" />
       <item itemvalue="CMake Application.OrdersDriver" />
       <item itemvalue="CMake Application.PlayerDriver" />
+      <item itemvalue="CMake Application.StartUpPhaseDriver" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -197,6 +215,7 @@
       <workItem from="1605414755872" duration="4000" />
       <workItem from="1605475120848" duration="1000" />
       <workItem from="1605490971935" duration="422000" />
+      <workItem from="1605501697358" duration="2096000" />
     </task>
     <task id="LOCAL-00001" summary="modified cmake files. all drivers are running fine">
       <created>1602268199947</created>
@@ -234,7 +253,8 @@
     <MESSAGE value="modified cmake files. all drivers are running fine" />
     <MESSAGE value="Fixed code not running as well as added comments for all classes!" />
     <MESSAGE value="Updated orders execute and validate method" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated orders execute and validate method" />
+    <MESSAGE value="Added copy constructors, stream insertion operators and assignment operators" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added copy constructors, stream insertion operators and assignment operators" />
   </component>
   <component name="WindowStateProjectService">
     <state x="612" y="312" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1602473220934">
@@ -264,39 +284,39 @@
     <state x="1348" y="619" key="FileChooserDialogImpl/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600735276336" />
     <state x="820" y="373" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1605372763548" />
     <state x="1348" y="619" key="FileChooserDialogImpl/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600553610636" />
-    <state width="1877" height="230" key="GridCell.Tab.0.bottom" timestamp="1605377631696">
+    <state width="1877" height="383" key="GridCell.Tab.0.bottom" timestamp="1605504569363">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="2967" height="491" key="GridCell.Tab.0.bottom/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
     <state width="1877" height="361" key="GridCell.Tab.0.bottom/-1920.54.1920.1040/0.0.1920.1040/1920.68.1920.1040@0.0.1920.1040" timestamp="1605315821885" />
-    <state width="1877" height="230" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605377631696" />
+    <state width="1877" height="383" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605504569363" />
     <state width="1877" height="305" key="GridCell.Tab.0.bottom/0.0.2048.1112/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1602033707448" />
     <state width="2005" height="214" key="GridCell.Tab.0.bottom/0.0.2048.1112/-1920.0.1920.1040@0.0.2048.1112" timestamp="1602530419651" />
     <state width="2967" height="491" key="GridCell.Tab.0.bottom/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
-    <state width="1877" height="230" key="GridCell.Tab.0.center" timestamp="1605377631696">
+    <state width="1877" height="383" key="GridCell.Tab.0.center" timestamp="1605504569363">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="2967" height="491" key="GridCell.Tab.0.center/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
     <state width="1877" height="361" key="GridCell.Tab.0.center/-1920.54.1920.1040/0.0.1920.1040/1920.68.1920.1040@0.0.1920.1040" timestamp="1605315821884" />
-    <state width="1877" height="230" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605377631696" />
+    <state width="1877" height="383" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605504569363" />
     <state width="1877" height="305" key="GridCell.Tab.0.center/0.0.2048.1112/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1602033707448" />
     <state width="2005" height="214" key="GridCell.Tab.0.center/0.0.2048.1112/-1920.0.1920.1040@0.0.2048.1112" timestamp="1602530419651" />
     <state width="2967" height="491" key="GridCell.Tab.0.center/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
-    <state width="1877" height="230" key="GridCell.Tab.0.left" timestamp="1605377631696">
+    <state width="1877" height="383" key="GridCell.Tab.0.left" timestamp="1605504569363">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="2967" height="491" key="GridCell.Tab.0.left/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
     <state width="1877" height="361" key="GridCell.Tab.0.left/-1920.54.1920.1040/0.0.1920.1040/1920.68.1920.1040@0.0.1920.1040" timestamp="1605315821884" />
-    <state width="1877" height="230" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605377631696" />
+    <state width="1877" height="383" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605504569363" />
     <state width="1877" height="305" key="GridCell.Tab.0.left/0.0.2048.1112/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1602033707448" />
     <state width="2005" height="214" key="GridCell.Tab.0.left/0.0.2048.1112/-1920.0.1920.1040@0.0.2048.1112" timestamp="1602530419650" />
     <state width="2967" height="491" key="GridCell.Tab.0.left/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
-    <state width="1877" height="230" key="GridCell.Tab.0.right" timestamp="1605377631696">
+    <state width="1877" height="383" key="GridCell.Tab.0.right" timestamp="1605504569363">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="2967" height="491" key="GridCell.Tab.0.right/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
     <state width="1877" height="361" key="GridCell.Tab.0.right/-1920.54.1920.1040/0.0.1920.1040/1920.68.1920.1040@0.0.1920.1040" timestamp="1605315821885" />
-    <state width="1877" height="230" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605377631696" />
+    <state width="1877" height="383" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605504569363" />
     <state width="1877" height="305" key="GridCell.Tab.0.right/0.0.2048.1112/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1602033707448" />
     <state width="2005" height="214" key="GridCell.Tab.0.right/0.0.2048.1112/-1920.0.1920.1040@0.0.2048.1112" timestamp="1602530419651" />
     <state width="2967" height="491" key="GridCell.Tab.0.right/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
@@ -324,21 +344,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="598" y="281" width="1071" height="478" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1602267758320" />
-    <state x="690" y="328" key="SettingsEditor" timestamp="1601488726553">
-      <screen x="0" y="0" width="2048" height="1112" />
+    <state x="647" y="307" key="SettingsEditor" timestamp="1605491638023">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1076" y="509" key="SettingsEditor/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600728434429" />
+    <state x="647" y="307" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1605491638023" />
     <state x="690" y="328" key="SettingsEditor/0.0.2048.1112/-1920.0.1920.1040@0.0.2048.1112" timestamp="1601488726553" />
     <state x="1076" y="509" key="SettingsEditor/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600553973703" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1602473891668">
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1605491597989">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="252" key="Vcs.Push.Dialog.v2/-1920.54.1920.1040/0.0.1920.1040/1920.68.1920.1040@0.0.1920.1040" timestamp="1602473891668" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1602268205098" />
-    <state x="647" y="422" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605372413173">
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1605491597989" />
+    <state x="647" y="422" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605501718155">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="647" y="422" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1605372413173" />
+    <state x="647" y="422" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1605501718155" />
     <state x="1102" y="101" width="1222" height="1027" key="dock-window-1" timestamp="1605231316223">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

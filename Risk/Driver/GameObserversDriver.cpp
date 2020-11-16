@@ -21,7 +21,8 @@ int main() {
         StatsObserver *statsView = new StatsObserver(engine);
     }
 
-    engine->mainGameLoop();
+    engine->startupPhase();
 
+    engine->mainGameLoop();
 
 }

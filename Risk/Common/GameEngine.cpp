@@ -5,6 +5,7 @@
 
 #include <string>
 #include <iostream>
+#include <cstdlib>
 #include <filesystem>
 #include <vector>
 #include <limits>
@@ -147,7 +148,6 @@ void GameEngine::gameStart_Auto(string map, int player_count, bool phase_observe
         string name = "Player " + std::to_string(i);
         this->players.emplace_back(name);
     }
-
     // Create and set the deck
     this->deck = new Deck();
 
@@ -212,6 +212,103 @@ void GameEngine::gameStart(bool verbose) {
         cout << "===================================" << endl;
     }
 }
+
+/**
+ * Giving each player a random order of play and armies in reinforcement pool. Assigning territories in a round robin fashion.
+ */
+void GameEngine::startupPhase(){
+    cout << "              " << endl;
+    srand (time(NULL));
+    list<Player>::iterator it;
+    vector<int> ordersOfPlay;
+
+    // This switch statement takes different actions in terms of the values depending on the number of players in the game.
+
+    switch(players.size()){
+        case 2:
+            cout << "40 initial armies for every player!" << endl;
+            ordersOfPlay = {1,2};
+            for(it = players.begin(); it != players.end(); ++it){
+                it->reinforcementPool = 40;
+                int random = rand() % ordersOfPlay.size();
+                it->orderOfPlay = ordersOfPlay[random];
+                ordersOfPlay.erase(ordersOfPlay.begin() + random);
+                ordersOfPlay.shrink_to_fit();
+            }
+            break;
+        case 3:
+            cout << "35 initial armies for every player!" << endl;
+            ordersOfPlay = {1,2,3};
+            for(it = players.begin(); it != players.end(); ++it){
+                it->reinforcementPool = 35;
+                int random = rand() % ordersOfPlay.size();
+                it->orderOfPlay = ordersOfPlay[random];
+                ordersOfPlay.erase(ordersOfPlay.begin() + random);
+                ordersOfPlay.shrink_to_fit();
+            }
+            break;
+        case 4:
+            cout << "30 initial armies for every player!" << endl;
+            ordersOfPlay = {1,2,3,4};
+            for(it = players.begin(); it != players.end(); ++it){
+                it->reinforcementPool = 30;
+                int random = rand() % ordersOfPlay.size();
+                it->orderOfPlay = ordersOfPlay[random];
+                ordersOfPlay.erase(ordersOfPlay.begin() + random);
+                ordersOfPlay.shrink_to_fit();
+            }
+            break;
+        case 5:
+            cout << "25 initial armies for every player!" << endl;
+            ordersOfPlay = {1,2,3,4,5};
+            for(it = players.begin(); it != players.end(); ++it){
+                it->reinforcementPool = 25;
+                int random = rand() % ordersOfPlay.size();
+                it->orderOfPlay = ordersOfPlay[random];
+                ordersOfPlay.erase(ordersOfPlay.begin() + random);
+                ordersOfPlay.shrink_to_fit();
+            }
+            break;
+    }
+
+    cout << "------------------------------" << endl;
+
+    // creating a copy of map territories pointers.
+
+    vector<Territory*> copyOfMapTerritories(map->territories.size());
+    for(int i = 0; i < map->territories.size(); i++){
+        copyOfMapTerritories[i] = map->territories[i];
+    }
+
+    // Giving each player territories in a round robin fashion.
+
+    while(copyOfMapTerritories.size() != 0){
+        for(it = players.begin(); it != players.end(); ++it){
+            if(copyOfMapTerritories.size() != 0) {
+                int random = rand() % copyOfMapTerritories.size();
+                it->territories.push_back(copyOfMapTerritories[random]);
+                copyOfMapTerritories.erase(copyOfMapTerritories.begin() + random);
+                copyOfMapTerritories.shrink_to_fit();
+            }
+        }
+    }
+
+    // Showing the territories and reinforcement pool of each player.
+
+    for(it = players.begin(); it != players.end(); ++it){
+        cout << it->name << ":" << endl;
+        cout << "              " << endl;
+        cout << "   Armies available in reinforcement pool: " << it->reinforcementPool << endl;
+        cout << "   Territories assigned: " << endl;
+        for(int i = 0; i < it->territories.size(); i++){
+            cout<< "        " << it->territories[i]->get_name() << endl;
+        }
+        cout << "------------------" << endl;
+        cout << "              " << endl;
+    }
+}
+
+
 
 // Continent_ArmyBonus_OwnedTerritories_DataObject
 
