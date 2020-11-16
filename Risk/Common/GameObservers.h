@@ -30,12 +30,15 @@ protected:
 class Subject {
 public:
     Subject();
+    Subject(const Subject &subject);
     ~Subject();
+    Subject& operator=(const Subject &s);
     virtual void add(Observer* o);
     virtual void remove(Observer* o);
     virtual void notify();
 private:
     list <Observer*> *observer_list;
+    friend ostream& operator<<(ostream&, const Subject&);
 };
 
 
@@ -47,11 +50,14 @@ class PhaseObserver : Observer {
 public:
     PhaseObserver();
     explicit PhaseObserver(GameEngine* gameEngine);
+    PhaseObserver(const PhaseObserver *phaseObserver);
     ~PhaseObserver();
+    PhaseObserver& operator=(const PhaseObserver &p);
     void Update();
     void display();
 private:
     GameEngine* _gameEngine;
+    friend ostream& operator<<(ostream&, const PhaseObserver&);
 };
 
 
@@ -61,10 +67,13 @@ private:
 class StatsObserver : Observer {
 public:
     StatsObserver();
-    StatsObserver(GameEngine* gameEngine);
+    explicit StatsObserver(GameEngine* gameEngine);
+    StatsObserver(const StatsObserver *statsObserver);
     ~StatsObserver();
+    StatsObserver& operator=(const StatsObserver &s);
     void Update();
     void display();
 private:
     GameEngine* _gameEngine;
+    friend ostream& operator<<(ostream&, const StatsObserver&);
 };

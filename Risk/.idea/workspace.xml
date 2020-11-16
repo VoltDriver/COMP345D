@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -22,10 +25,12 @@
     <generated>
       <config projectName="COMP345RISK" targetName="GameEngineDriver" />
       <config projectName="COMP345RISK" targetName="MapDriver" />
+      <config projectName="COMP345RISK" targetName="GameObserversDriver" />
       <config projectName="COMP345RISK" targetName="MapLoaderDriver" />
       <config projectName="COMP345RISK" targetName="CommonLib" />
       <config projectName="COMP345RISK" targetName="Common" />
       <config projectName="COMP345RISK" targetName="OrdersDriver" />
+      <config projectName="COMP345RISK" targetName="GameStartDriver" />
       <config projectName="COMP345RISK" targetName="CardsDriver" />
       <config projectName="COMP345RISK" targetName="PlayerDriver" />
     </generated>
@@ -38,11 +43,9 @@
   <component name="ChangeListManager">
     <list default="true" id="7ca97671-161b-47fb-8107-3fc1d41fb1cc" name="Default Changelist" comment="Updated orders execute and validate method">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/Orders.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Orders.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/Orders.h" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Orders.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/Player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Player.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/Player.h" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Player.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Driver/OrdersDriver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Driver/OrdersDriver.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/GameEngine.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/GameEngine.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/GameObservers.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Common/GameObservers.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/GameObservers.h" beforeDir="false" afterPath="$PROJECT_DIR$/Common/GameObservers.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +81,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../risk-master1" />
     <property name="settings.editor.selected.configurable" value="fileTemplates" />
   </component>
   <component name="RecentsManager">
@@ -89,7 +92,7 @@
       <recent name="D:\programs\Temp\Risk\Common" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake Application.OrdersDriver">
+  <component name="RunManager" selected="CMake Application.GameObserversDriver">
     <configuration name="CardsDriver" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="COMP345RISK" TARGET_NAME="CardsDriver" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="COMP345RISK" RUN_TARGET_NAME="CardsDriver">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -106,6 +109,16 @@
       </method>
     </configuration>
     <configuration name="GameEngineDriver" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="COMP345RISK" TARGET_NAME="GameEngineDriver" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="COMP345RISK" RUN_TARGET_NAME="GameEngineDriver">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameObserversDriver" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="COMP345RISK" TARGET_NAME="GameObserversDriver" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="COMP345RISK" RUN_TARGET_NAME="GameObserversDriver">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameStartDriver" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="COMP345RISK" TARGET_NAME="GameStartDriver" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="COMP345RISK" RUN_TARGET_NAME="GameStartDriver">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -130,16 +143,13 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="CMake Application.CardsDriver" />
-      <item itemvalue="CMake Application.GameEngineDriver" />
       <item itemvalue="CMake Application.CommonLib" />
       <item itemvalue="CMake Application.Common" />
+      <item itemvalue="CMake Application.GameEngineDriver" />
+      <item itemvalue="CMake Application.GameObserversDriver" />
+      <item itemvalue="CMake Application.GameStartDriver" />
       <item itemvalue="CMake Application.MapDriver" />
       <item itemvalue="CMake Application.MapLoaderDriver" />
       <item itemvalue="CMake Application.OrdersDriver" />
@@ -181,6 +191,12 @@
       <workItem from="1605225553172" duration="5310000" />
       <workItem from="1605235964986" duration="4013000" />
       <workItem from="1605297380264" duration="2545000" />
+      <workItem from="1605322304532" duration="441000" />
+      <workItem from="1605333959500" duration="2307000" />
+      <workItem from="1605372031900" duration="5426000" />
+      <workItem from="1605414755872" duration="4000" />
+      <workItem from="1605475120848" duration="1000" />
+      <workItem from="1605490971935" duration="422000" />
     </task>
     <task id="LOCAL-00001" summary="modified cmake files. all drivers are running fine">
       <created>1602268199947</created>
@@ -242,44 +258,45 @@
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state width="418" height="466" key="DebuggerActiveHint/0.0.2048.1112/-1920.0.1920.1040@0.0.2048.1112" timestamp="1601936002482" />
-    <state x="1348" y="619" key="FileChooserDialogImpl" timestamp="1600735276336">
-      <screen x="62" y="0" width="3010" height="1728" />
+    <state x="820" y="373" key="FileChooserDialogImpl" timestamp="1605372763548">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1348" y="619" key="FileChooserDialogImpl/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600735276336" />
+    <state x="820" y="373" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1605372763548" />
     <state x="1348" y="619" key="FileChooserDialogImpl/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600553610636" />
-    <state width="1877" height="361" key="GridCell.Tab.0.bottom" timestamp="1605315821885">
+    <state width="1877" height="230" key="GridCell.Tab.0.bottom" timestamp="1605377631696">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="2967" height="491" key="GridCell.Tab.0.bottom/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
     <state width="1877" height="361" key="GridCell.Tab.0.bottom/-1920.54.1920.1040/0.0.1920.1040/1920.68.1920.1040@0.0.1920.1040" timestamp="1605315821885" />
-    <state width="1877" height="230" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1602894762722" />
+    <state width="1877" height="230" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605377631696" />
     <state width="1877" height="305" key="GridCell.Tab.0.bottom/0.0.2048.1112/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1602033707448" />
     <state width="2005" height="214" key="GridCell.Tab.0.bottom/0.0.2048.1112/-1920.0.1920.1040@0.0.2048.1112" timestamp="1602530419651" />
     <state width="2967" height="491" key="GridCell.Tab.0.bottom/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
-    <state width="1877" height="361" key="GridCell.Tab.0.center" timestamp="1605315821884">
+    <state width="1877" height="230" key="GridCell.Tab.0.center" timestamp="1605377631696">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="2967" height="491" key="GridCell.Tab.0.center/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
     <state width="1877" height="361" key="GridCell.Tab.0.center/-1920.54.1920.1040/0.0.1920.1040/1920.68.1920.1040@0.0.1920.1040" timestamp="1605315821884" />
-    <state width="1877" height="230" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1602894762721" />
+    <state width="1877" height="230" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605377631696" />
     <state width="1877" height="305" key="GridCell.Tab.0.center/0.0.2048.1112/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1602033707448" />
     <state width="2005" height="214" key="GridCell.Tab.0.center/0.0.2048.1112/-1920.0.1920.1040@0.0.2048.1112" timestamp="1602530419651" />
     <state width="2967" height="491" key="GridCell.Tab.0.center/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
-    <state width="1877" height="361" key="GridCell.Tab.0.left" timestamp="1605315821884">
+    <state width="1877" height="230" key="GridCell.Tab.0.left" timestamp="1605377631696">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="2967" height="491" key="GridCell.Tab.0.left/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
     <state width="1877" height="361" key="GridCell.Tab.0.left/-1920.54.1920.1040/0.0.1920.1040/1920.68.1920.1040@0.0.1920.1040" timestamp="1605315821884" />
-    <state width="1877" height="230" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1602894762721" />
+    <state width="1877" height="230" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605377631696" />
     <state width="1877" height="305" key="GridCell.Tab.0.left/0.0.2048.1112/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1602033707448" />
     <state width="2005" height="214" key="GridCell.Tab.0.left/0.0.2048.1112/-1920.0.1920.1040@0.0.2048.1112" timestamp="1602530419650" />
     <state width="2967" height="491" key="GridCell.Tab.0.left/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
-    <state width="1877" height="361" key="GridCell.Tab.0.right" timestamp="1605315821885">
+    <state width="1877" height="230" key="GridCell.Tab.0.right" timestamp="1605377631696">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="2967" height="491" key="GridCell.Tab.0.right/-1842.457.1842.1080/3840.479.1920.1080/62.0.3010.1728@62.0.3010.1728" timestamp="1600843005937" />
     <state width="1877" height="361" key="GridCell.Tab.0.right/-1920.54.1920.1040/0.0.1920.1040/1920.68.1920.1040@0.0.1920.1040" timestamp="1605315821885" />
-    <state width="1877" height="230" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1602894762722" />
+    <state width="1877" height="230" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605377631696" />
     <state width="1877" height="305" key="GridCell.Tab.0.right/0.0.2048.1112/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1602033707448" />
     <state width="2005" height="214" key="GridCell.Tab.0.right/0.0.2048.1112/-1920.0.1920.1040@0.0.2048.1112" timestamp="1602530419651" />
     <state width="2967" height="491" key="GridCell.Tab.0.right/62.0.3010.1728/-1920.457.1920.1080/3840.479.1920.1080@62.0.3010.1728" timestamp="1600976595270" />
@@ -318,10 +335,10 @@
     </state>
     <state x="552" y="252" key="Vcs.Push.Dialog.v2/-1920.54.1920.1040/0.0.1920.1040/1920.68.1920.1040@0.0.1920.1040" timestamp="1602473891668" />
     <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1602268205098" />
-    <state x="647" y="422" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1602890996905">
+    <state x="647" y="422" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605372413173">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="647" y="422" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1602890996905" />
+    <state x="647" y="422" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1605372413173" />
     <state x="1102" y="101" width="1222" height="1027" key="dock-window-1" timestamp="1605231316223">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -338,9 +355,10 @@
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="843" y="415" key="scopes/0.0.2048.1112/-1920.0.1920.1040@0.0.2048.1112" timestamp="1601933075870" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1605313455543">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1605373719803">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/-1920.54.1920.1040/0.0.1920.1040/1920.68.1920.1040@0.0.1920.1040" timestamp="1605313455543" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1605373719803" />
   </component>
 </project>

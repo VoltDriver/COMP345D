@@ -426,9 +426,11 @@ ostream &operator<<(ostream& out, const GameEngine& g) {
 
 GameEngine &GameEngine::operator=(const GameEngine &g) {
     if (this != &g) {
+        delete this->currentPlayer;
         delete this->map;
         delete this->deck;
 
+        currentPlayer = g.currentPlayer;
         players = g.players;
         map = g.map;
         deck = g.deck;
@@ -458,8 +460,9 @@ GameEngine::GameEngine(const GameEngine &g) {
 }
 
 GameEngine::~GameEngine() {
-    delete this->deck;
+    delete this->currentPlayer;
     delete this->map;
+    delete this->deck;
 }
 
 
