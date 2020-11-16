@@ -10,6 +10,7 @@ class Card;
 class Hand;
 class Order;
 class Deck;
+class OrdersList;
 
 using namespace std;
 
@@ -19,7 +20,7 @@ using namespace std;
 class Player {
 private:
     vector<Territory*> territories;
-    vector<Order*> orders;
+    OrdersList* orders;
     int reinforcementPool;
     int uncommittedReinforcementPool;
     friend ostream& operator<<(ostream&, const Player&);
@@ -34,8 +35,8 @@ public:
     /* Constructors */
     Player();
     Player(string name);
-    explicit Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand, int orderOfPlay);
-    explicit Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand, string name, int orderOfPlay);
+    explicit Player(vector<Territory*> territories, OrdersList* orders, Hand* hand, int orderOfPlay);
+    explicit Player(vector<Territory*> territories, OrdersList* orders, Hand* hand, string name, int orderOfPlay);
     Player(const Player &p);
 
     /* Destructor */

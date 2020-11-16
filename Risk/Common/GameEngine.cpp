@@ -502,7 +502,7 @@ void GameEngine::executeOrdersPhase() {
             // If a player still is playing....
             if (playerOrdersStatus[player.name]) {
                 // ... and still has orders...
-                if (player.orders.empty())
+                if (player.orders->myList.empty())
                 {
                     // If it has no more orders... we add it to the number of players that are done.
                     playerOrdersStatus[player.name] = false;
@@ -511,9 +511,8 @@ void GameEngine::executeOrdersPhase() {
                 else
                 {
                     // ... it executes an order
-                    /* TODO: replace with ordersList. Also, check that once an order is executed, it is removed from the
-                    list of a player's orders. */
-                    player.orders[0]->execute();
+                    player.orders->myList[0]->execute();
+                    player.orders->remove(player.orders->myList[0]);
                 }
             }
         }

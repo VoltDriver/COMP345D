@@ -12,7 +12,7 @@ const int NUMBER_OF_POSSIBLE_ACTIONS = 4;
 // default constructor
 Player::Player() {
     this->territories = vector<Territory*>();
-    this->orders = vector<Order*>();
+    this->orders = new OrdersList();
     this->hand = new Hand();
     this->name = "";
     this->reinforcementPool = 0;
@@ -25,7 +25,7 @@ Player::Player() {
 // parameterized constructors
 Player::Player(string name) {
     this->territories = vector<Territory*>();
-    this->orders = vector<Order*>();
+    this->orders = new OrdersList();
     this->hand = new Hand();
     this->name = name;
     this->reinforcementPool = 0;
@@ -33,7 +33,7 @@ Player::Player(string name) {
 }
 
 
-Player::Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand, int orderOfPlay) {
+Player::Player(vector<Territory*> territories, OrdersList* orders, Hand* hand, int orderOfPlay) {
     this->territories = territories;
     for (int i = 0; i < territories.size(); i++){
         territories.at(i)->setPlayer(this);
@@ -48,7 +48,7 @@ Player::Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand
     this->friendlyPlayers = vector<Player*>();
 }
 
-Player::Player(vector<Territory*> territories, vector<Order*> orders, Hand* hand, string name, int orderOfPlay) {
+Player::Player(vector<Territory*> territories, OrdersList* orders, Hand* hand, string name, int orderOfPlay) {
     this->territories = territories;
     this->orders = orders;
     this->hand = hand;
@@ -79,9 +79,7 @@ Player::~Player() {
     for (Territory *territory: territories) {
         delete territory;
     }
-    for (Order *order: orders) {
-        delete order;
-    }
+    delete orders;
     for (Player* player: friendlyPlayers){
         delete player;
     }
@@ -91,7 +89,7 @@ Player::~Player() {
 
 /* Methods */
 void Player::addOrder(Order* order) {
-    orders.push_back(order);
+    orders->add(order);
     cout << "order has been added to list of orders" << endl;
 }
 
@@ -553,9 +551,7 @@ ostream &operator<<(std::ostream &strm, const Player &player) {
         strm << *territory;
     }
     strm << "Orders \n";
-    for (Order *order: player.orders) {
-        strm << order->description << "\n";
-    }
+    strm << player.orders;
     strm << "Cards \n";
     for (const Card& card: *player.hand->cards) {
         strm << card << "\n";
@@ -569,9 +565,7 @@ Player& Player::operator=(const Player& p) {
     for (Territory *territory: territories) {
         delete territory;
     }
-    for (Order *order: orders) {
-        delete order;
-    }
+    delete orders;
     for (Player* player: friendlyPlayers){
         delete player;
     }

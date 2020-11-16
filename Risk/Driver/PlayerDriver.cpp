@@ -16,7 +16,8 @@ int main() {
 
     // creating some arbitrary vector of orders
     auto *ord1 = new Order(id.setID());
-    vector<Order*> orders = {ord1};
+    OrdersList* orders = new OrdersList();
+    orders->add(ord1);
 
     // creating some arbitrary hand of cards
     auto *card1 = new Card(Bomb);
