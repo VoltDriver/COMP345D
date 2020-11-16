@@ -86,6 +86,13 @@ void PhaseObserver::Update() {
 
 void PhaseObserver::display() {
 
+    if (_gameEngine->getPhase() == "Startup Phase") {
+        cout << "" << endl;
+        cout << "-------------------------------------------------------------" << endl;
+        cout << "Phase Observer displaying: " << _gameEngine->getPhase() <<endl;
+        cout << "-------------------------------------------------------------" << endl;
+    }
+
     if (_gameEngine->getPhase() == "Reinforcement Phase") {
         cout << "" << endl;
         cout << "-------------------------------------------------------------" << endl;
@@ -141,6 +148,6 @@ void StatsObserver::Update() {
 }
 
 void StatsObserver::display() {
-    cout << "from Stats Observer" << endl;
+
 
 }

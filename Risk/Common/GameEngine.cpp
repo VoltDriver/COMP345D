@@ -217,6 +217,8 @@ void GameEngine::gameStart(bool verbose) {
  * Giving each player a random order of play and armies in reinforcement pool. Assigning territories in a round robin fashion.
  */
 void GameEngine::startupPhase(){
+    phase = "Startup Phase";
+    notify();
     cout << "              " << endl;
     srand (time(NULL));
     list<Player>::iterator it;
