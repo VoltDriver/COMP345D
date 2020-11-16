@@ -288,7 +288,9 @@ void GameEngine::startupPhase(){
         for(it = players.begin(); it != players.end(); ++it){
             if(copyOfMapTerritories.size() != 0) {
                 int random = rand() % copyOfMapTerritories.size();
-                it->territories.push_back(copyOfMapTerritories[random]);
+                Territory* territory = copyOfMapTerritories[random];
+                territory->setPlayer(&*it);
+                it->territories.push_back(territory);
                 copyOfMapTerritories.erase(copyOfMapTerritories.begin() + random);
                 copyOfMapTerritories.shrink_to_fit();
             }
@@ -397,6 +399,7 @@ void GameEngine::reinforcementPhase() {
         this->currentPlayer = &player;
 
         int reinforcement = 0;
+        currentPlayer->setUncommittedReinforcementPool(currentPlayer->reinforcementPool);
 
         int nbTerritoriesOwned = player.territories.size();
 
