@@ -50,8 +50,6 @@ public:
     bool issueOrderHuman(Deck* deck, Map* territoriesMap);
     void addTerritory(Territory* territory);
     void removeTerritory(Territory* territory);
-    bool issueOrder(Deck* deck);
-
 
     /* Overloaders */
     Player& operator=(const Player &p);

@@ -129,21 +129,18 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
     // If some reinforcements are left in the pool of the player, he can only take deploy actions.
     if(this->reinforcementPool > 0)
     {
+        // Deploy
         actionNumber = 0;
     }
     else
     {
         list<int> possibleActions = list<int>();
 
-        // Deploy
-        if(this->reinforcementPool <= 0)
-            possibleActions.push_back(0);
-
         // Advance
         possibleActions.push_back(1);
 
         // Play a card
-        if(this->hand->remainingCards() <= 0)
+        if(this->hand->remainingCards() > 0)
             possibleActions.push_back(2);
 
         // End turn
@@ -180,7 +177,7 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
             int territoryChoice = distribution(mt);
 
             // Generate a random input
-            std::uniform_int_distribution<int> distributionTroops(0,this->reinforcementPool);
+            std::uniform_int_distribution<int> distributionTroops(1,this->reinforcementPool);
             int troopNumber = distributionTroops(mt);
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
@@ -211,7 +208,7 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
             int sourceTerritoryChoice = distribution(mt);
 
             // Choosing randomly a number of troops to move
-            std::uniform_int_distribution<int> distributionTroops(0,this->reinforcementPool);
+            std::uniform_int_distribution<int> distributionTroops(1,sourceTerritoryToNumberMap[sourceTerritoryChoice]->get_armies());
 
             int troopNumber = distributionTroops(mt);
 
@@ -281,6 +278,8 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
         default:
             throw exception("Invalid action chosen for a player's turn.");
     }
+
+    return true;
 }
 
 /**
@@ -296,6 +295,7 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap) {
     // If some reinforcements are left in the pool of the player, he can only take deploy actions.
     if(this->reinforcementPool > 0)
     {
+        // Deploy.
         cout << "0: Deploy " << endl;
         cout << "(You have " << this->reinforcementPool << " reinforcements left in your pool. You must deploy them before issuing any other order." << endl;
 
@@ -307,19 +307,12 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap) {
     {
         list<int> possibleActions = list<int>();
 
-        // Deploy
-        if(this->reinforcementPool <= 0)
-        {
-            possibleActions.push_back(0);
-            cout << "0: Deploy " << endl;
-        }
-
         // Advance
         possibleActions.push_back(1);
         cout << "1: Advance " << endl;
 
         // Play a card
-        if(this->hand->remainingCards() <= 0)
+        if(this->hand->remainingCards() > 0)
         {
             possibleActions.push_back(2);
             cout << "2: Play a card" << endl;
@@ -399,7 +392,7 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap) {
 
             // Read input and validate it.
             int troopNumber = -1;
-            while(troopNumber<0 || troopNumber > this->reinforcementPool)
+            while(troopNumber<0 || troopNumber > sourceTerritoryToNumberMap[sourceTerritoryChoice]->get_armies())
                 cin >> troopNumber;
 
             // List the territories the player can choose to advance to

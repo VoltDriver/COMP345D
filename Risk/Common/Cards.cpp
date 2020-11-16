@@ -42,7 +42,6 @@ void Card::play(Player* player, Deck* deck, Map* map) {
             // Bomb
 
             // List the territories the player can choose
-            cout << "In which territory would you like to launch your bomb?"<< endl;
             std::map<int, Territory*> territoryToNumberMap = std::map<int, Territory*>();
             int counter = 0;
             for(Territory* t : player->to_attack())
@@ -113,7 +112,7 @@ void Card::play(Player* player, Deck* deck, Map* map) {
             int sourceTerritoryChoice = distribution(mt);
 
             // Choosing randomly a number of troops to move
-            std::uniform_int_distribution<int> distributionTroops(0,player->reinforcementPool);
+            std::uniform_int_distribution<int> distributionTroops(1,sourceTerritoryToNumberMap[sourceTerritoryChoice]->get_armies());
 
             int troopNumber = distributionTroops(mt);
 
@@ -229,7 +228,6 @@ void Card::playHuman(Player* player, Deck* deck, Map* map) {
 
             cout << "Blockade order issued." << endl;
             break;
-            break;
         }
         case Airlift:
         {
@@ -254,7 +252,7 @@ void Card::playHuman(Player* player, Deck* deck, Map* map) {
 
             // Read input and validate it.
             int troopNumber = -1;
-            while(troopNumber<0 || troopNumber > player->reinforcementPool)
+            while(troopNumber<0 || troopNumber > sourceTerritoryToNumberMap[sourceTerritoryChoice]->get_armies())
                 cin >> troopNumber;
 
             // List the territories the player can choose to advance to
@@ -303,7 +301,6 @@ void Card::playHuman(Player* player, Deck* deck, Map* map) {
 
         default:
             throw exception("Invalid card type to play.");
-            break;
     }
 
     // Adding this card back into the deck.
