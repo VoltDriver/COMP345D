@@ -144,7 +144,7 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
     // If some reinforcements are left in the pool of the player, he can only take deploy actions.
     if(this->uncommittedReinforcementPool > 0)
     {
-        cout << "You have reinforcements in your pool. Only deploy orders are allowed.";
+        cout << "You have reinforcements in your pool. Only deploy orders are allowed." << endl;
         // Deploy
         actionNumber = 0;
     }
@@ -297,14 +297,14 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
             // Playing the card.
             Card* card = cardsToNumbers[cardChoice];
 
-            cout << "Playing a card: " + card->toString();
+            cout << "Playing a card: " + card->toString() << endl;
             //             card->play(this, deck, territoriesMap, gamePlayers);
             card->play(this, deck, territoriesMap);
             break;
         }
         case 3:
             // End Turn
-            cout << "Ending turn.";
+            cout << "Ending turn." << endl;
             return false;
         default:
             throw exception("Invalid action chosen for a player's turn.");
@@ -511,14 +511,14 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap) {
             // Playing the card.
             Card* card = cardsToNumbers[cardChoice];
 
-            cout << "Playing a card: " + card->toString();
+            cout << "Playing a card: " + card->toString() << endl;
 
             //card->playHuman(this, deck, territoriesMap, gamePlayers);
             card->playHuman(this, deck, territoriesMap);
             break;
         }
         case 3:
-            cout << "Ending turn.";
+            cout << "Ending turn." << endl;
             return false;
         default:
             throw exception("Invalid action chosen for a player's turn.");
