@@ -387,7 +387,7 @@ Negotiate* Negotiate::clone() const {
 
 //OrdersList constructor
 OrdersList::OrdersList() {
-    myList = *new vector<Order*>;
+    myList = vector<Order*>();
 }
 
 //Copy constructor for OrderList class
