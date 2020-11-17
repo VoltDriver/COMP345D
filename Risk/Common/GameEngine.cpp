@@ -217,8 +217,8 @@ void GameEngine::gameStart(bool verbose) {
  * Giving each player a random order of play and armies in reinforcement pool. Assigning territories in a round robin fashion.
  */
 void GameEngine::startupPhase(){
-    phase = "Startup Phase";
-    notify();
+    this->phase = "Startup Phase";
+    Subject::notify();
     cout << "              " << endl;
     srand (time(NULL));
     list<Player>::iterator it;
@@ -449,6 +449,7 @@ void GameEngine::reinforcementPhase() {
  */
 void GameEngine::issueOrdersPhase() {
     this->phase = "Issue Orders Phase";
+    Subject::notify();
 
     // Contains whether a player is done with their turn or not. True if not done.
     std::map<string, bool> playerTurns = std::map<string, bool>();
@@ -462,14 +463,21 @@ void GameEngine::issueOrdersPhase() {
     int amountOfPlayersDone = 0;
 
     while (amountOfPlayersDone != players.size()) {
+
         for (Player &player : players) {
             // If a player did not end his turn yet...
             if (playerTurns[player.name]) {
+                this->phase = "Issue Orders Phase::Player turn";
+                this->currentPlayer = &player;
+                Subject::notify();
                 // ... it is prompted to play.
                 playerTurns[player.name] = player.issueOrder(this->deck, this->map);
 
                 // If it decided to end it's turn just now...
                 if (!playerTurns[player.name]) {
+                    this->phase = "Issue Orders Phase::Turn end";
+                    this->currentPlayer = &player;
+                    Subject::notify();
                     // ... we add it to the number of players that are done.
                     amountOfPlayersDone++;
                 }
@@ -485,6 +493,7 @@ void GameEngine::issueOrdersPhase() {
  */
 void GameEngine::executeOrdersPhase() {
     this->phase = "Execute Orders Phase";
+    Subject::notify();
 
     // Contains whether a player is done with their orders or not. True if not done.
     std::map<string, bool> playerOrdersStatus = std::map<string, bool>();
