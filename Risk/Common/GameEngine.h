@@ -73,10 +73,6 @@ class GameEngine: public Subject {
         GameEngine(const GameEngine &g);
 
 
-        bool getPhase_observer_flag();
-
-        bool getStat_observer_flag();
-
         Player* getCurrentPlayer();
 
         string getPhase();

@@ -409,11 +409,11 @@ void GameEngine::mainGameLoop() {
  * Players are given armies according to the territories they own, including continent bonuses.
  */
 void GameEngine::reinforcementPhase() {
+    // Phase Observer notification
     this->phase = "Reinforcement Phase";
+    Subject::notify();
 
     for (Player &player : players) {
-        this->currentPlayer = &player;
-
         int reinforcement = 0;
         currentPlayer->setUncommittedReinforcementPool(currentPlayer->reinforcementPool);
 
@@ -456,7 +456,10 @@ void GameEngine::reinforcementPhase() {
         // Adjust the uncommitted reinforcement pool of the player
         player.uncommittedReinforcementPool += reinforcement;
 
-        Subject::notify();   // Reinforcement Phase
+        // Phase Observer notification
+        this->phase = "Reinforcement Phase::Deploy";
+        this->currentPlayer = &player;
+        Subject::notify();
     }
 }
 
@@ -464,6 +467,7 @@ void GameEngine::reinforcementPhase() {
  * Players issue orders, in a round robin fashion.
  */
 void GameEngine::issueOrdersPhase() {
+    // Phase Observer notification
     this->phase = "Issue Orders Phase";
     Subject::notify();
 
@@ -481,19 +485,25 @@ void GameEngine::issueOrdersPhase() {
     while (amountOfPlayersDone != players.size()) {
 
         for (Player &player : players) {
+
             // If a player did not end his turn yet...
             if (playerTurns[player.name]) {
+
+                // Phase Observer notification
                 this->phase = "Issue Orders Phase::Player turn";
                 this->currentPlayer = &player;
                 Subject::notify();
+
                 // ... it is prompted to play.
                 playerTurns[player.name] = player.issueOrder(this->deck, this->map);
 
                 // If it decided to end it's turn just now...
                 if (!playerTurns[player.name]) {
+
+                    // Phase Observer notification
                     this->phase = "Issue Orders Phase::Turn end";
-                    this->currentPlayer = &player;
                     Subject::notify();
+
                     // ... we add it to the number of players that are done.
                     amountOfPlayersDone++;
                 }
@@ -508,6 +518,7 @@ void GameEngine::issueOrdersPhase() {
  * Executes orders in the players' lists of orders in a round robin fashion.
  */
 void GameEngine::executeOrdersPhase() {
+    // Phase Observer notification
     this->phase = "Execute Orders Phase";
     Subject::notify();
 
@@ -524,17 +535,28 @@ void GameEngine::executeOrdersPhase() {
 
     while (amountOfPlayersDone != players.size()) {
         for (Player &player : players) {
+
             // If a player still is playing....
             if (playerOrdersStatus[player.name]) {
                 // ... and still has orders...
                 if (player.orders->myList.empty())
                 {
+                    // Phase Observer notification
+                    this->phase = "Execute Orders Phase::Done";
+                    this->currentPlayer = &player;
+                    Subject::notify();
+
                     // If it has no more orders... we add it to the number of players that are done.
                     playerOrdersStatus[player.name] = false;
                     amountOfPlayersDone++;
                 }
                 else
                 {
+                    // Phase Observer notification
+                    this->phase = "Execute Orders Phase::Execute";
+                    this->currentPlayer = &player;
+                    Subject::notify();
+
                     // ... it executes an order
                     player.orders->myList[0]->execute();
                     player.orders->remove(player.orders->myList[0]);
@@ -601,13 +623,6 @@ GameEngine::~GameEngine() {
     delete this->deck;
 }
 
-bool GameEngine::getPhase_observer_flag() {
-    return phase_observer_flag;
-}
-
-bool GameEngine::getStat_observer_flag(){
-    return stat_observer_flag;
-}
 
 Player* GameEngine::getCurrentPlayer() {
     return currentPlayer;

@@ -1,6 +1,5 @@
 #include "GameObservers.h"
 #include "GameEngine.h"
-#include "Player.h"
 #include <iostream>
 #include <string>
 
@@ -87,55 +86,66 @@ void PhaseObserver::Update() {
 void PhaseObserver::display() {
     string phase = _gameEngine->getPhase();
     string player_name = _gameEngine->getCurrentPlayer()->name;
-
+    int armiesToDeploy = _gameEngine->getCurrentPlayer()->getReinforcementPool();
 
     /* Startup Phase */
     if (phase == "Startup Phase") {
-        cout << "" << endl;
-        cout << "-------------------------------------------------------------" << endl;
-        cout << "Phase Observer displaying: " << phase <<endl;
+        cout << "\n-------------------------------------------------------------" << endl;
+        cout << "\t\t***** STARTUP PHASE *****" << endl;
         cout << "-------------------------------------------------------------" << endl;
     }
 
-
     /* Reinforcement Phase */
     if (phase == "Reinforcement Phase") {
-        cout << "" << endl;
+        cout << "\n-------------------------------------------------------------" << endl;
+        cout << "\t\t***** REINFORCEMENT PHASE *****" << endl;
         cout << "-------------------------------------------------------------" << endl;
-        cout << "Phase Observer displaying: " << phase << " " << player_name << endl;
-        cout << "Number of armies to Deploy: " << _gameEngine->getCurrentPlayer()->getReinforcementPool();
+    }
+
+    if (phase == "Reinforcement Phase::Deploy") {
+        cout << "\n-------------------------------------------------------------" << endl;
+        cout << "Reinforcement Phase " << player_name << endl;
+        cout << "Number of armies to Deploy: " << armiesToDeploy;
         cout << "\n-------------------------------------------------------------" << endl;
     }
 
 
     /* Issue Orders Phase */
     if (phase == "Issue Orders Phase") {
-        cout << "" << endl;
-        cout << "-------------------------------------------------------------" << endl;
-        cout << "Phase Observer displaying: " << phase << endl;
+        cout << "\n-------------------------------------------------------------" << endl;
+        cout << "\t\t***** ISSUE ORDERS PHASE *****" << endl;
         cout << "-------------------------------------------------------------" << endl;
     }
 
     if (phase == "Issue Orders Phase::Player turn") {
-        cout << "" << endl;
-        cout << "-------------------------------------------------------------" << endl;
-        cout << "Phase Observer displaying: " << player_name << " issuing order." << endl;
+        cout << "\n-------------------------------------------------------------" << endl;
+        cout << player_name << " issuing an order." << endl;
         cout << "-------------------------------------------------------------" << endl;
     }
 
     if (phase == "Issue Orders Phase::Turn end") {
-        cout << "" << endl;
-        cout << "-------------------------------------------------------------" << endl;
-        cout << "Phase Observer displaying: " << player_name << " has no more orders to issue." << endl;
+        cout << "\n-------------------------------------------------------------" << endl;
+        cout << player_name << " has no more orders to issue." << endl;
         cout << "-------------------------------------------------------------" << endl;
     }
 
 
     /* Execute Orders Phase */
     if (phase == "Execute Orders Phase") {
-        cout << "" << endl;
+        cout << "\n-------------------------------------------------------------" << endl;
+        cout << "\t\t***** EXECUTE ORDERS PHASE *****" << endl;
         cout << "-------------------------------------------------------------" << endl;
-        cout << "Phase Observer displaying: " << phase << endl;
+    }
+
+    if (phase == "Execute Orders Phase::Execute") {
+        cout << "\n-------------------------------------------------------------" << endl;
+        cout << player_name << " is executing an order." << endl;
+        cout << "-------------------------------------------------------------" << endl;
+    }
+
+    if (phase == "Execute Orders Phase::Done") {
+        cout << "\n-------------------------------------------------------------" << endl;
+        cout << player_name << " is done executing orders." << endl;
         cout << "-------------------------------------------------------------" << endl;
     }
 }
