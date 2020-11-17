@@ -148,6 +148,15 @@ void PhaseObserver::display() {
         cout << player_name << " is done executing orders." << endl;
         cout << "-------------------------------------------------------------" << endl;
     }
+
+
+    /* Game Over Phase */
+    if (phase == "Game Over") {
+        cout << "\n-------------------------------------------------------------" << endl;
+        cout << "\t\t***** GAME OVER *****" << endl;
+        cout << player_name << " wins!" << endl;
+        cout << "-------------------------------------------------------------" << endl;
+    }
 }
 
 

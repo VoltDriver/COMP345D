@@ -383,10 +383,15 @@ void GameEngine::mainGameLoop() {
         executeOrdersPhase();
 
         // Checking if the game is over
-        for (const Player& player : players) {
+        for (Player& player : players) {
             if (player.territories.size() == map->get_territories().size()) {
                 gameOver = true;
                 winningPlayer = player.name;
+
+                // Phase Observer notification
+                this->phase = "Game Over";
+                this->currentPlayer = &player;
+                Subject::notify();
             }
         }
 
@@ -396,6 +401,7 @@ void GameEngine::mainGameLoop() {
             auto current = it++;
             if (current->territories.empty()) {
                 cout << current->name << " has lost!";
+
                 players.erase(current);
             }
         }
