@@ -23,7 +23,8 @@ std::string Card::toString() const {
     return cardTypeMap[*this->type];
 }
 
-void Card::play(Player* player, Deck* deck, Map* map, list<Player> gamePlayers) {
+// void Card::play(Player* player, Deck* deck, Map* map, const list<Player*>& gamePlayers) {
+void Card::play(Player* player, Deck* deck, Map* map) {
     // Saving the type temporarily.
     CardType cardType = *this->type;
 
@@ -146,15 +147,15 @@ void Card::play(Player* player, Deck* deck, Map* map, list<Player> gamePlayers) 
             // List the players the player can choose
             std::map<int, Player*> playerToNumberMap = std::map<int, Player*>();
             int counter = 0;
-            for(Player p : gamePlayers)
+            /*for(Player* p : gamePlayers)
             {
                 // We cant negotiate with ourselves.
-                if(p.name != player->name)
+                if(p->name != player->name)
                 {
-                    playerToNumberMap[counter] = &p;
+                    playerToNumberMap[counter] = p;
                     counter++;
                 }
-            }
+            }*/
 
             // Generate a random input
             std::uniform_int_distribution<int> distribution(0,playerToNumberMap.size() - 1);
@@ -180,7 +181,8 @@ void Card::play(Player* player, Deck* deck, Map* map, list<Player> gamePlayers) 
     player->hand->removeCard(cardType);
 }
 
-void Card::playHuman(Player* player, Deck* deck, Map* map, list<Player> gamePlayers) {
+// void Card::playHuman(Player* player, Deck* deck, Map* map, const list<Player*> gamePlayers) {
+void Card::playHuman(Player* player, Deck* deck, Map* map) {
     // Saving the type temporarily.
     CardType cardType = *this->type;
 
@@ -322,15 +324,16 @@ void Card::playHuman(Player* player, Deck* deck, Map* map, list<Player> gamePlay
             // List the players the player can choose
             std::map<int, Player*> playerToNumberMap = std::map<int, Player*>();
             int counter = 0;
-            for(Player p : gamePlayers)
+
+            /*for(Player* p : gamePlayers)
             {
                 // We cant negotiate with ourselves.
-                if(p.name != player->name)
+                if(p->name != player->name)
                 {
-                    playerToNumberMap[counter] = &p;
+                    playerToNumberMap[counter] = p;
                     counter++;
                 }
-            }
+            }*/
 
             // Read input and validate it.
             int playerChoice = -1;

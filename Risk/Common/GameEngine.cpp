@@ -328,7 +328,7 @@ void GameEngine::startupPhase(){
     }
 
     // Reordering the list of players, to implement order of play
-    players.sort();
+    //players.sort();
 }
 
 
@@ -493,6 +493,14 @@ void GameEngine::issueOrdersPhase() {
         playerTurns[player.name] = true;
     }
 
+
+    list<Player*> gamePlayers = list<Player*>();
+
+    /*for (Player p : players)
+    {
+        gamePlayers.push_back(&p);
+    }*/
+
     // Going round robin until all turns are done.
     int amountOfPlayersDone = 0;
 
@@ -509,7 +517,8 @@ void GameEngine::issueOrdersPhase() {
                 Subject::notify();
 
                 // ... it is prompted to play.
-                playerTurns[player.name] = player.issueOrder(this->deck, this->map, players);
+                //                 playerTurns[player.name] = player.issueOrder(this->deck, this->map, gamePlayers);
+                playerTurns[player.name] = player.issueOrder(this->deck, this->map);
 
                 // If it decided to end it's turn just now...
                 if (!playerTurns[player.name]) {

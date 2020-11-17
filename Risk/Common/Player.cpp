@@ -123,13 +123,14 @@ void Player::setUncommittedReinforcementPool(int newPool) {
 }
 
 
+// bool Player::issueOrder(Deck *deck, Map* territoriesMap, const list<Player*> gamePlayers) {
 /// Prompts the player to issue an order. Returns True if an order was issued, false otherwise.
 
 /**
  * Makes a player issue an order. This is meant to be used by an AI player.
  * @return True if an order was issued, false otherwise.
  */
-bool Player::issueOrder(Deck *deck, Map* territoriesMap, list<Player> gamePlayers) {
+bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
     int actionNumber = -1;
 
     // We use Mt19937 and random_device, which seeds the random generator with some random data from the system.
@@ -297,7 +298,8 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap, list<Player> gamePlayer
             Card* card = cardsToNumbers[cardChoice];
 
             cout << "Playing a card: " + card->toString();
-            card->play(this, deck, territoriesMap, gamePlayers);
+            //             card->play(this, deck, territoriesMap, gamePlayers);
+            card->play(this, deck, territoriesMap);
             break;
         }
         case 3:
@@ -311,11 +313,12 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap, list<Player> gamePlayer
     return true;
 }
 
+// bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap, const list<Player*> gamePlayers) {
 /**
  * Prompts the player to issue an order. This is meant to be used by a human player.
  * @return True if an order was issued, false otherwise.
  */
-bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap, list<Player> gamePlayers) {
+bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap) {
     int actionNumber = -1;
 
     cout << this->name << ", which order would you like to issue? (input the number)" << endl;
@@ -510,7 +513,8 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap, list<Player> gameP
 
             cout << "Playing a card: " + card->toString();
 
-            card->playHuman(this, deck, territoriesMap, gamePlayers);
+            //card->playHuman(this, deck, territoriesMap, gamePlayers);
+            card->playHuman(this, deck, territoriesMap);
             break;
         }
         case 3:
@@ -595,9 +599,9 @@ Player& Player::operator=(const Player& p) {
     return *this;
 }
 
-// Player comparator
+/*// Player comparator
 bool Player::operator<(const Player &other) const {
         return orderOfPlay < other.orderOfPlay;
-}
+}*/
 
 
