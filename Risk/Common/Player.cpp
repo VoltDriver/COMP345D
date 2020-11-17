@@ -129,7 +129,7 @@ void Player::setUncommittedReinforcementPool(int newPool) {
  * Makes a player issue an order. This is meant to be used by an AI player.
  * @return True if an order was issued, false otherwise.
  */
-bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
+bool Player::issueOrder(Deck *deck, Map* territoriesMap, list<Player> gamePlayers) {
     int actionNumber = -1;
 
     // We use Mt19937 and random_device, which seeds the random generator with some random data from the system.
@@ -143,6 +143,7 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
     // If some reinforcements are left in the pool of the player, he can only take deploy actions.
     if(this->uncommittedReinforcementPool > 0)
     {
+        cout << "You have reinforcements in your pool. Only deploy orders are allowed.";
         // Deploy
         actionNumber = 0;
     }
@@ -201,7 +202,6 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
             std::uniform_int_distribution<int> distributionTroops(1,this->uncommittedReinforcementPool);
             int troopNumber = distributionTroops(mt);
 
-            // TODO: Create the order properly... And implement a constructor that makes them automatically.
             auto* deployOrder = new Deploy(generator.setID(), troopNumber, territoryToNumberMap[territoryChoice], this);
             addOrder(deployOrder);
 
@@ -296,11 +296,13 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
             // Playing the card.
             Card* card = cardsToNumbers[cardChoice];
 
-            card->play(this, deck, territoriesMap);
+            cout << "Playing a card: " + card->toString();
+            card->play(this, deck, territoriesMap, gamePlayers);
             break;
         }
         case 3:
             // End Turn
+            cout << "Ending turn.";
             return false;
         default:
             throw exception("Invalid action chosen for a player's turn.");
@@ -313,7 +315,7 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap) {
  * Prompts the player to issue an order. This is meant to be used by a human player.
  * @return True if an order was issued, false otherwise.
  */
-bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap) {
+bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap, list<Player> gamePlayers) {
     int actionNumber = -1;
 
     cout << this->name << ", which order would you like to issue? (input the number)" << endl;
@@ -506,10 +508,13 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap) {
             // Playing the card.
             Card* card = cardsToNumbers[cardChoice];
 
-            card->playHuman(this, deck, territoriesMap);
+            cout << "Playing a card: " + card->toString();
+
+            card->playHuman(this, deck, territoriesMap, gamePlayers);
             break;
         }
         case 3:
+            cout << "Ending turn.";
             return false;
         default:
             throw exception("Invalid action chosen for a player's turn.");
@@ -588,6 +593,11 @@ Player& Player::operator=(const Player& p) {
     this->friendlyPlayers = p.friendlyPlayers;
 
     return *this;
+}
+
+// Player comparator
+bool Player::operator<(const Player &other) const {
+        return orderOfPlay < other.orderOfPlay;
 }
 
 

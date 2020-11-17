@@ -11,6 +11,9 @@ int main() {
     cout << "\nPrinting player object" << endl;
     cout << *player;
 
+    list<Player> players = list<Player>();
+    players.push_back(*player);
+
     // Testing the Card class
     std::cout << "***** Test Card class *****" << std::endl;
 
@@ -53,13 +56,14 @@ int main() {
 
     std::cout << "There are " << newDeck->remainingCards() << " cards in the deck." << std::endl;
 
+
     int amountOfCards = newHand->remainingCards();
 
     for (int i = 0; i < amountOfCards; ++i) {
         Card currentCard = newHand->cards->front();
 
         std::cout << "Playing a card: "<< currentCard.toString() << std::endl;
-        currentCard.play(player, newDeck, nullptr);
+        currentCard.play(player, newDeck, nullptr, players);
         std::cout << "There are " << newHand->remainingCards() << " cards in the hand." << std::endl;
         std::cout << "The cards are... " << *newHand->listAllCards() << std::endl;
     }
