@@ -326,6 +326,9 @@ void GameEngine::startupPhase(){
         cout << "------------------" << endl;
         cout << "              " << endl;
     }
+
+    // Reordering the list of players, to implement order of play
+    players.sort();
 }
 
 
@@ -506,7 +509,7 @@ void GameEngine::issueOrdersPhase() {
                 Subject::notify();
 
                 // ... it is prompted to play.
-                playerTurns[player.name] = player.issueOrder(this->deck, this->map);
+                playerTurns[player.name] = player.issueOrder(this->deck, this->map, players);
 
                 // If it decided to end it's turn just now...
                 if (!playerTurns[player.name]) {
@@ -577,6 +580,20 @@ void GameEngine::executeOrdersPhase() {
     }
 
     // Every order has been executed.
+
+
+    for(Player &p : players)
+    {
+        // Adding cards to players who conquered a territory.
+        if(p.conquered)
+        {
+            deck->draw(p.hand);
+            p.conquered = false;
+        }
+
+        // Resetting the Negotiate orders
+        p.friendlyPlayers.clear();
+    }
 }
 
 ostream &operator<<(ostream& out, const GameEngine& g) {
@@ -655,4 +672,3 @@ void GameEngine::start() {
     startupPhase();
     mainGameLoop();
 }
-
