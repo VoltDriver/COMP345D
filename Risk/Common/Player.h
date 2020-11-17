@@ -50,10 +50,8 @@ public:
     vector<Territory*> to_defend();
     vector<Territory*> to_attack();
     void addOrder(Order* order);
-    //     bool issueOrder(Deck* deck, Map* territoriesMap, const list<Player*> gamePlayers);
-    bool issueOrder(Deck* deck, Map* territoriesMap);
-    //     bool issueOrderHuman(Deck* deck, Map* territoriesMap, const list<Player*> gamePlayers);
-    bool issueOrderHuman(Deck* deck, Map* territoriesMap);
+    bool issueOrder(Deck* deck, Map* territoriesMap, const list<Player*> gamePlayers);
+    bool issueOrderHuman(Deck* deck, Map* territoriesMap, const list<Player*> gamePlayers);
 
     void addTerritory(Territory* territory);
     void removeTerritory(Territory* territory);
@@ -61,7 +59,7 @@ public:
 
     /* Overloaders */
     Player& operator=(const Player &p);
-    //bool operator< (const Player &other) const;
+    bool operator< (const Player &other) const;
 
     /* Friend classes */
     friend class GameEngine;

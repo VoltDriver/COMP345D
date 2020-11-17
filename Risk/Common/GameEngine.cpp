@@ -154,7 +154,10 @@ void GameEngine::gameStart_Auto(string map, int player_count, bool phase_observe
     // Create and set players
     for (int i = 1; i <= player_count; i++) {
         string name = "Player " + std::to_string(i);
-        this->players.emplace_back(name);
+
+        Player* player = new Player(name);
+
+        this->players.emplace_back(player);
     }
     // Create and set the deck
     this->deck = new Deck();
@@ -208,7 +211,10 @@ void GameEngine::gameStart(bool verbose) {
     // Create and set players
     for (int i = 1; i <= num_of_players; i++) {
         string name = "Player " + std::to_string(i);
-        this->players.emplace_back(name);
+
+        Player* player = new Player(name);
+
+        this->players.emplace_back(player);
     }
 
     // Create and set the deck
@@ -237,7 +243,7 @@ void GameEngine::startupPhase(){
     Subject::notify();
     cout << "              " << endl;
     srand (time(NULL));
-    list<Player>::iterator it;
+    list<Player*>::iterator it;
     vector<int> ordersOfPlay;
 
     // This switch statement takes different actions in terms of the values depending on the number of players in the game.
@@ -247,9 +253,9 @@ void GameEngine::startupPhase(){
             cout << "40 initial armies for every player!" << endl;
             ordersOfPlay = {1,2};
             for(it = players.begin(); it != players.end(); ++it){
-                it->reinforcementPool = 40;
+                (*it)->reinforcementPool = 40;
                 int random = rand() % ordersOfPlay.size();
-                it->orderOfPlay = ordersOfPlay[random];
+                (*it)->orderOfPlay = ordersOfPlay[random];
                 ordersOfPlay.erase(ordersOfPlay.begin() + random);
                 ordersOfPlay.shrink_to_fit();
             }
@@ -258,9 +264,9 @@ void GameEngine::startupPhase(){
             cout << "35 initial armies for every player!" << endl;
             ordersOfPlay = {1,2,3};
             for(it = players.begin(); it != players.end(); ++it){
-                it->reinforcementPool = 35;
+                (*it)->reinforcementPool = 35;
                 int random = rand() % ordersOfPlay.size();
-                it->orderOfPlay = ordersOfPlay[random];
+                (*it)->orderOfPlay = ordersOfPlay[random];
                 ordersOfPlay.erase(ordersOfPlay.begin() + random);
                 ordersOfPlay.shrink_to_fit();
             }
@@ -269,9 +275,9 @@ void GameEngine::startupPhase(){
             cout << "30 initial armies for every player!" << endl;
             ordersOfPlay = {1,2,3,4};
             for(it = players.begin(); it != players.end(); ++it){
-                it->reinforcementPool = 30;
+                (*it)->reinforcementPool = 30;
                 int random = rand() % ordersOfPlay.size();
-                it->orderOfPlay = ordersOfPlay[random];
+                (*it)->orderOfPlay = ordersOfPlay[random];
                 ordersOfPlay.erase(ordersOfPlay.begin() + random);
                 ordersOfPlay.shrink_to_fit();
             }
@@ -280,9 +286,9 @@ void GameEngine::startupPhase(){
             cout << "25 initial armies for every player!" << endl;
             ordersOfPlay = {1,2,3,4,5};
             for(it = players.begin(); it != players.end(); ++it){
-                it->reinforcementPool = 25;
+                (*it)->reinforcementPool = 25;
                 int random = rand() % ordersOfPlay.size();
-                it->orderOfPlay = ordersOfPlay[random];
+                (*it)->orderOfPlay = ordersOfPlay[random];
                 ordersOfPlay.erase(ordersOfPlay.begin() + random);
                 ordersOfPlay.shrink_to_fit();
             }
@@ -305,8 +311,8 @@ void GameEngine::startupPhase(){
             if(copyOfMapTerritories.size() != 0) {
                 int random = rand() % copyOfMapTerritories.size();
                 Territory* territory = copyOfMapTerritories[random];
-                territory->setPlayer(&*it);
-                it->territories.push_back(territory);
+                territory->setPlayer(&*(*it));
+                (*it)->territories.push_back(territory);
                 copyOfMapTerritories.erase(copyOfMapTerritories.begin() + random);
                 copyOfMapTerritories.shrink_to_fit();
             }
@@ -316,19 +322,19 @@ void GameEngine::startupPhase(){
     // Showing the territories and reinforcement pool of each player.
 
     for(it = players.begin(); it != players.end(); ++it){
-        cout << it->name << ":" << endl;
+        cout << (*it)->name << ":" << endl;
         cout << "              " << endl;
-        cout << "   Armies available in reinforcement pool: " << it->reinforcementPool << endl;
+        cout << "   Armies available in reinforcement pool: " << (*it)->reinforcementPool << endl;
         cout << "   Territories assigned: " << endl;
-        for(int i = 0; i < it->territories.size(); i++){
-            cout<< "        " << it->territories[i]->get_name() << endl;
+        for(int i = 0; i < (*it)->territories.size(); i++){
+            cout<< "        " << (*it)->territories[i]->get_name() << endl;
         }
         cout << "------------------" << endl;
         cout << "              " << endl;
     }
 
     // Reordering the list of players, to implement order of play
-    //players.sort();
+    players.sort();
 }
 
 
@@ -391,14 +397,14 @@ void GameEngine::mainGameLoop() {
         executeOrdersPhase();
 
         // Checking if the game is over
-        for (Player& player : players) {
-            if (player.territories.size() == map->get_territories().size()) {
+        for (Player* player : players) {
+            if (player->territories.size() == map->get_territories().size()) {
                 gameOver = true;
-                winningPlayer = player.name;
+                winningPlayer = player->name;
 
                 // Phase Observer notification
                 this->phase = "Game Over";
-                this->currentPlayer = &player;
+                this->currentPlayer = player;
                 Subject::notify();
             }
         }
@@ -407,8 +413,8 @@ void GameEngine::mainGameLoop() {
         auto it = players.begin();
         while (it != players.end()) {
             auto current = it++;
-            if (current->territories.empty()) {
-                cout << current->name << " has lost!";
+            if ((*current)->territories.empty()) {
+                cout << (*current)->name << " has lost!";
 
                 players.erase(current);
             }
@@ -427,18 +433,18 @@ void GameEngine::reinforcementPhase() {
     this->phase = "Reinforcement Phase";
     Subject::notify();
 
-    for (Player &player : players) {
+    for (Player* player : players) {
         int reinforcement = 0;
         currentPlayer->setUncommittedReinforcementPool(currentPlayer->reinforcementPool);
 
-        int nbTerritoriesOwned = player.territories.size();
+        int nbTerritoriesOwned = player->territories.size();
 
         // Int division because it is rounded down.
         reinforcement += nbTerritoriesOwned / 3;
 
         std::map<string, ContinentOwnership_DataObject> continentOwnership = std::map<string, ContinentOwnership_DataObject>();
 
-        for (Territory *t : player.territories) {
+        for (Territory *t : player->territories) {
             // Checking if the continent is already part of the map
             if (continentOwnership.find(t->get_continent()->get_name()) == continentOwnership.end()) {
                 // ... if it's not there, then we add it in.
@@ -465,14 +471,14 @@ void GameEngine::reinforcementPhase() {
         }
 
         // Place the reinforcements in the players' pools.
-        player.reinforcementPool += reinforcement;
+        player->reinforcementPool += reinforcement;
 
         // Adjust the uncommitted reinforcement pool of the player
-        player.uncommittedReinforcementPool += reinforcement;
+        player->uncommittedReinforcementPool += reinforcement;
 
         // Phase Observer notification
         this->phase = "Reinforcement Phase::Deploy";
-        this->currentPlayer = &player;
+        this->currentPlayer = player;
         Subject::notify();
     }
 }
@@ -489,39 +495,44 @@ void GameEngine::issueOrdersPhase() {
     std::map<string, bool> playerTurns = std::map<string, bool>();
 
     // Initializing the map
-    for (Player &player : players) {
-        playerTurns[player.name] = true;
+    for (Player* player : players) {
+        playerTurns[player->name] = true;
     }
 
 
+    // Creating a copy of the Players. We have to instantiate them manually, because we've
+    // had weird problems with memory corruption otherwise.
     list<Player*> gamePlayers = list<Player*>();
 
-    /*for (Player p : players)
-    {
-        gamePlayers.push_back(&p);
-    }*/
+    auto iterator = std::next(this->players.begin(), 0);
+
+    for (int i = 0; i < players.size(); ++i) {
+        Player* copyPlayer = (*iterator);
+        gamePlayers.emplace_back(copyPlayer);
+        iterator++;
+    }
+
 
     // Going round robin until all turns are done.
     int amountOfPlayersDone = 0;
 
     while (amountOfPlayersDone != players.size()) {
 
-        for (Player &player : players) {
+        for (Player* player : players) {
 
             // If a player did not end his turn yet...
-            if (playerTurns[player.name]) {
+            if (playerTurns[player->name]) {
 
                 // Phase Observer notification
                 this->phase = "Issue Orders Phase::Player turn";
-                this->currentPlayer = &player;
+                this->currentPlayer = player;
                 Subject::notify();
 
                 // ... it is prompted to play.
-                //                 playerTurns[player.name] = player.issueOrder(this->deck, this->map, gamePlayers);
-                playerTurns[player.name] = player.issueOrder(this->deck, this->map);
+                playerTurns[player->name] = player->issueOrder(this->deck, this->map, gamePlayers);
 
                 // If it decided to end it's turn just now...
-                if (!playerTurns[player.name]) {
+                if (!playerTurns[player->name]) {
 
                     // Phase Observer notification
                     this->phase = "Issue Orders Phase::Turn end";
@@ -549,40 +560,40 @@ void GameEngine::executeOrdersPhase() {
     std::map<string, bool> playerOrdersStatus = std::map<string, bool>();
 
     // Initializing the map
-    for (Player &player : players) {
-        playerOrdersStatus[player.name] = true;
+    for (Player* player : players) {
+        playerOrdersStatus[player->name] = true;
     }
 
     // Going round robin until all orders are done.
     int amountOfPlayersDone = 0;
 
     while (amountOfPlayersDone != players.size()) {
-        for (Player &player : players) {
+        for (Player* player : players) {
 
             // If a player still is playing....
-            if (playerOrdersStatus[player.name]) {
+            if (playerOrdersStatus[player->name]) {
                 // ... and still has orders...
-                if (player.orders->myList.empty())
+                if (player->orders->myList.empty())
                 {
                     // Phase Observer notification
                     this->phase = "Execute Orders Phase::Done";
-                    this->currentPlayer = &player;
+                    this->currentPlayer = player;
                     Subject::notify();
 
                     // If it has no more orders... we add it to the number of players that are done.
-                    playerOrdersStatus[player.name] = false;
+                    playerOrdersStatus[player->name] = false;
                     amountOfPlayersDone++;
                 }
                 else
                 {
                     // Phase Observer notification
                     this->phase = "Execute Orders Phase::Execute";
-                    this->currentPlayer = &player;
+                    this->currentPlayer = player;
                     Subject::notify();
 
                     // ... it executes an order
-                    player.orders->myList[0]->execute();
-                    player.orders->remove(player.orders->myList[0]);
+                    player->orders->myList[0]->execute();
+                    player->orders->remove(player->orders->myList[0]);
                 }
             }
         }
@@ -591,25 +602,25 @@ void GameEngine::executeOrdersPhase() {
     // Every order has been executed.
 
 
-    for(Player &p : players)
+    for(Player* p : players)
     {
         // Adding cards to players who conquered a territory.
-        if(p.conquered)
+        if(p->conquered)
         {
-            deck->draw(p.hand);
-            p.conquered = false;
+            deck->draw(p->hand);
+            p->conquered = false;
         }
 
         // Resetting the Negotiate orders
-        p.friendlyPlayers.clear();
+        p->friendlyPlayers.clear();
     }
 }
 
 ostream &operator<<(ostream& out, const GameEngine& g) {
     string players;
-    for(const Player& p : g.players)
+    for(const Player* p : g.players)
     {
-        players += p.name + " ";
+        players += p->name + " ";
     }
     return out << g.map << endl << g.deck << endl << players<< endl << g.stat_observer_flag << " " << g.phase_observer_flag;
 }
@@ -637,7 +648,7 @@ GameEngine::GameEngine() {
     currentPlayer = new Player();
     phase = "";
     turnCounter = 0;
-    players = list<Player>();
+    players = list<Player*>();
     map = new Map();
     deck = new Deck();
     phase_observer_flag = true;
@@ -661,6 +672,11 @@ GameEngine::~GameEngine() {
     delete this->statsView;
     delete this->map;
     delete this->deck;
+
+    for(Player* p : players)
+    {
+        delete p;
+    }
 }
 
 

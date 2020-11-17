@@ -32,23 +32,21 @@ class Card {
          */
         std::string toString() const;
 
-        //         void play(Player* player, Deck* deck, Map* map, const list<Player*>& gamePlayers);
         /**
          * Plays the card, creating a special order in the associated player and adding the card back to the deck.
          * This method is meant to be used by an AI player, and will automatically make any decisions.
          * @param player The player who is playing the card.
          * @param deck The deck to put the card back into.
          */
-        void play(Player* player, Deck* deck, Map* map);
+        void play(Player* player, Deck* deck, Map* map, const list<Player*>& gamePlayers);
 
-        //         void playHuman(Player* player, Deck* deck, Map* map, const list<Player*> gamePlayers);
         /**
          * Plays the card, creating a special order in the associated player and adding the card back to the deck.
          * This method is meant to be used by a human player, and will prompt the user for decisions.
          * @param player The player who is playing the card.
          * @param deck The deck to put the card back into.
          */
-        void playHuman(Player* player, Deck* deck, Map* map);
+        void playHuman(Player* player, Deck* deck, Map* map, const list<Player*>& gamePlayers);
 
         Card();
 

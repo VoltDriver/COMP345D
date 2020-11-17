@@ -23,8 +23,7 @@ std::string Card::toString() const {
     return cardTypeMap[*this->type];
 }
 
-// void Card::play(Player* player, Deck* deck, Map* map, const list<Player*>& gamePlayers) {
-void Card::play(Player* player, Deck* deck, Map* map) {
+void Card::play(Player* player, Deck* deck, Map* map, const list<Player*>& gamePlayers) {
     // Saving the type temporarily.
     CardType cardType = *this->type;
 
@@ -147,7 +146,7 @@ void Card::play(Player* player, Deck* deck, Map* map) {
             // List the players the player can choose
             std::map<int, Player*> playerToNumberMap = std::map<int, Player*>();
             int counter = 0;
-            /*for(Player* p : gamePlayers)
+            for(Player* p : gamePlayers)
             {
                 // We cant negotiate with ourselves.
                 if(p->name != player->name)
@@ -155,7 +154,7 @@ void Card::play(Player* player, Deck* deck, Map* map) {
                     playerToNumberMap[counter] = p;
                     counter++;
                 }
-            }*/
+            }
 
             // Generate a random input
             std::uniform_int_distribution<int> distribution(0,playerToNumberMap.size() - 1);
@@ -181,8 +180,7 @@ void Card::play(Player* player, Deck* deck, Map* map) {
     player->hand->removeCard(cardType);
 }
 
-// void Card::playHuman(Player* player, Deck* deck, Map* map, const list<Player*> gamePlayers) {
-void Card::playHuman(Player* player, Deck* deck, Map* map) {
+void Card::playHuman(Player* player, Deck* deck, Map* map, const list<Player*>& gamePlayers) {
     // Saving the type temporarily.
     CardType cardType = *this->type;
 
@@ -325,7 +323,7 @@ void Card::playHuman(Player* player, Deck* deck, Map* map) {
             std::map<int, Player*> playerToNumberMap = std::map<int, Player*>();
             int counter = 0;
 
-            /*for(Player* p : gamePlayers)
+            for(Player* p : gamePlayers)
             {
                 // We cant negotiate with ourselves.
                 if(p->name != player->name)
@@ -333,7 +331,7 @@ void Card::playHuman(Player* player, Deck* deck, Map* map) {
                     playerToNumberMap[counter] = p;
                     counter++;
                 }
-            }*/
+            }
 
             // Read input and validate it.
             int playerChoice = -1;

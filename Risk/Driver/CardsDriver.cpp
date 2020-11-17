@@ -3,7 +3,7 @@
 #include "Common/Player.h"
 
 int main() {
-    /* // Creating a dummy player
+     // Creating a dummy player
     Player* player = new Player();
 
     std::cout << "Showing the current orders of our player:" << std::endl;
@@ -78,7 +78,7 @@ int main() {
     delete player;
     delete card;
     delete card2;
-    delete newDeck; */
+    delete newDeck;
 
     return 0;
 }
