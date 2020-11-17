@@ -50,6 +50,9 @@ class GameEngine: public Subject {
         static pair<bool, bool> observer_settings();
 
     public:
+        PhaseObserver *phaseView;
+        StatsObserver *statsView;
+
         // Constants
         static const int MINIMUM_REINFORCEMENT;
         static const char * MAP_DIRECTORY;

@@ -134,6 +134,14 @@ void GameEngine::gameStart_Auto(string map, int player_count, bool phase_observe
     this->phase_observer_flag = phase_observer;
     this->stat_observer_flag = stat_observer;
 
+    // Creating observers
+    if(this->phase_observer_flag) {
+        phaseView = new PhaseObserver(this);
+    }
+    if(this->stat_observer_flag) {
+        statsView = new StatsObserver(this);
+    }
+
     // Load and set map
     try {
         this->map = MapLoader::parse(MAP_DIRECTORY + map, false);
@@ -154,8 +162,8 @@ void GameEngine::gameStart_Auto(string map, int player_count, bool phase_observe
     cout << "\n\n=========== DEBUG OUTPUT ==========" << endl;
     cout << "Selected map: " << map << endl;
     cout << "Player count: " << player_count << endl;
-    cout << "Phase obserber: " << (phase_observer ? "Enabled" : "Disabled") << endl;
-    cout << "Stat obserber: " << (stat_observer ? "Enabled" : "Disabled") << endl;
+    cout << "Phase observer: " << (phase_observer ? "Enabled" : "Disabled") << endl;
+    cout << "Stats observer: " << (stat_observer ? "Enabled" : "Disabled") << endl;
 
     cout << "> Running map validation..." << endl;
     // Validate map
@@ -174,11 +182,19 @@ void GameEngine::gameStart(bool verbose) {
     string map_filename = map_select();
     // Select number of players 2-5
     int num_of_players = player_select();
-    // Turn off any observers
+    // Turn on/off any observers
     pair<bool, bool> observer_options = observer_settings();
 
     this->phase_observer_flag = observer_options.first;
     this->stat_observer_flag = observer_options.second;
+
+    // Creating observers
+    if(this->phase_observer_flag) {
+        phaseView = new PhaseObserver(this);
+    }
+    if(this->stat_observer_flag) {
+        statsView = new StatsObserver(this);
+    }
 
     // Load and set map
     try {
@@ -546,6 +562,7 @@ GameEngine &GameEngine::operator=(const GameEngine &g) {
         delete this->deck;
 
         currentPlayer = g.currentPlayer;
+        phase = g.phase;
         players = g.players;
         map = g.map;
         deck = g.deck;
@@ -558,6 +575,7 @@ GameEngine &GameEngine::operator=(const GameEngine &g) {
 
 GameEngine::GameEngine() {
     currentPlayer = new Player();
+    phase = "";
     players = list<Player>();
     map = new Map();
     deck = new Deck();
@@ -567,6 +585,7 @@ GameEngine::GameEngine() {
 
 GameEngine::GameEngine(const GameEngine &g) {
     currentPlayer = g.currentPlayer;
+    phase = g.phase;
     players = g.players;
     map = g.map;
     deck = g.deck;
@@ -576,10 +595,11 @@ GameEngine::GameEngine(const GameEngine &g) {
 
 GameEngine::~GameEngine() {
     delete this->currentPlayer;
+    delete this->phaseView;
+    delete this->statsView;
     delete this->map;
     delete this->deck;
 }
-
 
 bool GameEngine::getPhase_observer_flag() {
     return phase_observer_flag;
