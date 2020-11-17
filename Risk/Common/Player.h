@@ -54,6 +54,7 @@ public:
     bool issueOrderHuman(Deck* deck, Map* territoriesMap);
     void addTerritory(Territory* territory);
     void removeTerritory(Territory* territory);
+    OrdersList* getOrdersList();
 
     /* Overloaders */
     Player& operator=(const Player &p);

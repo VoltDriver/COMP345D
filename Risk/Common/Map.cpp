@@ -193,7 +193,7 @@ bool Territory::borders_territory(Territory *comparator) const {
 /* Overloaders */
 // stream insertion operator
 ostream &operator<<(std::ostream &strm, const Territory &territory) {
-    return strm << territory.name << " | "
+    return strm << "\t" << territory.name << " | "
                 << (!territory.continent ? "()" : territory.continent->get_name()) << " | "
 //                << "Bordering Territories: " << territory.bordering_territories_tostring() << " | "
                 << "ID: " << territory.id

@@ -86,7 +86,6 @@ void PhaseObserver::Update() {
 void PhaseObserver::display() {
     string phase = _gameEngine->getPhase();
     string player_name = _gameEngine->getCurrentPlayer()->name;
-    int armiesToDeploy = _gameEngine->getCurrentPlayer()->getReinforcementPool();
 
 
     /* Startup Phase */
@@ -96,6 +95,7 @@ void PhaseObserver::display() {
         cout << "--------------------------------------------------------------------------------------------" << endl;
     }
 
+
     /* Reinforcement Phase */
     if (phase == "Reinforcement Phase") {
         cout << "\n--------------------------------------------------------------------------------------------" << endl;
@@ -104,6 +104,7 @@ void PhaseObserver::display() {
     }
 
     if (phase == "Reinforcement Phase::Deploy") {
+        int armiesToDeploy = _gameEngine->getCurrentPlayer()->getReinforcementPool();
         cout << "\n--------------------------------------------------------------------------------------------" << endl;
         cout << "-" << player_name << " Reinforcement Phase-" << endl;
         cout << "Number of armies to Deploy: " << armiesToDeploy;
@@ -121,6 +122,7 @@ void PhaseObserver::display() {
     if (phase == "Issue Orders Phase::Player turn") {
         vector<Territory*> terrToDef = _gameEngine->getCurrentPlayer()->to_defend();
         vector<Territory*> terrToAtk = _gameEngine->getCurrentPlayer()->to_attack();
+
         cout << "\n--------------------------------------------------------------------------------------------" << endl;
         cout << "-" << player_name << " Issue Order Phase-\n" << endl;
         cout << "Territories owned: " << endl;
@@ -149,9 +151,12 @@ void PhaseObserver::display() {
     }
 
     if (phase == "Execute Orders Phase::Execute") {
+        int remainingOrders = _gameEngine->getCurrentPlayer()->getOrdersList()->myList.size();
+
         cout << "\n--------------------------------------------------------------------------------------------" << endl;
         cout << "-" << player_name << " Execute Order Phase-" << endl;
-        cout << "Executing order" << endl;
+        cout << "Remaining orders to execute: " << remainingOrders << endl;
+        cout << "Executing order..." << endl;
         cout << "--------------------------------------------------------------------------------------------\n" << endl;
     }
 

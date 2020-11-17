@@ -517,6 +517,7 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap) {
     return true;
 }
 
+
 vector<Territory *> Player::to_defend() {
     return territories;
 }
@@ -547,6 +548,9 @@ vector<Territory *> Player::to_attack() {
     return setToVector;
 }
 
+OrdersList* Player::getOrdersList() {
+    return orders;
+};
 
 /* Overloads */
 //stream insertion operator
