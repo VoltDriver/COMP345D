@@ -376,6 +376,11 @@ void GameEngine::mainGameLoop() {
     string winningPlayer;
 
     while (!gameOver) {
+        // Phase Observer notification
+        this->phase = "New Turn";
+        this->turnCounter++;
+        Subject::notify();
+
         // Reinforcement Phase
         reinforcementPhase();
 
@@ -608,6 +613,7 @@ GameEngine &GameEngine::operator=(const GameEngine &g) {
 
         currentPlayer = g.currentPlayer;
         phase = g.phase;
+        turnCounter = g.turnCounter;
         players = g.players;
         map = g.map;
         deck = g.deck;
@@ -621,6 +627,7 @@ GameEngine &GameEngine::operator=(const GameEngine &g) {
 GameEngine::GameEngine() {
     currentPlayer = new Player();
     phase = "";
+    turnCounter = 0;
     players = list<Player>();
     map = new Map();
     deck = new Deck();
@@ -631,6 +638,7 @@ GameEngine::GameEngine() {
 GameEngine::GameEngine(const GameEngine &g) {
     currentPlayer = g.currentPlayer;
     phase = g.phase;
+    turnCounter = g.turnCounter;
     players = g.players;
     map = g.map;
     deck = g.deck;
@@ -653,6 +661,10 @@ Player* GameEngine::getCurrentPlayer() {
 
 string GameEngine::getPhase() {
     return phase;
+}
+
+int GameEngine::getTurnCounter() {
+    return turnCounter;
 }
 
 void GameEngine::start() {

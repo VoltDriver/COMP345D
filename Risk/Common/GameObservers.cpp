@@ -86,12 +86,20 @@ void PhaseObserver::Update() {
 void PhaseObserver::display() {
     string phase = _gameEngine->getPhase();
     string player_name = _gameEngine->getCurrentPlayer()->name;
-
+    int turnCounter = _gameEngine->getTurnCounter();
 
     /* Startup Phase */
     if (phase == "Startup Phase") {
         cout << "\n--------------------------------------------------------------------------------------------" << endl;
         cout << "\t\t\t***** STARTUP PHASE *****" << endl;
+        cout << "--------------------------------------------------------------------------------------------" << endl;
+    }
+
+
+    /* New Turn Phase */
+    if (phase == "New Turn") {
+        cout << "\n--------------------------------------------------------------------------------------------" << endl;
+        cout << "\t\t\t***** TURN " << turnCounter << " *****" << endl;
         cout << "--------------------------------------------------------------------------------------------" << endl;
     }
 

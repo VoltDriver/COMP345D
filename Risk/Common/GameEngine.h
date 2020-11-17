@@ -41,6 +41,7 @@ class GameEngine: public Subject {
         Map *map;
         Deck *deck;
         string phase;
+        int turnCounter;
         bool phase_observer_flag;
         bool stat_observer_flag;
         friend ostream& operator<<(ostream&, const GameEngine&);
@@ -76,5 +77,7 @@ class GameEngine: public Subject {
         Player* getCurrentPlayer();
 
         string getPhase();
+
+        int getTurnCounter();
 
 };
