@@ -23,7 +23,7 @@ std::string Card::toString() const {
     return cardTypeMap[*this->type];
 }
 
-void Card::play(Player* player, Deck* deck, Map* map, list<Player> gamePlayers) {
+void Card::play(Player* player, Deck* deck, Map* map) {
     // Saving the type temporarily.
     CardType cardType = *this->type;
 
@@ -62,10 +62,10 @@ void Card::play(Player* player, Deck* deck, Map* map, list<Player> gamePlayers) 
         }
         case Reinforcement:
         {
-            // Currently, 5 reinforcement are added, as per the teacher's instructions.
-            player->reinforcementPool += 5;
-            player->uncommittedReinforcementPool += 5;
-            cout << "Reinforcement Card played: Reinforcements Added.";
+            // TODO: Check that the amount of armies given is fine, and if we need an ORDER class for it.
+            player->reinforcementPool += 15;
+            player->uncommittedReinforcementPool += 15;
+            cout << "Reinforcements Added.";
             break;
         }
         case Blockade:
@@ -143,28 +143,7 @@ void Card::play(Player* player, Deck* deck, Map* map, list<Player> gamePlayers) 
         }
         case Diplomacy:
         {
-            // List the players the player can choose
-            std::map<int, Player*> playerToNumberMap = std::map<int, Player*>();
-            int counter = 0;
-            for(Player p : gamePlayers)
-            {
-                // We cant negotiate with ourselves.
-                if(p.name != player->name)
-                {
-                    playerToNumberMap[counter] = &p;
-                    counter++;
-                }
-            }
-
-            // Generate a random input
-            std::uniform_int_distribution<int> distribution(0,playerToNumberMap.size() - 1);
-            int territoryChoice = distribution(mt);
-
-            // TODO: Create order properly.
-            auto* negotiateOrder = new class::Negotiate(id.setID());
-            player->addOrder(negotiateOrder);
-
-            cout << "Negotiate order issued." << endl;
+            // TODO: Implement properly.
             break;
         }
 
@@ -180,7 +159,7 @@ void Card::play(Player* player, Deck* deck, Map* map, list<Player> gamePlayers) 
     player->hand->removeCard(cardType);
 }
 
-void Card::playHuman(Player* player, Deck* deck, Map* map, list<Player> gamePlayers) {
+void Card::playHuman(Player* player, Deck* deck, Map* map) {
     // Saving the type temporarily.
     CardType cardType = *this->type;
 
@@ -207,7 +186,7 @@ void Card::playHuman(Player* player, Deck* deck, Map* map, list<Player> gamePlay
 
             // Read input and validate it.
             int territoryChoice = -1;
-            while(territoryChoice<0 || territoryChoice > player->to_attack().size() - 1)
+            while(territoryChoice<0 || territoryChoice > player->to_attack().size())
                 cin >> territoryChoice;
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
@@ -243,7 +222,7 @@ void Card::playHuman(Player* player, Deck* deck, Map* map, list<Player> gamePlay
 
             // Read input and validate it.
             int territoryChoice = -1;
-            while(territoryChoice<0 || territoryChoice > player->to_attack().size() - 1)
+            while(territoryChoice<0 || territoryChoice > player->to_attack().size())
                 cin >> territoryChoice;
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
@@ -269,7 +248,7 @@ void Card::playHuman(Player* player, Deck* deck, Map* map, list<Player> gamePlay
 
             // Read input and validate it.
             int sourceTerritoryChoice = -1;
-            while(sourceTerritoryChoice<0 || sourceTerritoryChoice > player->to_defend().size() - 1)
+            while(sourceTerritoryChoice<0 || sourceTerritoryChoice > player->to_defend().size())
                 cin >> sourceTerritoryChoice;
 
             cout << "How many troops would you like to move? (" << sourceTerritoryToNumberMap[sourceTerritoryChoice]->get_armies() << " remaining in your territory.)" << endl;
@@ -307,7 +286,7 @@ void Card::playHuman(Player* player, Deck* deck, Map* map, list<Player> gamePlay
 
             // Read input and validate it.
             int destinationTerritoryChoice = -1;
-            while(destinationTerritoryChoice<0 || destinationTerritoryChoice > (player->to_attack().size() + player->to_defend().size()) - 1 )
+            while(destinationTerritoryChoice<0 || destinationTerritoryChoice > (player->to_attack().size() + player->to_defend().size()) )
                 cin >> destinationTerritoryChoice;
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
@@ -319,29 +298,7 @@ void Card::playHuman(Player* player, Deck* deck, Map* map, list<Player> gamePlay
         }
         case Diplomacy:
         {
-            // List the players the player can choose
-            std::map<int, Player*> playerToNumberMap = std::map<int, Player*>();
-            int counter = 0;
-            for(Player p : gamePlayers)
-            {
-                // We cant negotiate with ourselves.
-                if(p.name != player->name)
-                {
-                    playerToNumberMap[counter] = &p;
-                    counter++;
-                }
-            }
-
-            // Read input and validate it.
-            int playerChoice = -1;
-            while(playerChoice<0 || playerChoice > playerToNumberMap.size() - 1 )
-                cin >> playerChoice;
-
-            // TODO: Create order properly.
-            auto* negotiateOrder = new class::Negotiate(id.setID());
-            player->addOrder(negotiateOrder);
-
-            cout << "Negotiate order issued." << endl;
+            // TODO: Implement properly.
             break;
         }
 

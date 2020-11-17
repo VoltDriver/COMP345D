@@ -27,6 +27,3 @@ target_link_libraries(GameObserversDriver Common)
 
 add_executable(StartupPhaseDriver StartupPhaseDriver.cpp)
 target_link_libraries(StartupPhaseDriver Common)
-
-add_executable(MainGameLoopDriver MainGameLoopDriver.cpp)
-target_link_libraries(MainGameLoopDriver Common)

@@ -38,7 +38,7 @@ class Card {
          * @param player The player who is playing the card.
          * @param deck The deck to put the card back into.
          */
-        void play(Player* player, Deck* deck, Map* map, list<Player> gamePlayers);
+        void play(Player* player, Deck* deck, Map* map);
 
         /**
          * Plays the card, creating a special order in the associated player and adding the card back to the deck.
@@ -46,7 +46,7 @@ class Card {
          * @param player The player who is playing the card.
          * @param deck The deck to put the card back into.
          */
-        void playHuman(Player* player, Deck* deck, Map* map, list<Player> gamePlayers);
+        void playHuman(Player* player, Deck* deck, Map* map);
 
         Card();
 
