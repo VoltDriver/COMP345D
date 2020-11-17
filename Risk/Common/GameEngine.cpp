@@ -415,7 +415,7 @@ void GameEngine::mainGameLoop() {
             auto current = it++;
             if ((*current)->territories.empty()) {
                 cout << (*current)->name << " has lost!";
-
+                eliminatedPlayers.push_back(*current);
                 players.erase(current);
             }
         }
@@ -631,6 +631,16 @@ GameEngine &GameEngine::operator=(const GameEngine &g) {
         delete this->map;
         delete this->deck;
 
+        for(Player* player : players)
+        {
+            delete player;
+        }
+
+        for(Player* player : eliminatedPlayers)
+        {
+            delete player;
+        }
+
         currentPlayer = g.currentPlayer;
         phase = g.phase;
         turnCounter = g.turnCounter;
@@ -639,6 +649,7 @@ GameEngine &GameEngine::operator=(const GameEngine &g) {
         deck = g.deck;
         phase_observer_flag = g.phase_observer_flag;
         stat_observer_flag = g.stat_observer_flag;
+        eliminatedPlayers = g.eliminatedPlayers;
     }
 
     return *this;
@@ -649,6 +660,7 @@ GameEngine::GameEngine() {
     phase = "";
     turnCounter = 0;
     players = list<Player*>();
+    eliminatedPlayers = list<Player*>();
     map = new Map();
     deck = new Deck();
     phase_observer_flag = true;
@@ -660,6 +672,7 @@ GameEngine::GameEngine(const GameEngine &g) {
     phase = g.phase;
     turnCounter = g.turnCounter;
     players = g.players;
+    eliminatedPlayers = g.eliminatedPlayers;
     map = g.map;
     deck = g.deck;
     phase_observer_flag = g.phase_observer_flag;
@@ -676,6 +689,11 @@ GameEngine::~GameEngine() {
     for(Player* p : players)
     {
         delete p;
+    }
+
+    for(Player* player : eliminatedPlayers)
+    {
+        delete player;
     }
 }
 

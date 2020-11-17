@@ -37,6 +37,7 @@ class ContinentOwnership_DataObject {
 class GameEngine: public Subject {
     private:
         list <Player*> players;
+        list <Player*> eliminatedPlayers;
         Player *currentPlayer;
         Map *map;
         Deck *deck;
