@@ -193,12 +193,11 @@ bool Territory::borders_territory(Territory *comparator) const {
 /* Overloaders */
 // stream insertion operator
 ostream &operator<<(std::ostream &strm, const Territory &territory) {
-    return strm << "Territory("
-                << "id: " << territory.id << ", "
-                << "name: " << territory.name << ", "
-                << "continent: " << (!territory.continent ? "()" : territory.continent->get_name()) << ", "
-                << "borders: " << territory.bordering_territories_tostring()
-                << ")\n";
+    return strm << territory.name << " | "
+                << (!territory.continent ? "()" : territory.continent->get_name()) << " | "
+                << "Bordering Territories: " << territory.bordering_territories_tostring() << " | "
+                << "ID: " << territory.id
+                << "\n";
 }
 
 // assignment operator
