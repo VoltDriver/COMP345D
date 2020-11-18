@@ -106,7 +106,7 @@ void Deploy::execute() {
         player->setReinforcementPool(player->getReinforcementPool()-armies);
     }
     else{
-        cout << "This deploy order is not valid";
+        cout << "This deploy order is not valid" << endl;
     }
 }
 
