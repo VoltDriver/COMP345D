@@ -138,7 +138,7 @@ Advance& Advance::operator=(const Advance &other) {
 //validate() method for Advance that prints out a string and returns true
 bool Advance::validate() {
     if(player != nullptr && source != nullptr && target != nullptr && source->borders_territory(target) && source->getPlayer() !=
-        nullptr && source->getPlayerName().compare(player->name) && source->get_armies() >= armies > 0) {
+        nullptr && source->getPlayerName().compare(player->name) == 0 && source->get_armies() >= armies && armies > 0) {
         if (target->getPlayer() != nullptr && player->name.compare(target->getPlayerName()) != 0 && player->isFriendly(target->getPlayer()))
             return false;
         else
@@ -198,7 +198,7 @@ void Advance::execute() {
                     player->setConquered(true);
                 }
             }
-            else if (armies == 0) {
+            else if (target->get_armies() >= 0) {
                 cout << "I have defended with an army of " << startingDefendingArmies << " by killing "
                      << attackingUnitsKilled << " of the " << startingArmies << " units and losing "
                      << defendingUnitsKilled << " units and being left with " << target->get_armies() << " remaining!"
@@ -206,7 +206,10 @@ void Advance::execute() {
                 source->set_armies(source->get_armies() + armies);
             }
             else {
-                //
+                cout << "I have defended with an army of " << startingDefendingArmies << " by killing "
+                     << attackingUnitsKilled << " of the " << startingArmies << " units and losing "
+                     << defendingUnitsKilled << " units and being left with " << target->get_armies() << " remaining!"
+                     << endl;
             }
         }
         else
