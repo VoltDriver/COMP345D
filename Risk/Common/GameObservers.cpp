@@ -130,9 +130,12 @@ void PhaseObserver::display() {
     if (phase == "Issue Orders Phase::Player turn") {
         vector<Territory*> terrToDef = _gameEngine->getCurrentPlayer()->to_defend();
         vector<Territory*> terrToAtk = _gameEngine->getCurrentPlayer()->to_attack();
+        int armiesToDeploy = _gameEngine->getCurrentPlayer()->getUncommittedReinforcementPool();
 
         cout << "\n--------------------------------------------------------------------------------------------" << endl;
         cout << "-" << player_name << " Issue Order Phase-\n" << endl;
+
+        cout << "Armies left to deploy: " << armiesToDeploy << "\n" << endl;
         cout << "Territories owned: " << endl;
         for (int i = 0; i < terrToDef.size(); i++) {
             cout << *terrToDef[i];

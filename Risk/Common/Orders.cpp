@@ -267,7 +267,7 @@ void Bomb::execute() {
         else {
             target->set_armies(0);
         }
-        cout << "Before bombing: " << target->get_name() << " has " << target->get_armies() << " units" << endl;
+        cout << "After bombing: " << target->get_name() << " has " << target->get_armies() << " units" << endl;
     }
     else {
         cout << "This bomb order is invalid!" << endl;

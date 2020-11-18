@@ -134,7 +134,7 @@ void Card::play(Player* player, Deck* deck, Map* map, const list<Player*>& gameP
 
             int destinationTerritoryChoice = distributionDestination(mt);
 
-            auto* airliftOrder = new class::Airlift(id.setID(), 0, sourceTerritoryToNumberMap[sourceTerritoryChoice],
+            auto* airliftOrder = new class::Airlift(id.setID(), troopNumber, sourceTerritoryToNumberMap[sourceTerritoryChoice],
                     destinationTerritoryToNumberMap[destinationTerritoryChoice], player);
             player->addOrder(airliftOrder);
 
