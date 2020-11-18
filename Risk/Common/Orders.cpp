@@ -541,6 +541,7 @@ OrdersList::~OrdersList() {
 int OrdersList::remove(Order *order){
     for(int i =0; i<myList.size(); i++ ){
         if ((*myList.at(i)).getID() == (*order).getID()) {
+            delete myList[i];
             myList.erase(myList.begin() + i);
             myList.shrink_to_fit();
             return i;

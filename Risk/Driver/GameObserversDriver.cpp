@@ -4,9 +4,7 @@
 using namespace std;
 
 int main() {
-    GameEngine *engine = new GameEngine;
+    GameEngine engine = GameEngine();
 
-    engine->main();
-
-    delete engine;
+    engine.main();
 }
