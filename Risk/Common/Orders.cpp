@@ -162,7 +162,6 @@ void Advance::execute() {
             for (int i = 0; i < armies; i++) {
                 cout << i << "   " << armies << endl;
                 int attackingKillChance = rand() % 10 + 1;
-                cout << "Chance to kill defending: " << attackingKillChance << endl << endl << endl;
                 if (attackingKillChance > 4) {
                     defendingUnitsKilled++;
                     if (defendingUnitsKilled == target->get_armies())
@@ -172,7 +171,6 @@ void Advance::execute() {
             for (int i = 0; i < target->get_armies(); i++) {
                 cout << i << "   " << target->get_armies() << endl;
                 int defendingKillChance = rand() % 10 + 1;
-                cout << "Chance to kill attacking: " << defendingKillChance << endl << endl << endl;
                 if (defendingKillChance > 3) {
                     attackingUnitsKilled++;
                     if (attackingUnitsKilled == armies)
@@ -389,7 +387,6 @@ void Airlift::execute() {
             for (int i = 0; i < armies; i++) {
                 cout << i << "   " << armies << endl;
                 int attackingKillChance = rand() % 10 + 1;
-                cout << "Chance to kill defending: " << attackingKillChance << endl << endl << endl;
                 if (attackingKillChance > 4) {
                     defendingUnitsKilled++;
                     if (defendingUnitsKilled == target->get_armies())
@@ -399,7 +396,6 @@ void Airlift::execute() {
             for (int i = 0; i < target->get_armies(); i++) {
                 cout << i << "   " << target->get_armies() << endl;
                 int defendingKillChance = rand() % 10 + 1;
-                cout << "Chance to kill attacking: " << defendingKillChance << endl << endl << endl;
                 if (defendingKillChance > 3) {
                     attackingUnitsKilled++;
                     if (attackingUnitsKilled == armies)
