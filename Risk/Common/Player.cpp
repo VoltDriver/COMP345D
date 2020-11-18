@@ -368,7 +368,7 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap, const list<Player*
         // Validate input.
         while(actionNumber<0 ||
         actionNumber >= NUMBER_OF_POSSIBLE_ACTIONS ||
-        (std::find(possibleActions.begin(), possibleActions.end(), actionNumber) != possibleActions.end()))
+        (std::find(possibleActions.begin(), possibleActions.end(), actionNumber) == possibleActions.end()))
             cin >> actionNumber;
     }
 
