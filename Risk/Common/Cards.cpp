@@ -160,7 +160,6 @@ void Card::play(Player* player, Deck* deck, Map* map, const list<Player*>& gameP
             std::uniform_int_distribution<int> distribution(0,playerToNumberMap.size() - 1);
             int playerChoice = distribution(mt);
 
-            // TODO: Create order properly.
             auto* negotiateOrder = new class::Negotiate(id.setID(), player, playerToNumberMap.at(playerChoice));
             player->addOrder(negotiateOrder);
 
@@ -210,7 +209,6 @@ void Card::playHuman(Player* player, Deck* deck, Map* map, const list<Player*>& 
             while(territoryChoice<0 || territoryChoice > player->to_attack().size() - 1)
                 cin >> territoryChoice;
 
-            // TODO: Create the order properly... And implement a constructor that makes them automatically.
             auto* bombOrder = new class::Bomb(id.setID(), territoryToNumberMap.at(territoryChoice), player);
             player->addOrder(bombOrder);
 
@@ -219,9 +217,8 @@ void Card::playHuman(Player* player, Deck* deck, Map* map, const list<Player*>& 
         }
         case Reinforcement:
         {
-            // TODO: Check that the amount of armies given is fine, and if we need an ORDER class for it.
-            player->reinforcementPool += 15;
-            player->uncommittedReinforcementPool += 15;
+            player->reinforcementPool += 5;
+            player->uncommittedReinforcementPool += 5;
             cout << "Reinforcements Added.";
             break;
         }
@@ -246,7 +243,6 @@ void Card::playHuman(Player* player, Deck* deck, Map* map, const list<Player*>& 
             while(territoryChoice<0 || territoryChoice > player->to_attack().size() - 1)
                 cin >> territoryChoice;
 
-            // TODO: Create the order properly... And implement a constructor that makes them automatically.
             auto* blockadeOrder = new class::Blockade(id.setID(), territoryToNumberMap.at(territoryChoice), player);
             player->addOrder(blockadeOrder);
 
@@ -310,7 +306,6 @@ void Card::playHuman(Player* player, Deck* deck, Map* map, const list<Player*>& 
             while(destinationTerritoryChoice<0 || destinationTerritoryChoice > (player->to_attack().size() + player->to_defend().size()) - 1 )
                 cin >> destinationTerritoryChoice;
 
-            // TODO: Create the order properly... And implement a constructor that makes them automatically.
             auto* airliftOrder = new class::Airlift(id.setID(), troopNumber, sourceTerritoryToNumberMap.at(sourceTerritoryChoice), destinationTerritoryToNumberMap.at(destinationTerritoryChoice), player);
             player->addOrder(airliftOrder);
 
@@ -338,7 +333,6 @@ void Card::playHuman(Player* player, Deck* deck, Map* map, const list<Player*>& 
             while(playerChoice<0 || playerChoice > playerToNumberMap.size() - 1 )
                 cin >> playerChoice;
 
-            // TODO: Create order properly.
             auto* negotiateOrder = new class::Negotiate(id.setID(), player, playerToNumberMap.at(playerChoice));
             player->addOrder(negotiateOrder);
 
