@@ -10,7 +10,7 @@ using namespace std;
 //Order class constructor
 Order::Order(int anID) {
     id = anID;
-    description = "This is a generic order. It does nothing but encapsulates all other orders.";
+    description = "Order";
 }
 
 //Copy constructor for Order class
@@ -35,36 +35,27 @@ ostream &operator<<(ostream &strm, const Order &order) {
     return strm;
 }
 
+string Order::getDescription() {
+    return description;
+}
+
 //getID() method that returns the id of an Order
 int Order:: getID(){
     return id;
 }
 
-//validate() method for Order that prints out a string and returns true
-bool Order::validate() {
-    cout << "Validating..." << endl;
-    return true;
+int Order::getPriority() {
+    return priority;
 }
 
-//execute() method for Order that prints out a different string depending on the boolean returned by validate()
-void Order::execute() {
-    cout << *this << endl;
-    if (validate()) {
-        cout << "Executing..." << endl;
-        cout << "Executed!" << endl;
-    }
-    else {
-        cout << "Failed" << endl;
-    }
-}
-
-Order* Order::clone() const {
-    return new Order(*this);
+bool compare(Order* order, Order* other) {
+    return order->priority < other->priority;
 }
 
 //Constructor for Deploy class
 Deploy::Deploy(int anID, int armies, Territory* target, Player* player) : Order(anID) {
-    description = "This is a deploy order. It allows you to mobilize an army to attack another.";
+    this->priority = 1;
+    this->description = "Deploy";
     this->armies = armies;
     this->target = target;
     this->player = player;
@@ -72,6 +63,7 @@ Deploy::Deploy(int anID, int armies, Territory* target, Player* player) : Order(
 
 //Copy constructor for Deploy class
 Deploy::Deploy(const Deploy &deploy2) : Order(deploy2) {
+    this->priority = 1;
     this->description = deploy2.description;
     this->armies = deploy2.armies;
     this->target = deploy2.target;
@@ -81,6 +73,7 @@ Deploy::Deploy(const Deploy &deploy2) : Order(deploy2) {
 //Assignment operator for Deploy class
 Deploy& Deploy::operator=(const Deploy &other) {
     this -> Order::operator=(other);
+    this->priority = 1;
     this->armies = other.armies;
     this->target = other.target;
     this->player = other.player;
@@ -89,13 +82,11 @@ Deploy& Deploy::operator=(const Deploy &other) {
 
 //validate() method for Deploy that prints out a string and returns true
 bool Deploy::validate() {
-    if (target->getPlayer() != nullptr)
-        if (target->getPlayerName().compare(player->name) == 0 && armies > 0 && armies <= player->getReinforcementPool())
-            return true;
-        else
-            return false;
-    else
-        return false;
+    if (player != nullptr && target != nullptr && target->getPlayer() != nullptr && target->getPlayerName().compare(player->name) == 0 &&
+        armies > 0 && armies <= player->getReinforcementPool()){
+        return true;
+    }
+    return false;
 }
 
 //execute() method for Deploy that prints out a different string depending on the boolean returned by validate()
@@ -108,6 +99,7 @@ void Deploy::execute() {
     else{
         cout << "This deploy order is not valid";
     }
+    player->getOrdersList()->remove(this);
 }
 
 Deploy* Deploy::clone() const {
@@ -115,38 +107,115 @@ Deploy* Deploy::clone() const {
 }
 
 //Constructor for Advance class
-Advance::Advance(int anID) : Order(anID){
-    description = "This is an advance order. It allows you to mobilize an army to a vacant territory.";
+Advance::Advance(int anID, int armies, Territory* source, Territory* target, Player* player) : Order(anID){
+    description = "Advance";
+    this -> priority = 4;
+    this->armies = armies;
+    this->source = source;
+    this->target = target;
+    this->player = player;
 }
 
 //Copy constructor for Advance class
 Advance::Advance(const Advance &advance2) : Order(advance2) {
-
+    this -> priority = 4;
+    this->description = advance2.description;
+    this->armies = advance2.armies;
+    this->source = advance2.source;
+    this->player = advance2.player;
 }
 
 //Assignment operator for Advance class
 Advance& Advance::operator=(const Advance &other) {
     this -> Order::operator=(other);
+    this -> priority = 4;
+    this->armies = other.armies;
+    this->source = other.source;
+    this->player = other.player;
     return *this;
 }
 
 //validate() method for Advance that prints out a string and returns true
 bool Advance::validate() {
-    cout << "Can I advance?" << endl;
-    return true;
+    if(player != nullptr && source != nullptr && target != nullptr && source->borders_territory(target) && source->getPlayer() !=
+        nullptr && source->getPlayerName().compare(player->name) && source->get_armies() >= armies > 0) {
+        if (target->getPlayer() != nullptr && player->name.compare(target->getPlayerName()) != 0 && player->isFriendly(target->getPlayer()))
+            return false;
+        else
+            return true;
+    }
+    return false;
 }
 
 //execute() method for Advance that prints out a different string depending on the boolean returned by validate()
 void Advance::execute() {
     cout << *this << endl;
     if (validate()) {
-        cout << "Proceeding to virtually move forward." << endl;
-        cout << "Have successfully virtually moved forward (probably more steps than you walked today #SocialDistancing)! "<< endl;
+        if (target->getPlayer() == nullptr || target->getPlayerName().compare(player->name) != 0) {
+            source->set_armies(source->get_armies()-armies);
+            int startingDefendingArmies = target->get_armies();
+            int startingArmies = armies;
+            int attackingUnitsKilled = 0;
+            int defendingUnitsKilled = 0;
+            srand((unsigned int)time(NULL));
+
+            for (int i = 0; i < armies; i++) {
+                cout << i << "   " << armies << endl;
+                int attackingKillChance = rand() % 10 + 1;
+                cout << "Chance to kill defending: " << attackingKillChance << endl << endl << endl;
+                if (attackingKillChance > 4) {
+                    defendingUnitsKilled++;
+                    if (defendingUnitsKilled == target->get_armies())
+                        break;
+                }
+            }
+            for (int i = 0; i < target->get_armies(); i++) {
+                cout << i << "   " << target->get_armies() << endl;
+                int defendingKillChance = rand() % 10 + 1;
+                cout << "Chance to kill attacking: " << defendingKillChance << endl << endl << endl;
+                if (defendingKillChance > 3) {
+                    attackingUnitsKilled++;
+                    if (attackingUnitsKilled == armies)
+                        break;
+                }
+            }
+            armies -= attackingUnitsKilled;
+            target->set_armies(target->get_armies() - defendingUnitsKilled);
+            if (armies > 0 && target->get_armies() == 0) {
+                cout << "I have conquered with an army of " << startingArmies << " by killing " << defendingUnitsKilled
+                     << " of the " << startingDefendingArmies << " units and losing " << attackingUnitsKilled
+                     << " units and being left with " << armies << " remaining!" << endl;
+                target->set_armies(armies);
+                Player* p = target->getPlayer();
+                if (p != nullptr) {
+                    p->removeTerritory(target);
+                    target->setPlayer(nullptr);
+                    p = nullptr;
+                }
+                target->setPlayer(player);
+                player->addTerritory(target);
+                if (!(player->hasConquered())){
+                    player->setConquered(true);
+                }
+            }
+            else if (armies == 0) {
+                cout << "I have defended with an army of " << startingDefendingArmies << " by killing "
+                     << attackingUnitsKilled << " of the " << startingArmies << " units and losing "
+                     << defendingUnitsKilled << " units and being left with " << target->get_armies() << " remaining!"
+                     << endl;
+                source->set_armies(source->get_armies() + armies);
+            }
+            else {
+                //
+            }
+        }
+        else
+            target->set_armies(target->get_armies() + armies);
     }
     else {
-        cout << "You can't move them because they're virtual! Perhaps you can move yourself instead." << endl;
+        cout << "This airlift order is not valid" << endl;
     }
-
+    player->getOrdersList()->remove(this);
 }
 
 Advance* Advance::clone() const {
@@ -155,13 +224,15 @@ Advance* Advance::clone() const {
 
 //Constructor for Bomb class
 Bomb::Bomb(int anID, Territory* target, Player* player) : Order(anID){
-    description =  "This is a bomb order. It allows you to drop a bomb on another player's army.";
+    description =  "Bomb";
+    this->priority = 4;
     this->target = target;
     this->player = player;
 }
 
 //Copy constructor for Bomb class
 Bomb::Bomb(const Bomb &bomb2) : Order(bomb2) {
+    this->priority = 4;
     this->description = bomb2.description;
     this->target = bomb2.target;
     this->player = bomb2.player;
@@ -170,12 +241,16 @@ Bomb::Bomb(const Bomb &bomb2) : Order(bomb2) {
 //Assignment operator for Bomb class
 class Bomb& Bomb::operator=(const Bomb &other) {
     this -> Order::operator=(other);
+    this->priority = 4;
+    this->description = other.description;
+    this->target = other.target;
+    this->player = other.player;
     return *this;
 }
 
 //validate() method for Bomb that prints out a string and returns true
 bool Bomb::validate() {
-    if (target->getPlayer() != nullptr && target->getPlayerName().compare(player->name) == 0) {
+    if (target != nullptr && player != nullptr && target->getPlayer() != nullptr && target->getPlayerName().compare(player->name) == 0) {
         return false;
     }
     else
@@ -194,6 +269,7 @@ void Bomb::execute() {
     else {
         cout << "This bomb order is invalid!" << endl;
     }
+    player->getOrdersList()->remove(this);
 }
 
 class Bomb* Bomb::clone() const {
@@ -202,7 +278,8 @@ class Bomb* Bomb::clone() const {
 
 //Constructor for Blockade class
 Blockade::Blockade(int anID, Territory* target, Player* player) : Order(anID){
-    description = "This is a blockade order. It allows you to form a blockade and defend a particular territory.";
+    description = "Blockade";
+    this->priority = 3;
     this->target = target;
     this->player = player;
 }
@@ -210,6 +287,7 @@ Blockade::Blockade(int anID, Territory* target, Player* player) : Order(anID){
 //Copy constructor for Blockade class
 Blockade::Blockade(const Blockade &blockade2) : Order(blockade2) {
     this->description = blockade2.description;
+    this->priority = 3;
     this->target = blockade2.target;
     this->player = blockade2.player;
 }
@@ -217,6 +295,9 @@ Blockade::Blockade(const Blockade &blockade2) : Order(blockade2) {
 //Assignment operator for Blockade class
 class Blockade & Blockade::operator=(const Blockade &other) {
     this -> Order::operator=(other);
+    this->priority = 3;
+    this->target = other.target;
+    this->player = other.player;
     return *this;
 }
 
@@ -233,12 +314,13 @@ void Blockade::execute() {
     cout << *this << endl;
     if (validate()) {
         target->set_armies(2*target->get_armies());
+        player->removeTerritory(target);
         target->setPlayer(nullptr);
-// Remember to remove territory from player vector
     }
     else{
         cout << "Not a valid order" << endl;
     }
+    player->getOrdersList()->remove(this);
 }
 
 class Blockade* Blockade::clone() const {
@@ -247,7 +329,8 @@ class Blockade* Blockade::clone() const {
 
 //Constructor for Airlift class
 Airlift::Airlift(int anID, int armies, Territory* source, Territory* target, Player* player) : Order(anID){
-    description = "This is an airlift order. This allows you to fly your army over a larger distance.";
+    this->priority = 2;
+    description = "Airlift";
     this->armies = armies;
     this->source = source;
     this->target = target;
@@ -257,6 +340,7 @@ Airlift::Airlift(int anID, int armies, Territory* source, Territory* target, Pla
 //Copy constructor for Airlift class
 Airlift::Airlift(const Airlift &airlift2) : Order(airlift2) {
     this->description = airlift2.description;
+    this->priority = 2;
     this->armies = airlift2.armies;
     this->source = airlift2.source;
     this->target = airlift2.target;
@@ -266,13 +350,23 @@ Airlift::Airlift(const Airlift &airlift2) : Order(airlift2) {
 //Assignment Operator for Airlift class
 class Airlift & Airlift::operator=(const Airlift &other) {
     this -> Order::operator=(other);
+    this->priority = 2;
+    this->armies = other.armies;
+    this->source = other.source;
+    this->target = other.target;
+    this->player = other.player;
     return *this;
 }
 
 //validate() method for Airlift that prints out a string and returns true
 bool Airlift::validate() {
-    if (source->getPlayer() != nullptr && source->getPlayerName().compare(player->name) == 0 && source->get_armies() >= armies && armies > 0)
-        return true;
+    if (source != nullptr && player != nullptr && target != nullptr && source->getPlayer() != nullptr && source->getPlayerName().compare(player->name) == 0 && source->get_armies() >= armies && armies > 0) {
+        if (target->getPlayer() != nullptr && player->name.compare(target->getPlayerName()) != 0 &&
+            player->isFriendly(target->getPlayer()))
+            return false;
+        else
+            return true;
+    }
     else
         return false;
 }
@@ -324,8 +418,11 @@ void Airlift::execute() {
                 }
                 target->setPlayer(player);
                 player->addTerritory(target);
+                if (!(player->hasConquered())){
+                    player->setConquered(true);
+                }
             }
-            else if (target->get_armies() > 0) {
+            else if (armies == 0) {
                 cout << "I have defended with an army of " << startingDefendingArmies << " by killing "
                      << attackingUnitsKilled << " of the " << startingArmies << " units and losing "
                      << defendingUnitsKilled << " units and being left with " << target->get_armies() << " remaining!"
@@ -342,6 +439,7 @@ void Airlift::execute() {
     else {
         cout << "This airlift order is not valid" << endl;
     }
+    player->getOrdersList()->remove(this);
 }
 
 class Airlift* Airlift::clone() const {
@@ -349,36 +447,48 @@ class Airlift* Airlift::clone() const {
 }
 
 //Constructor for Negotiate class
-Negotiate::Negotiate(int anID) : Order(anID){
-    description = "This is a negotiate order. It allows you to make a deal with an opposing player.";
+Negotiate::Negotiate(int anID, Player* player, Player* target) : Order(anID){
+    this->description = "Negotiate";
+    this->priority = 4;
+    this->player = player;
+    this->target = target;
 }
 
 //copy constructor for Negotiate class
 Negotiate::Negotiate(const Negotiate &negotiate2) : Order(negotiate2) {
-
+    this->priority = 4;
+    this->player = negotiate2.player;
+    this->target = negotiate2.target;
 }
 
 //Assignment operator for Negotiate class
 Negotiate & Negotiate::operator=(const Negotiate &other) {
     this -> Order::operator=(other);
+    this->priority = 4;
+    this->player = other.player;
+    this->target = other.target;
     return *this;
 }
 
 //validate() method for Negotiate that prints out a string and returns true
 bool Negotiate::validate() {
-    cout << "So do we negotiate like the Mexican cartel or..." << endl;
-    return false;
+    if (player != nullptr && target != nullptr && player->name.compare(target->name) != 0)
+        return true;
+    else
+        return false;
 }
 
 //execute() method for Negotiate that prints out a different string depending on the boolean returned by validate()
 void Negotiate::execute() {
     cout << *this << endl;
     if (validate()){
-        cout << "You used the wrong order then buddy" << endl;
+        player->addFriendlyPlayer(target);
+        target->addFriendlyPlayer(player);
     }
     else {
         cout << "Guess you read The Art of The Deal from yours truly, Donald T." << endl;
     }
+//    player->getOrdersList()->remove(this);
 }
 
 Negotiate* Negotiate::clone() const {
@@ -414,7 +524,8 @@ OrdersList& OrdersList::operator=(const OrdersList &other) {
 //Stream insertion for OrdersList
 ostream &operator<<(ostream &strm, const OrdersList &ordersList) {
     for (int i = 0; i < ordersList.myList.size(); i++){
-        strm << (*ordersList.myList.at(i)).getID() << endl;
+        strm << ordersList.myList.at(i)->getDescription() << " ID: " << ordersList.myList.at(i)->getID() << endl;
+
     }
     strm << endl;
     return strm;
@@ -436,21 +547,28 @@ int OrdersList::remove(Order *order){
             return i;
         }
     }
-    return 0;
+    return -1;
+}
+
+void OrdersList::sort() {
+    std::sort(this->myList.begin(), this->myList.end(), compare);
 }
 
 //move() method that takes an Order and a position as parameters
 //The Order in the specified position is removed and the Order specified as parameter is then inserted to the position that has now been freed
 void OrdersList::move(Order *order, int pos){
-    std::vector<Order>:: iterator i;
-    Order *temp = order;
-    this->remove(order);
-    this->myList.insert(myList.begin()+pos, temp);
+    if (this->myList.at(pos-1)->getPriority() <= order->getPriority()) {
+        std::vector<Order>::iterator i;
+        Order *temp = order;
+        this->remove(order);
+        this->myList.insert(myList.begin() + pos, temp);
+    }
 }
 
 //add() method that pushes the Order specified in the parameter to the vector
 void OrdersList::add(Order *order){
     myList.push_back(order);
+    this->sort();
 }
 
 int ID::currentID;

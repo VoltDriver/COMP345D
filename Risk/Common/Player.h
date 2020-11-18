@@ -53,8 +53,12 @@ public:
     bool issueOrder(Deck* deck, Map* territoriesMap, list<Player> gamePlayers);
     bool issueOrderHuman(Deck* deck, Map* territoriesMap, list<Player> gamePlayers);
     bool operator< (const Player &other) const;
+    void addFriendlyPlayer(Player* player);
     void addTerritory(Territory* territory);
     void removeTerritory(Territory* territory);
+    bool hasConquered();
+    void setConquered(bool conquered);
+    bool isFriendly(Player* player);
     OrdersList* getOrdersList();
 
     /* Overloaders */

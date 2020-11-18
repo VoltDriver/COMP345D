@@ -15,9 +15,7 @@ int main() {
     vector<Territory*> territories = {ter1, ter2, ter3};
 
     // creating some arbitrary vector of orders
-    auto *ord1 = new Order(id.setID());
     OrdersList* orders = new OrdersList();
-    orders->add(ord1);
 
     // creating some arbitrary hand of cards
     auto *card1 = new Card(Bomb);
@@ -28,8 +26,8 @@ int main() {
     auto *player1 = new Player(territories, orders, hand1, 0);
 
     // adding order to list of orders
-    auto *ord2 = new Deploy(id.setID(), 2, territories.at(0), player1);
-    player1->addOrder(ord2);
+    auto *ord = new Deploy(id.setID(), 2, territories.at(0), player1);
+    player1->addOrder(ord);
 
     // return list of territories
     vector<Territory*> terrToDef = player1->to_defend();
