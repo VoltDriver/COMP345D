@@ -160,15 +160,17 @@ void PhaseObserver::display() {
     }
 
     if (phase == "Issue Orders Phase::Post-issuance") {
-        string order = _gameEngine->getCurrentPlayer()->getOrdersList()->myList[0]->getDescription();
+        string order = _gameEngine->getCurrentPlayer()->getOrdersList()->myList.back()->getDescription();
 
         cout << "\n--------------------------------------------------------------------------------------------" << endl;
         cout << "-" << player_name << " Post-Issue Order Phase-\n" << endl;
+
         cout << player_name << " issued " << order << " order\n" <<endl;
         cout << "Current list of orders issued: " << endl;
         for (Order* order : _gameEngine->getCurrentPlayer()->getOrdersList()->myList) {
             cout << "-" << order->getDescription() << endl;
         }
+
         cout << "--------------------------------------------------------------------------------------------\n" << endl;
     }
 
@@ -190,7 +192,7 @@ void PhaseObserver::display() {
         string order = _gameEngine->getCurrentPlayer()->getOrdersList()->myList[0]->getDescription();
 
         cout << "\n--------------------------------------------------------------------------------------------" << endl;
-        cout << "-" << player_name << " Execute Order Phase-" << endl;
+        cout << "-" << player_name << " Execute Order Phase-\n" << endl;
         cout << "Remaining orders to execute: " << endl;
         for (Order* order : _gameEngine->getCurrentPlayer()->getOrdersList()->myList) {
             cout << "-" << order->getDescription() << endl;
@@ -277,7 +279,7 @@ void StatsObserver::display() {
     if (phase == "Game Over") {
         cout << "\n********************************************************************************************" << endl;
         cout << "\t\t\t***** GAME OVER *****" << endl;
-        cout << player_name << " wins!\n" << endl;
+        cout << "\t\t\t    " << player_name << " wins!\n" << endl;
         displayWorldDomination(_gameEngine, totalTerritories);
         cout << "********************************************************************************************\n" << endl;
     }

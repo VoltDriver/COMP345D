@@ -559,10 +559,6 @@ void GameEngine::issueOrdersPhase() {
                     playerTurns[player->name] = player->issueOrder(this->deck, this->map, gamePlayers);
                 }
 
-                // Phase Observer notification
-                this->phase = "Issue Orders Phase::Post-issuance";
-                Subject::notify();
-
                 // If it decided to end it's turn just now...
                 if (!playerTurns[player->name]) {
 
@@ -573,6 +569,12 @@ void GameEngine::issueOrdersPhase() {
                     // ... we add it to the number of players that are done.
                     amountOfPlayersDone++;
                 }
+                else {
+                    // Phase Observer notification
+                    this->phase = "Issue Orders Phase::Post-issuance";
+                    Subject::notify();
+                }
+
             }
         }
     }
