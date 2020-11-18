@@ -158,14 +158,15 @@ void Advance::execute() {
             int attackingUnitsKilled = 0;
             int defendingUnitsKilled = 0;
             srand((unsigned int)time(NULL));
-
-            for (int i = 0; i < armies; i++) {
-                cout << i << "   " << armies << endl;
-                int attackingKillChance = rand() % 10 + 1;
-                if (attackingKillChance > 4) {
-                    defendingUnitsKilled++;
-                    if (defendingUnitsKilled == target->get_armies())
-                        break;
+            if (target->get_armies() > 0) {
+                for (int i = 0; i < armies; i++) {
+                    cout << i << "   " << armies << endl;
+                    int attackingKillChance = rand() % 10 + 1;
+                    if (attackingKillChance > 4) {
+                        defendingUnitsKilled++;
+                        if (defendingUnitsKilled == target->get_armies())
+                            break;
+                    }
                 }
             }
             for (int i = 0; i < target->get_armies(); i++) {
@@ -196,18 +197,12 @@ void Advance::execute() {
                     player->setConquered(true);
                 }
             }
-            else if (target->get_armies() >= 0) {
-                cout << "I have defended with an army of " << startingDefendingArmies << " by killing "
+            else {
+                cout << "They have defended with an army of " << startingDefendingArmies << " by killing "
                      << attackingUnitsKilled << " of the " << startingArmies << " units and losing "
                      << defendingUnitsKilled << " units and being left with " << target->get_armies() << " remaining!"
                      << endl;
                 source->set_armies(source->get_armies() + armies);
-            }
-            else {
-                cout << "I have defended with an army of " << startingDefendingArmies << " by killing "
-                     << attackingUnitsKilled << " of the " << startingArmies << " units and losing "
-                     << defendingUnitsKilled << " units and being left with " << target->get_armies() << " remaining!"
-                     << endl;
             }
         }
         else
@@ -383,14 +378,15 @@ void Airlift::execute() {
             int attackingUnitsKilled = 0;
             int defendingUnitsKilled = 0;
             srand((unsigned int)time(NULL));
-
-            for (int i = 0; i < armies; i++) {
-                cout << i << "   " << armies << endl;
-                int attackingKillChance = rand() % 10 + 1;
-                if (attackingKillChance > 4) {
-                    defendingUnitsKilled++;
-                    if (defendingUnitsKilled == target->get_armies())
-                        break;
+            if (target->get_armies() > 0) {
+                for (int i = 0; i < armies; i++) {
+                    cout << i << "   " << armies << endl;
+                    int attackingKillChance = rand() % 10 + 1;
+                    if (attackingKillChance > 4) {
+                        defendingUnitsKilled++;
+                        if (defendingUnitsKilled == target->get_armies())
+                            break;
+                    }
                 }
             }
             for (int i = 0; i < target->get_armies(); i++) {
@@ -421,15 +417,12 @@ void Airlift::execute() {
                     player->setConquered(true);
                 }
             }
-            else if (armies == 0) {
-                cout << "I have defended with an army of " << startingDefendingArmies << " by killing "
+            else {
+                cout << "They have defended with an army of " << startingDefendingArmies << " by killing "
                      << attackingUnitsKilled << " of the " << startingArmies << " units and losing "
                      << defendingUnitsKilled << " units and being left with " << target->get_armies() << " remaining!"
                      << endl;
                 source->set_armies(source->get_armies() + armies);
-            }
-            else {
-                //
             }
         }
         else
