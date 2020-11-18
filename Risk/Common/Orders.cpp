@@ -178,8 +178,8 @@ void Advance::execute() {
             int defendingUnitsKilled = 0;
             srand((unsigned int)time(NULL));
             if (target->get_armies() > 0) {
+                cout << player->name << " attacking with " <<  armies << " armies" << endl;
                 for (int i = 0; i < armies; i++) {
-                    cout << "Soldier: " << i+1  << " of attacking: " <<  armies << endl;
                     int attackingKillChance = rand() % 10 + 1;
                     if (attackingKillChance > 4) {
                         defendingUnitsKilled++;
@@ -189,8 +189,9 @@ void Advance::execute() {
                 }
             }
             cout << endl;
+
+            cout << "Enemy player defending with " <<  target->get_armies() << " armies" << endl;
             for (int i = 0; i < target->get_armies(); i++) {
-                cout << "Soldier: " << i+1  << " of defending: " << target->get_armies() << endl;
                 int defendingKillChance = rand() % 10 + 1;
                 if (defendingKillChance > 3) {
                     attackingUnitsKilled++;
@@ -201,9 +202,9 @@ void Advance::execute() {
             armies -= attackingUnitsKilled;
             target->set_armies(target->get_armies() - defendingUnitsKilled);
             if (armies > 0 && target->get_armies() == 0) {
-                cout << "\nI have conquered with an army of " << startingArmies << " by killing " << defendingUnitsKilled
-                     << " of the " << startingDefendingArmies << " units and losing " << attackingUnitsKilled
-                     << " units and being left with " << armies << " remaining!" << endl;
+                cout << "\n" << player->name << " has conquered the enemy with " << startingArmies << " armies\n"
+                    << "Casualties: " << attackingUnitsKilled << " | Remaining armies: " << armies << "\n"
+                    << defendingUnitsKilled << " of " << startingDefendingArmies << " enemy units were killed\n" << endl;
                 target->set_armies(armies);
                 Player* p = target->getPlayer();
                 if (p != nullptr) {
@@ -218,10 +219,10 @@ void Advance::execute() {
                 }
             }
             else {
-                cout << "\nThey have defended with an army of " << startingDefendingArmies << " by killing "
-                     << attackingUnitsKilled << " of the " << startingArmies << " units and losing "
-                     << defendingUnitsKilled << " units and being left with " << target->get_armies() << " remaining!"
-                     << endl;
+                cout << "\nThe enemy has defended their territory with " << startingDefendingArmies << " armies."
+                    << "Casualties: " << attackingUnitsKilled << " | Remaining armies: " << armies << "\n"
+                    << "Enemy casualties: " << defendingUnitsKilled << " | Remaining enemy units: " << target->get_armies() << endl;
+
                 source->set_armies(source->get_armies() + armies);
             }
         }
@@ -421,8 +422,8 @@ void Airlift::execute() {
             int defendingUnitsKilled = 0;
             srand((unsigned int)time(NULL));
             if (target->get_armies() > 0) {
+                cout << player->name << " attacking with " <<  armies << " armies" << endl;
                 for (int i = 0; i < armies; i++) {
-                    cout << "Soldier: " << i+1  << " of Attacking: " << armies << endl;
                     int attackingKillChance = rand() % 10 + 1;
                     if (attackingKillChance > 4) {
                         defendingUnitsKilled++;
@@ -432,8 +433,8 @@ void Airlift::execute() {
                 }
             }
             cout << endl;
+            cout << "Enemy player defending with " <<  target->get_armies() << " armies" << endl;
             for (int i = 0; i < target->get_armies(); i++) {
-                cout << "Soldier: " << i+1  << " of Defending: " << target->get_armies() << endl;
                 int defendingKillChance = rand() % 10 + 1;
                 if (defendingKillChance > 3) {
                     attackingUnitsKilled++;
@@ -444,9 +445,9 @@ void Airlift::execute() {
             armies -= attackingUnitsKilled;
             target->set_armies(target->get_armies() - defendingUnitsKilled);
             if (armies > 0 && target->get_armies() == 0) {
-                cout << "\nI have conquered with an army of " << startingArmies << " by killing " << defendingUnitsKilled
-                     << " of the " << startingDefendingArmies << " units and losing " << attackingUnitsKilled
-                     << " units and being left with " << armies << " remaining!" << endl;
+                cout << "\n" << player->name << " has conquered the enemy with " << startingArmies << " armies\n"
+                     << "Casualties: " << attackingUnitsKilled << " | Remaining armies: " << armies << "\n"
+                     << defendingUnitsKilled << " of " << startingDefendingArmies << " enemy units were killed\n" << endl;
                 target->set_armies(armies);
                 Player* p = target->getPlayer();
                 if (p != nullptr) {
@@ -461,10 +462,10 @@ void Airlift::execute() {
                 }
             }
             else {
-                cout << "\nThey have defended with an army of " << startingDefendingArmies << " by killing "
-                     << attackingUnitsKilled << " of the " << startingArmies << " units and losing "
-                     << defendingUnitsKilled << " units and being left with " << target->get_armies() << " remaining!"
-                     << endl;
+                cout << "The enemy has defended their territory with " << startingDefendingArmies << " armies."
+                     << player->name << " has killed " << attackingUnitsKilled << " of the " << startingArmies
+                     << " attacking armies\n"
+                     << "Enemy casualties: " << defendingUnitsKilled << " | Remaining enemy units: " << target->get_armies() << endl;
                 source->set_armies(source->get_armies() + armies);
             }
         }
