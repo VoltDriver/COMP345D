@@ -75,7 +75,7 @@ public:
     StatsObserver& operator=(const StatsObserver &s);
     void Update();
     void display();
-    void displayWorldDomination(GameEngine* _gameEngine, float totalTerritories);
+    void displayWorldDomination(GameEngine* _gameEngine);
 
 private:
     GameEngine* _gameEngine;
