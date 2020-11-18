@@ -39,6 +39,6 @@ int main() {
         p->hand->addCard(c);
     }
 
-    engineHuman.main();
+    engineHuman.mainGameLoop();
 }
 

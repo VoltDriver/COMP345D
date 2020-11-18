@@ -254,6 +254,7 @@ void GameEngine::startupPhase(){
             ordersOfPlay = {1,2};
             for(it = players.begin(); it != players.end(); ++it){
                 (*it)->reinforcementPool = 40;
+                (*it)->uncommittedReinforcementPool = 40;
                 int random = rand() % ordersOfPlay.size();
                 (*it)->orderOfPlay = ordersOfPlay[random];
                 ordersOfPlay.erase(ordersOfPlay.begin() + random);
@@ -265,6 +266,7 @@ void GameEngine::startupPhase(){
             ordersOfPlay = {1,2,3};
             for(it = players.begin(); it != players.end(); ++it){
                 (*it)->reinforcementPool = 35;
+                (*it)->uncommittedReinforcementPool = 35;
                 int random = rand() % ordersOfPlay.size();
                 (*it)->orderOfPlay = ordersOfPlay[random];
                 ordersOfPlay.erase(ordersOfPlay.begin() + random);
@@ -276,6 +278,7 @@ void GameEngine::startupPhase(){
             ordersOfPlay = {1,2,3,4};
             for(it = players.begin(); it != players.end(); ++it){
                 (*it)->reinforcementPool = 30;
+                (*it)->uncommittedReinforcementPool = 30;
                 int random = rand() % ordersOfPlay.size();
                 (*it)->orderOfPlay = ordersOfPlay[random];
                 ordersOfPlay.erase(ordersOfPlay.begin() + random);
@@ -287,6 +290,7 @@ void GameEngine::startupPhase(){
             ordersOfPlay = {1,2,3,4,5};
             for(it = players.begin(); it != players.end(); ++it){
                 (*it)->reinforcementPool = 25;
+                (*it)->uncommittedReinforcementPool = 25;
                 int random = rand() % ordersOfPlay.size();
                 (*it)->orderOfPlay = ordersOfPlay[random];
                 ordersOfPlay.erase(ordersOfPlay.begin() + random);
@@ -435,6 +439,7 @@ void GameEngine::reinforcementPhase() {
 
     for (Player* player : players) {
         int reinforcement = 0;
+        currentPlayer = player;
         currentPlayer->setUncommittedReinforcementPool(currentPlayer->reinforcementPool);
 
         int nbTerritoriesOwned = player->territories.size();
