@@ -259,7 +259,8 @@ void StatsObserver::displayWorldDomination(GameEngine* _gameEngine) {
         float percentageOwned = (player->to_defend().size()/totalTerritories)*100;
 
         cout << player->name << ": owns " << player->to_defend().size() << " territories of " << totalTerritories << " | "
-          << "World domination progress: " << percentageOwned << "% [";
+            << "Conquered: " << player->getNumOfConquers() << " | "
+            << "World domination progress: " << percentageOwned << "% [";
 
         int progressBars = percentageOwned/10;
         for (int i = 0; i < 10; i++) {

@@ -637,15 +637,15 @@ void GameEngine::executeOrdersPhase() {
                         player->orders->myList[0]->execute();
 
                         if (player->hasConquered()) {
+                            player->numOfConquers++;
+
                             // Stats Observer notification
                             this->phase = "Conquered";
                             Subject::notify();
                         }
                     }
-
                 }
             }
-
         }
     }
 

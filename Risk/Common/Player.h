@@ -27,6 +27,7 @@ private:
     bool conquered;
     vector<Player*> friendlyPlayers;
     int orderOfPlay;
+    int numOfConquers;
 
 public:
     string name;
@@ -59,6 +60,7 @@ public:
     void setConquered(bool conquered);
     bool isFriendly(Player* player);
     OrdersList* getOrdersList();
+    int getNumOfConquers();
 
     /* Overloaders */
     Player& operator=(const Player &p);

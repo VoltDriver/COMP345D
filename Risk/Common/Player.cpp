@@ -15,6 +15,7 @@ Player::Player() {
     this->orders = new OrdersList();
     this->hand = new Hand();
     this->name = "";
+    this->numOfConquers = 0;
     this->reinforcementPool = 0;
     this->uncommittedReinforcementPool = 0;
     this->conquered = false;
@@ -28,6 +29,7 @@ Player::Player(string name) {
     this->orders = new OrdersList();
     this->hand = new Hand();
     this->name = name;
+    this->numOfConquers = 0;
     this->reinforcementPool = 0;
     this->uncommittedReinforcementPool = 0;
     this->conquered = false;
@@ -44,6 +46,7 @@ Player::Player(vector<Territory*> territories, OrdersList* orders, Hand* hand, i
     this->orders = orders;
     this->hand = hand;
     this->name = "";
+    this->numOfConquers = 0;
     this->reinforcementPool = 0;
     this->uncommittedReinforcementPool = 0;
     this->conquered = false;
@@ -56,6 +59,7 @@ Player::Player(vector<Territory*> territories, OrdersList* orders, Hand* hand, s
     this->orders = orders;
     this->hand = hand;
     this->name = name;
+    this->numOfConquers = 0;
     this->reinforcementPool = 0;
     this->uncommittedReinforcementPool = 0;
     this->conquered = false;
@@ -69,6 +73,7 @@ Player::Player(const Player &p) {
     this->orders = p.orders;
     this->hand = p.hand;
     this->name = p.name;
+    this->numOfConquers = p.numOfConquers;
     this->reinforcementPool = p.reinforcementPool;
     this->uncommittedReinforcementPool = p.uncommittedReinforcementPool;
     this->conquered = p.conquered;
@@ -554,6 +559,10 @@ vector<Territory *> Player::to_attack() {
 
 OrdersList* Player::getOrdersList() {
     return orders;
+}
+
+int Player::getNumOfConquers() {
+    return numOfConquers;
 }
 
 void Player::addFriendlyPlayer(Player* player) {
