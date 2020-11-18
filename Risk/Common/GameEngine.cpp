@@ -542,7 +542,7 @@ void GameEngine::issueOrdersPhase() {
             if (playerTurns[player->name]) {
 
                 // Phase Observer notification
-                this->phase = "Issue Orders Phase::Player turn";
+                this->phase = "Issue Orders Phase::Pre-issuance";
                 this->currentPlayer = player;
                 Subject::notify();
 
@@ -557,6 +557,10 @@ void GameEngine::issueOrdersPhase() {
                 {
                     playerTurns[player->name] = player->issueOrder(this->deck, this->map, gamePlayers);
                 }
+
+                // Phase Observer notification
+                this->phase = "Issue Orders Phase::Post-issuance";
+                Subject::notify();
 
                 // If it decided to end it's turn just now...
                 if (!playerTurns[player->name]) {

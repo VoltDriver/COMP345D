@@ -5,26 +5,33 @@
 
 
 /* Observer Class */
+// default constructor
 Observer::Observer() {}
+
+// destructor
 Observer::~Observer() {}
 
 
 
 /* Subject Class */
+// default constructor
 Subject::Subject() {
     observer_list = new list<Observer*>;
 }
 
+// copy constructor
 Subject::Subject(const Subject &subject) {
     for (int i = 0; i < subject.observer_list->size(); i++) {
         this->observer_list[i] = subject.observer_list[i];
     }
 }
 
+// destructor
 Subject::~Subject() {
     delete observer_list;
 }
 
+// assignment operator
 Subject& Subject::operator=(const Subject& s) {
     for (Observer* observer: *observer_list) {
         delete observer;
@@ -34,6 +41,7 @@ Subject& Subject::operator=(const Subject& s) {
     return *this;
 }
 
+// stream insertion operator
 ostream &operator<<(std::ostream& strm, const Subject &subject) {
     return strm << "Subject insertion stream operator" << endl;
 }
@@ -55,17 +63,21 @@ void Subject::notify() {
 
 
 /* PhaseObserver Class */
+// default constructor
 PhaseObserver::PhaseObserver() {}
 
+// parameterized constructor
 PhaseObserver::PhaseObserver(GameEngine* gameEngine) {
     _gameEngine = gameEngine;
     _gameEngine->add(this);   // When a PhaseObserver is created, it will be added to the observers list of the subject.
 }
 
+// copy constructor
 PhaseObserver::PhaseObserver(const PhaseObserver *phaseObserver) {
     this->_gameEngine = phaseObserver->_gameEngine;
 }
 
+// destructor
 PhaseObserver::~PhaseObserver() {
     _gameEngine->remove(this);
 }
@@ -127,13 +139,13 @@ void PhaseObserver::display() {
         cout << "--------------------------------------------------------------------------------------------" << endl;
     }
 
-    if (phase == "Issue Orders Phase::Player turn") {
+    if (phase == "Issue Orders Phase::Pre-issuance") {
         vector<Territory*> terrToDef = _gameEngine->getCurrentPlayer()->to_defend();
         vector<Territory*> terrToAtk = _gameEngine->getCurrentPlayer()->to_attack();
         int armiesToDeploy = _gameEngine->getCurrentPlayer()->getUncommittedReinforcementPool();
 
         cout << "\n--------------------------------------------------------------------------------------------" << endl;
-        cout << "-" << player_name << " Issue Order Phase-\n" << endl;
+        cout << "-" << player_name << " Pre-Issue Order Phase-\n" << endl;
 
         cout << "Armies left to deploy: " << armiesToDeploy << "\n" << endl;
         cout << "Territories owned: " << endl;
@@ -143,6 +155,19 @@ void PhaseObserver::display() {
         cout << "\nEnemy Territories: " << endl;
         for (int i = 0; i < terrToAtk.size(); i++) {
             cout << *terrToAtk[i];
+        }
+        cout << "--------------------------------------------------------------------------------------------\n" << endl;
+    }
+
+    if (phase == "Issue Orders Phase::Post-issuance") {
+        string order = _gameEngine->getCurrentPlayer()->getOrdersList()->myList[0]->getDescription();
+
+        cout << "\n--------------------------------------------------------------------------------------------" << endl;
+        cout << "-" << player_name << " Post-Issue Order Phase-\n" << endl;
+        cout << player_name << " issued " << order << " order\n" <<endl;
+        cout << "Current list of orders issued: " << endl;
+        for (Order* order : _gameEngine->getCurrentPlayer()->getOrdersList()->myList) {
+            cout << "-" << order->getDescription() << endl;
         }
         cout << "--------------------------------------------------------------------------------------------\n" << endl;
     }
@@ -171,6 +196,7 @@ void PhaseObserver::display() {
         cout << "--------------------------------------------------------------------------------------------\n" << endl;
     }
 
+
     if (phase == "Execute Orders Phase::Done") {
         cout << "\n--------------------------------------------------------------------------------------------" << endl;
         cout << player_name << " is done executing orders." << endl;
@@ -182,26 +208,32 @@ void PhaseObserver::display() {
 
 
 /* StatsObserver Class */
+// default constructor
 StatsObserver::StatsObserver() {}
 
+// parameterized constructor
 StatsObserver::StatsObserver(GameEngine* gameEngine) {
     _gameEngine = gameEngine;
     _gameEngine->add(this);
 }
 
+// copy constructor
 StatsObserver::StatsObserver(const StatsObserver *statsObserver) {
     this->_gameEngine = statsObserver->_gameEngine;
 }
 
+// destructor
 StatsObserver::~StatsObserver() {
     _gameEngine->remove(this);
 }
 
+// assignment operator
 StatsObserver& StatsObserver::operator=(const StatsObserver& s) {
     this->_gameEngine = s._gameEngine;
     return *this;
 }
 
+// stream insertion operator
 ostream &operator<<(std::ostream& strm, const StatsObserver &statsObserver) {
     return strm << "StatsObserver insertion stream operator" << endl;
 }
@@ -210,7 +242,7 @@ void StatsObserver::Update() {
     display();
 }
 
-void displayWorldDomination(GameEngine* _gameEngine, float totalTerritories) {
+void StatsObserver::displayWorldDomination(GameEngine* _gameEngine, float totalTerritories) {
     for (Player* player : _gameEngine->getPlayers()) {
         cout << player->name << ": owns " << player->to_defend().size() << " territories | " << (player->to_defend().size()/totalTerritories)*100
             << "% world domination" << endl;
