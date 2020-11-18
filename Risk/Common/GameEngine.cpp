@@ -607,7 +607,6 @@ void GameEngine::executeOrdersPhase() {
 
                     // ... it executes an order
                     player->orders->myList[0]->execute();
-                    player->orders->remove(player->orders->myList[0]);
                 }
             }
         }
