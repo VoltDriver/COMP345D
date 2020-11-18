@@ -733,6 +733,10 @@ Player* GameEngine::getCurrentPlayer() {
     return currentPlayer;
 }
 
+Map* GameEngine::getMap() {
+    return map;
+}
+
 list<Player*> GameEngine::getPlayers(){
     return players;
 }

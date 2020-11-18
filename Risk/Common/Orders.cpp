@@ -117,7 +117,7 @@ Deploy* Deploy::clone() const {
 
 //Constructor for Advance class
 Advance::Advance(int anID, int armies, Territory* source, Territory* target, Player* player) : Order(anID){
-    description = "Advance";
+    description = "Advance\n";
     this -> priority = 4;
     this->armies = armies;
     this->source = source;
@@ -181,15 +181,15 @@ void Advance::execute() {
                     int attackingKillChance = rand() % 10 + 1;
                     if (attackingKillChance > 4) {
                         defendingUnitsKilled++;
-                        if (defendingUnitsKilled == target->get_armies())
+                        if (defendingUnitsKilled == startingDefendingArmies)
                             break;
                     }
                 }
             }
             cout << endl;
 
-            cout << "Enemy player defending with " <<  target->get_armies() << " armies" << endl;
-            for (int i = 0; i < target->get_armies(); i++) {
+            cout << "Enemy player defending with " <<  startingDefendingArmies << " armies" << endl;
+            for (int i = 0; i < startingDefendingArmies; i++) {
                 int defendingKillChance = rand() % 10 + 1;
                 if (defendingKillChance > 3) {
                     attackingUnitsKilled++;
@@ -219,7 +219,7 @@ void Advance::execute() {
             else {
                 cout << "\nThe enemy has defended their territory with " << startingDefendingArmies << " armies\n"
                     << "Casualties: " << attackingUnitsKilled << " | Remaining armies: " << armies << "\n"
-                    << "Enemy casualties: " << defendingUnitsKilled << " | Remaining enemy units: " << target->get_armies() << endl;
+                    << defendingUnitsKilled << " of " << startingDefendingArmies << " enemy units were killed" << endl;
 
                 source->set_armies(source->get_armies() + armies);
             }
@@ -239,7 +239,7 @@ Advance* Advance::clone() const {
 
 //Constructor for Bomb class
 Bomb::Bomb(int anID, Territory* target, Player* player) : Order(anID){
-    description =  "Bomb";
+    description =  "Bomb\n";
     this->priority = 4;
     this->target = target;
     this->player = player;
@@ -302,7 +302,7 @@ class Bomb* Bomb::clone() const {
 
 //Constructor for Blockade class
 Blockade::Blockade(int anID, Territory* target, Player* player) : Order(anID){
-    description = "Blockade";
+    description = "Blockade\n";
     this->priority = 3;
     this->target = target;
     this->player = player;
@@ -361,7 +361,7 @@ class Blockade* Blockade::clone() const {
 //Constructor for Airlift class
 Airlift::Airlift(int anID, int armies, Territory* source, Territory* target, Player* player) : Order(anID){
     this->priority = 2;
-    description = "Airlift";
+    description = "Airlift\n";
     this->armies = armies;
     this->source = source;
     this->target = target;
@@ -425,13 +425,13 @@ void Airlift::execute() {
                     int attackingKillChance = rand() % 10 + 1;
                     if (attackingKillChance > 4) {
                         defendingUnitsKilled++;
-                        if (defendingUnitsKilled == target->get_armies())
+                        if (defendingUnitsKilled == startingDefendingArmies)
                             break;
                     }
                 }
             }
             cout << endl;
-            cout << "Enemy player defending with " <<  target->get_armies() << " armies" << endl;
+            cout << "Enemy player defending with " <<  startingDefendingArmies << " armies" << endl;
             for (int i = 0; i < target->get_armies(); i++) {
                 int defendingKillChance = rand() % 10 + 1;
                 if (defendingKillChance > 3) {
@@ -441,8 +441,8 @@ void Airlift::execute() {
                     }
             }
             armies -= attackingUnitsKilled;
-            target->set_armies(target->get_armies() - defendingUnitsKilled);
-            if (armies > 0 && target->get_armies() == 0) {
+            target->set_armies(startingDefendingArmies - defendingUnitsKilled);
+            if (armies > 0 && startingDefendingArmies == 0) {
                 cout << "\n" << player->name << " has conquered the enemy with " << startingArmies << " armies\n"
                      << "Casualties: " << attackingUnitsKilled << " | Remaining armies: " << armies << "\n"
                      << defendingUnitsKilled << " of " << startingDefendingArmies << " enemy units were killed\n" << endl;
@@ -463,7 +463,7 @@ void Airlift::execute() {
                 cout << "The enemy has defended their territory with " << startingDefendingArmies << " armies."
                      << player->name << " has killed " << attackingUnitsKilled << " of the " << startingArmies
                      << " attacking armies\n"
-                     << "Enemy casualties: " << defendingUnitsKilled << " | Remaining enemy units: " << target->get_armies() << endl;
+                     << defendingUnitsKilled << " of " << startingDefendingArmies << " enemy units were killed\n" << endl;
                 source->set_armies(source->get_armies() + armies);
             }
         }
@@ -485,7 +485,7 @@ class Airlift* Airlift::clone() const {
 
 //Constructor for Negotiate class
 Negotiate::Negotiate(int anID, Player* player, Player* target) : Order(anID){
-    this->description = "Negotiate";
+    this->description = "Negotiate\n";
     this->priority = 4;
     this->player = player;
     this->target = target;
@@ -527,7 +527,7 @@ void Negotiate::execute() {
         cout << "Before negotiating friendly: " << player->isFriendly(target) << endl;
         player->addFriendlyPlayer(target);
         target->addFriendlyPlayer(player);
-        cout << "After negotiating friendly: " << player->isFriendly(target) << endl;
+        cout << "After negotiating friendly: " << player->isFriendly(target) << "\n" << endl;
     }
     else {
         cout << "This negotiate order is invalid." << endl;
@@ -578,6 +578,7 @@ ostream &operator<<(ostream &strm, const OrdersList &ordersList) {
 // Destructor for OrdersList
 OrdersList::~OrdersList() {
     for (int i = 0; i < this->myList.size(); i++) {
+        delete this->myList.at(i);
         delete this->myList.at(i);
     }
 }

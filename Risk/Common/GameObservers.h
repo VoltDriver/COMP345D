@@ -73,6 +73,7 @@ public:
     StatsObserver& operator=(const StatsObserver &s);
     void Update();
     void display();
+
 private:
     GameEngine* _gameEngine;
     friend ostream& operator<<(ostream&, const StatsObserver&);

@@ -210,21 +210,31 @@ void StatsObserver::Update() {
     display();
 }
 
+void displayWorldDomination(GameEngine* _gameEngine, float totalTerritories) {
+    for (Player* player : _gameEngine->getPlayers()) {
+        cout << player->name << ": owns " << player->to_defend().size() << " territories | " << (player->to_defend().size()/totalTerritories)*100
+            << "% world domination" << endl;
+    }
+}
+
 void StatsObserver::display() {
     string phase = _gameEngine->getPhase();
     string player_name = _gameEngine->getCurrentPlayer()->name;
+    int totalTerritories = _gameEngine->getMap()->get_territories().size();
 
     /* Player was Conquered */
     if (phase == "Conquered") {
         cout << "********************************************************************************************" << endl;
-        cout << player_name << " has won the battle!" << endl;
+        cout << player_name << " has won the battle!\n" << endl;
+        displayWorldDomination(_gameEngine, totalTerritories);
         cout << "********************************************************************************************" << endl;
     }
 
     /* A Player was Eliminated */
     if (phase == "Eliminated") {
         cout << "\n********************************************************************************************" << endl;
-        cout << player_name << " has been eliminated!" << endl;
+        cout << player_name << " has been eliminated!\n" << endl;
+        displayWorldDomination(_gameEngine, totalTerritories);
         cout << "********************************************************************************************\n" << endl;
     }
 
@@ -232,14 +242,21 @@ void StatsObserver::display() {
     if (phase == "Game Over") {
         cout << "\n********************************************************************************************" << endl;
         cout << "\t\t\t***** GAME OVER *****" << endl;
-        cout << player_name << " wins!" << endl;
+        cout << player_name << " wins!\n" << endl;
+        displayWorldDomination(_gameEngine, totalTerritories);
         cout << "********************************************************************************************\n" << endl;
     }
 
-    std::list <Player*>::iterator it;
+
+//    std::list <Player*>::iterator it;
 
 //    for (it = _gameEngine->getPlayers().begin(); it != _gameEngine->getPlayers().end(); ++it){
 //        cout << (*it)->to_defend().size();
 //    }
+//    for (Player* player : _gameEngine->getPlayers()) {
+//        cout << player->to_defend().size() << endl;
+//    }
+
 
 }
+

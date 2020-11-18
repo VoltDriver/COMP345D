@@ -79,6 +79,8 @@ class GameEngine: public Subject {
 
         Player* getCurrentPlayer();
 
+        Map* getMap();
+
         string getPhase();
 
         int getTurnCounter();
