@@ -50,8 +50,8 @@ public:
     vector<Territory*> to_defend();
     vector<Territory*> to_attack();
     void addOrder(Order* order);
-    bool issueOrder(Deck* deck, Map* territoriesMap, list<Player> gamePlayers);
-    bool issueOrderHuman(Deck* deck, Map* territoriesMap, list<Player> gamePlayers);
+    bool issueOrder(Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers);
+    bool issueOrderHuman(Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers);
     void addFriendlyPlayer(Player* player);
     void addTerritory(Territory* territory);
     void removeTerritory(Territory* territory);

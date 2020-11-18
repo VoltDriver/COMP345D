@@ -11,8 +11,8 @@ int main() {
     cout << "\nPrinting player object" << endl;
     cout << *player;
 
-    list<Player> players = list<Player>();
-    players.push_back(*player);
+    list<Player*> players = list<Player*>();
+    players.push_back(player);
 
     // Testing the Card class
     std::cout << "***** Test Card class *****" << std::endl;
