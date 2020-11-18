@@ -213,7 +213,7 @@ void Advance::execute() {
             target->set_armies(target->get_armies() + armies);
     }
     else {
-        cout << "This airlift order is not valid" << endl;
+        cout << "This advance order is not valid" << endl;
     }
     player->getOrdersList()->remove(this);
 }
