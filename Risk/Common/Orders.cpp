@@ -491,7 +491,7 @@ void Negotiate::execute() {
     else {
         cout << "Guess you read The Art of The Deal from yours truly, Donald T." << endl;
     }
-//    player->getOrdersList()->remove(this);
+    player->getOrdersList()->remove(this);
 }
 
 Negotiate* Negotiate::clone() const {
