@@ -187,15 +187,17 @@ void PhaseObserver::display() {
     }
 
     if (phase == "Execute Orders Phase::Execute") {
-        int remainingOrders = _gameEngine->getCurrentPlayer()->getOrdersList()->myList.size();
+        string order = _gameEngine->getCurrentPlayer()->getOrdersList()->myList[0]->getDescription();
 
         cout << "\n--------------------------------------------------------------------------------------------" << endl;
         cout << "-" << player_name << " Execute Order Phase-" << endl;
-        cout << "Remaining orders to execute: " << remainingOrders << endl;
-        cout << "Executing order..." << endl;
+        cout << "Remaining orders to execute: " << endl;
+        for (Order* order : _gameEngine->getCurrentPlayer()->getOrdersList()->myList) {
+            cout << "-" << order->getDescription() << endl;
+        }
+        cout << "\nNow executing " << order << " order" << endl;
         cout << "--------------------------------------------------------------------------------------------\n" << endl;
     }
-
 
     if (phase == "Execute Orders Phase::Done") {
         cout << "\n--------------------------------------------------------------------------------------------" << endl;
@@ -243,8 +245,9 @@ void StatsObserver::Update() {
 }
 
 void StatsObserver::displayWorldDomination(GameEngine* _gameEngine, float totalTerritories) {
+    cout << "Player Stats" << endl;
     for (Player* player : _gameEngine->getPlayers()) {
-        cout << player->name << ": owns " << player->to_defend().size() << " territories | " << (player->to_defend().size()/totalTerritories)*100
+        cout << player->name << ": owns " << player->to_defend().size() << " territories of " << totalTerritories << " | " << (player->to_defend().size()/totalTerritories)*100
             << "% world domination" << endl;
     }
 }

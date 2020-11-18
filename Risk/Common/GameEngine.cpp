@@ -413,14 +413,15 @@ void GameEngine::mainGameLoop() {
             auto current = it++;
             if ((*current)->territories.empty()) {
 
-                // Stats Observer notification
-                this->phase = "Eliminated";
-                this->currentPlayer = *current;
-                Subject::notify();
 
                 cout << (*current)->name << " has lost!" << endl;
                 eliminatedPlayers.push_back(*current);
                 players.erase(current);
+
+                // Stats Observer notification
+                this->phase = "Eliminated";
+                this->currentPlayer = eliminatedPlayers.back();
+                Subject::notify();
             }
         }
 

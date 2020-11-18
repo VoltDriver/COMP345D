@@ -117,7 +117,7 @@ Deploy* Deploy::clone() const {
 
 //Constructor for Advance class
 Advance::Advance(int anID, int armies, Territory* source, Territory* target, Player* player) : Order(anID){
-    description = "Advance\n";
+    description = "Advance";
     this -> priority = 4;
     this->armies = armies;
     this->source = source;
@@ -239,7 +239,7 @@ Advance* Advance::clone() const {
 
 //Constructor for Bomb class
 Bomb::Bomb(int anID, Territory* target, Player* player) : Order(anID){
-    description =  "Bomb\n";
+    description =  "Bomb";
     this->priority = 4;
     this->target = target;
     this->player = player;
@@ -361,7 +361,7 @@ class Blockade* Blockade::clone() const {
 //Constructor for Airlift class
 Airlift::Airlift(int anID, int armies, Territory* source, Territory* target, Player* player) : Order(anID){
     this->priority = 2;
-    description = "Airlift\n";
+    description = "Airlift";
     this->armies = armies;
     this->source = source;
     this->target = target;
@@ -485,7 +485,7 @@ class Airlift* Airlift::clone() const {
 
 //Constructor for Negotiate class
 Negotiate::Negotiate(int anID, Player* player, Player* target) : Order(anID){
-    this->description = "Negotiate\n";
+    this->description = "Negotiate";
     this->priority = 4;
     this->player = player;
     this->target = target;
