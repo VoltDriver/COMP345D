@@ -628,6 +628,12 @@ void GameEngine::executeOrdersPhase() {
                     }
                 }
             }
+
+            // if current player owns all territories (won the game), then leave the execute phase.
+            if (player->to_defend().size() == map->get_territories().size()) {
+                return;
+            }
+
         }
     }
 
