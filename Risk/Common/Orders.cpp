@@ -29,9 +29,7 @@ Order& Order::operator=(const Order &other) {
     return *this;
 }
 
-Order::~Order() {
-    cout << "Destroyed" << endl;
-}
+Order::~Order() {}
 
 // Stream insertion operator for all Order classes
 ostream &operator<<(ostream &strm, const Order &order) {
