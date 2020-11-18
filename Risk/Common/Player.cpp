@@ -270,7 +270,6 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap, const list<Player*> gam
 
             int destinationTerritoryChoice = distributionDestination(mt);
 
-            // TODO: Create the order properly... And implement a constructor that makes them automatically.
             Advance* advanceOrder = new Advance(generator.setID(), troopNumber, sourceTerritoryToNumberMap.at(sourceTerritoryChoice), destinationTerritoryToNumberMap.at(destinationTerritoryChoice), this);
             addOrder(advanceOrder);
 
@@ -479,7 +478,6 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap, const list<Player*
             while(destinationTerritoryChoice<0 || destinationTerritoryChoice > destinationTerritoryToNumberMap.size())
                 cin >> destinationTerritoryChoice;
 
-            // TODO: Create the order properly... And implement a constructor that makes them automatically.
             Advance* advanceOrder = new Advance(generator.setID(), troopNumber, sourceTerritoryToNumberMap.at(sourceTerritoryChoice), destinationTerritoryToNumberMap.at(destinationTerritoryChoice), this);
             addOrder(advanceOrder);
 
