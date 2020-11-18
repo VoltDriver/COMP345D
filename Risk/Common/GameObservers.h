@@ -45,6 +45,7 @@ private:
 /**
  * The phase observer will be responsible for displaying new information everytime the phase of the game changes and will
  * display the turn of a player. Additional useful information will be displayed depending on the different phases.
+ * A turn counter will also be displayed at the start of every new turn.
  */
 class PhaseObserver : Observer {
 public:
@@ -62,7 +63,8 @@ private:
 
 
 /**
- *
+ * The stats observer will display % of territories controlled for all players still in the game. Triggered when
+ * a
  */
 class StatsObserver : Observer {
 public:

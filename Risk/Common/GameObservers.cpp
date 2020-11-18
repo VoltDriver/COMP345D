@@ -86,7 +86,6 @@ void PhaseObserver::Update() {
 void PhaseObserver::display() {
     string phase = _gameEngine->getPhase();
     string player_name = _gameEngine->getCurrentPlayer()->name;
-    int turnCounter = _gameEngine->getTurnCounter();
 
     /* Startup Phase */
     if (phase == "Startup Phase") {
@@ -98,8 +97,9 @@ void PhaseObserver::display() {
 
     /* New Turn Phase */
     if (phase == "New Turn") {
+        int turnCounter = _gameEngine->getTurnCounter();
         cout << "\n--------------------------------------------------------------------------------------------" << endl;
-        cout << "\t\t\t***** TURN " << turnCounter << " *****" << endl;
+        cout << "\t\t\t\t***** TURN " << turnCounter << " *****" << endl;
         cout << "--------------------------------------------------------------------------------------------" << endl;
     }
 
@@ -246,17 +246,6 @@ void StatsObserver::display() {
         displayWorldDomination(_gameEngine, totalTerritories);
         cout << "********************************************************************************************\n" << endl;
     }
-
-
-//    std::list <Player*>::iterator it;
-
-//    for (it = _gameEngine->getPlayers().begin(); it != _gameEngine->getPlayers().end(); ++it){
-//        cout << (*it)->to_defend().size();
-//    }
-//    for (Player* player : _gameEngine->getPlayers()) {
-//        cout << player->to_defend().size() << endl;
-//    }
-
 
 }
 
