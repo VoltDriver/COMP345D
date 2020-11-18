@@ -6,7 +6,7 @@ using namespace std;
 int main() {
     GameEngine *engine = new GameEngine;
 
-    engine->start();
+    engine->main();
 
     delete engine;
 }

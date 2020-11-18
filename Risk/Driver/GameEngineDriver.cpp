@@ -9,7 +9,7 @@ int main() {
     GameEngine *engine = new GameEngine;
 
     try {
-        engine->gameStart();
+        engine->main();
     } catch (exception &e) {
         cout << "Invalid Map provided, the game will now terminate." << endl;
     };

@@ -529,7 +529,16 @@ void GameEngine::issueOrdersPhase() {
                 Subject::notify();
 
                 // ... it is prompted to play.
-                playerTurns[player->name] = player->issueOrder(this->deck, this->map, gamePlayers);
+
+                // Checking if we have human players.
+                if(hasHumanPlayers)
+                {
+                    playerTurns[player->name] = player->issueOrderHuman(this->deck, this->map, gamePlayers);
+                }
+                else
+                {
+                    playerTurns[player->name] = player->issueOrder(this->deck, this->map, gamePlayers);
+                }
 
                 // If it decided to end it's turn just now...
                 if (!playerTurns[player->name]) {
@@ -665,6 +674,7 @@ GameEngine::GameEngine() {
     deck = new Deck();
     phase_observer_flag = true;
     stat_observer_flag = true;
+    hasHumanPlayers = false;
 }
 
 GameEngine::GameEngine(const GameEngine &g) {
@@ -677,6 +687,7 @@ GameEngine::GameEngine(const GameEngine &g) {
     deck = g.deck;
     phase_observer_flag = g.phase_observer_flag;
     stat_observer_flag = g.stat_observer_flag;
+    hasHumanPlayers = g.hasHumanPlayers;
 }
 
 GameEngine::~GameEngine() {
@@ -702,6 +713,10 @@ Player* GameEngine::getCurrentPlayer() {
     return currentPlayer;
 }
 
+list<Player*> GameEngine::getPlayers(){
+    return players;
+}
+
 string GameEngine::getPhase() {
     return phase;
 }
@@ -710,7 +725,7 @@ int GameEngine::getTurnCounter() {
     return turnCounter;
 }
 
-void GameEngine::start() {
+void GameEngine::main() {
     gameStart(false);
     startupPhase();
     mainGameLoop();

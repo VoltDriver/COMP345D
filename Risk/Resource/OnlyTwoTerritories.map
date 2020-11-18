@@ -1,0 +1,21 @@
+; Joel
+; OnlyTwoTerritoriesMap
+
+; Risk Map
+; Dimensions: 677 x 425 Pixels
+
+[files]
+pic google_pic.jpg
+map google_map.gif
+crd google.cards
+
+[continents]
+Western_States 1 red
+
+[countries]
+1 Portugal 1 57 305
+2 Spanien 1 114 312
+
+[borders]
+1 2
+2 1

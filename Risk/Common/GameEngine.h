@@ -54,6 +54,7 @@ class GameEngine: public Subject {
     public:
         PhaseObserver *phaseView;
         StatsObserver *statsView;
+        bool hasHumanPlayers;
 
         // Constants
         static const int MINIMUM_REINFORCEMENT;
@@ -67,7 +68,8 @@ class GameEngine: public Subject {
                             int player_count = 5, bool phase_observer = true, bool stat_observer = true);
         void reinforcementPhase();
         void executeOrdersPhase();
-        void start();
+        void main();
+        list<Player*> getPlayers();
 
         GameEngine& operator=(const GameEngine &g);
         GameEngine();
