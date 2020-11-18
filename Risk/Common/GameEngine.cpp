@@ -244,8 +244,10 @@ void GameEngine::gameStart(bool verbose) {
  * Giving each player a random order of play and armies in reinforcement pool. Assigning territories in a round robin fashion.
  */
 void GameEngine::startupPhase(){
+    // Phase Observer notification
     this->phase = "Startup Phase";
     Subject::notify();
+
     cout << "              " << endl;
     srand (time(NULL));
     list<Player*>::iterator it;
@@ -405,32 +407,39 @@ void GameEngine::mainGameLoop() {
         // Orders Execution Phase
         executeOrdersPhase();
 
+        // Checking if a player has lost
+        auto it = players.begin();
+        while (it != players.end()) {
+            auto current = it++;
+            if ((*current)->territories.empty()) {
+
+                // Stats Observer notification
+                this->phase = "Eliminated";
+                this->currentPlayer = *current;
+                Subject::notify();
+
+                cout << (*current)->name << " has lost!" << endl;
+                eliminatedPlayers.push_back(*current);
+                players.erase(current);
+            }
+        }
+
         // Checking if the game is over
         for (Player* player : players) {
             if (player->territories.size() == map->get_territories().size()) {
                 gameOver = true;
                 winningPlayer = player->name;
 
-                // Phase Observer notification
+                // Stats Observer notification
                 this->phase = "Game Over";
                 this->currentPlayer = player;
                 Subject::notify();
             }
         }
 
-        // Checking if a player has lost
-        auto it = players.begin();
-        while (it != players.end()) {
-            auto current = it++;
-            if ((*current)->territories.empty()) {
-                cout << (*current)->name << " has lost!";
-                eliminatedPlayers.push_back(*current);
-                players.erase(current);
-            }
-        }
     }
 
-    cout << "The game is over! " << winningPlayer << " has won.";
+    cout << "The game is over! " << winningPlayer << " has won." << endl;
 }
 
 /**
@@ -611,6 +620,12 @@ void GameEngine::executeOrdersPhase() {
 
                     // ... it executes an order
                     player->orders->myList[0]->execute();
+
+                    if (player->hasConquered()) {
+                        // Stats Observer notification
+                        this->phase = "Conquered";
+                        Subject::notify();
+                    }
                 }
             }
         }

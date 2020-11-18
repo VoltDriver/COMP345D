@@ -217,7 +217,7 @@ void Advance::execute() {
                 }
             }
             else {
-                cout << "\nThe enemy has defended their territory with " << startingDefendingArmies << " armies."
+                cout << "\nThe enemy has defended their territory with " << startingDefendingArmies << " armies\n"
                     << "Casualties: " << attackingUnitsKilled << " | Remaining armies: " << armies << "\n"
                     << "Enemy casualties: " << defendingUnitsKilled << " | Remaining enemy units: " << target->get_armies() << endl;
 
