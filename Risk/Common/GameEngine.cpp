@@ -130,6 +130,9 @@ pair<bool, bool> GameEngine::observer_settings() {
     return make_pair(observer_phase, observer_stats);
 }
 
+/**
+ * Automated version of gameStart, to be used in Driver files not the main game!
+ */
 void GameEngine::gameStart_Auto(string map, int player_count, bool phase_observer, bool stat_observer) {
     this->phase_observer_flag = phase_observer;
     this->stat_observer_flag = stat_observer;
@@ -167,27 +170,31 @@ void GameEngine::gameStart_Auto(string map, int player_count, bool phase_observe
     cout << "Player count: " << player_count << endl;
     cout << "Phase observer: " << (phase_observer ? "Enabled" : "Disabled") << endl;
     cout << "Stats observer: " << (stat_observer ? "Enabled" : "Disabled") << endl;
-
-    cout << "> Running map validation..." << endl;
-    // Validate map
-    //this->map->validate();
-    auto temp_map = MapLoader::parse(MAP_DIRECTORY + map);
-    delete temp_map;
-
     // Cards
     cout << "The Deck contains " << this->deck->remainingCards() << " cards." << endl;
+    cout << "> Running map validation..." << endl;
+    // Validate map
+    auto temp_map = MapLoader::parse(MAP_DIRECTORY + map);
+    delete temp_map;
     cout << "===================================" << endl;
 }
 
+/**
+ * Sets the game rules using user input
+ *
+ * Lets the player choose the following options:
+ * Player count
+ * map
+ * Enable/Disable Observers
+ */
 void GameEngine::gameStart(bool verbose) {
-
     // Display and choose map
     string map_filename = map_select();
     // Select number of players 2-5
     int num_of_players = player_select();
     // Turn on/off any observers
     pair<bool, bool> observer_options = observer_settings();
-
+    // Set observer bools
     this->phase_observer_flag = observer_options.first;
     this->stat_observer_flag = observer_options.second;
 
@@ -203,8 +210,7 @@ void GameEngine::gameStart(bool verbose) {
     try {
         this->map = MapLoader::parse(MAP_DIRECTORY + map_filename, false);
     } catch (const std::exception &e) {
-        cout << e.what() << endl;
-
+        verbose && (cout << "\n\n" << e.what() << endl);
         throw exception("Invalid map specified");
     }
 
@@ -224,7 +230,6 @@ void GameEngine::gameStart(bool verbose) {
         cout << "\n\n=========== DEBUG OUTPUT ==========" << endl;
         // Validate map
         cout << "> Running map validation..." << endl;
-        //this->map->validate();
         auto temp_map = MapLoader::parse(MAP_DIRECTORY  + map_filename);
         delete temp_map;
 
@@ -678,6 +683,8 @@ GameEngine::GameEngine() {
     phase_observer_flag = true;
     stat_observer_flag = true;
     hasHumanPlayers = false;
+    phaseView = nullptr;
+    statsView = nullptr;
 }
 
 GameEngine::GameEngine(const GameEngine &g) {

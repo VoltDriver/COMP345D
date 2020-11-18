@@ -6,7 +6,9 @@ int main() {
     try {
         engine->gameStart(true);
     } catch (exception &e) {
+        cout << "\n\n==================================================" << endl;
         cout << "Invalid Map provided, the game will now terminate." << endl;
+        cout << "==================================================" << endl;
     };
 
     delete engine;
@@ -16,9 +18,11 @@ int main() {
     cout << "*** Running with invalid map ***\n" << endl;
 
     try {
-        engine->gameStart_Auto("test_bordering_territory_index_error.map", 4, true, true);
+        engine->gameStart_Auto("test_bordering_territory_index_error.map", 4, true, false);
     } catch (exception &e) {
-        cout << "Invalid Map provided, the game will now terminate.\n\n" << endl;
+        cout << "==================================================" << endl;
+        cout << "Invalid Map provided, the game will now terminate." << endl;
+        cout << "==================================================\n\n" << endl;
     }
 
     delete engine;
@@ -29,7 +33,22 @@ int main() {
     try {
         engine->gameStart_Auto();
     } catch (exception &e) {
+        cout << "==================================================" << endl;
         cout << "Invalid Map provided, the game will now terminate." << endl;
+        cout << "==================================================\n\n" << endl;
+    }
+
+    delete engine;
+    engine = new GameEngine;
+
+    cout << "\n\n*** Running with valid map 2 ***" << endl;
+
+    try {
+        engine->gameStart_Auto("test_success2.map", 2, false, false);
+    } catch (exception &e) {
+        cout << "==================================================" << endl;
+        cout << "Invalid Map provided, the game will now terminate." << endl;
+        cout << "==================================================\n\n" << endl;
     }
 
     return 0;
