@@ -426,7 +426,6 @@ void GameEngine::mainGameLoop() {
     }
 
     cout << "The game is over! " << winningPlayer << " has won.";
-    delete currentPlayer;
 }
 
 /**
@@ -700,11 +699,6 @@ GameEngine::~GameEngine() {
     delete this->statsView;
     delete this->map;
     delete this->deck;
-
-    for(Player* p : players)
-    {
-        delete p;
-    }
 
     for(Player* player : eliminatedPlayers)
     {

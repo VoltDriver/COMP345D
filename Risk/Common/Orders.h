@@ -24,6 +24,7 @@ public:
     Order(const Order &order2);
     Order& operator=(const Order& other);
     friend ostream& operator<<(ostream&, const Order&);
+    virtual ~Order();
 
     friend bool compare(Order* order, Order* other);
     int getPriority();
@@ -45,6 +46,7 @@ public:
     Deploy(int anID, int armies, Territory* target, Player* player);
     Deploy(const Deploy &deploy2);
     Deploy& operator=(const Deploy& other);
+    ~Deploy();
 
 
     Deploy* clone() const;
@@ -63,6 +65,7 @@ public:
     Advance(int anID, int armies, Territory* source, Territory* target, Player* player);
     Advance(const Advance &advance2);
     Advance& operator=(const Advance& other);
+    ~Advance();
 
     Advance* clone() const;
     bool validate();
@@ -77,6 +80,7 @@ public:
     Bomb(int anID, Territory* target, Player* player);
     Bomb(const Bomb &bomb2);
     Bomb& operator=(const Bomb& other);
+    ~Bomb();
 
     Bomb* clone() const;
     bool validate();
@@ -92,6 +96,7 @@ public:
     Blockade(int anID, Territory* target, Player* player);
     Blockade(const Blockade &blockade2);
     Blockade& operator=(const Blockade& other);
+    ~Blockade();
 
     Blockade* clone() const;
     bool validate();
@@ -109,8 +114,9 @@ public:
     Airlift(int anID, int armies, Territory* source, Territory* target, Player* player);
     Airlift(const Airlift &airlift2);
     Airlift& operator=(const Airlift& other);
+    ~Airlift();
 
-    Airlift* clone() const;;
+    Airlift* clone() const;
     bool validate();
     void execute();
 };
@@ -124,6 +130,7 @@ public:
     Negotiate(int anID, Player* player, Player* target);
     Negotiate(const Negotiate &negotiate2);
     Negotiate& operator=(const Negotiate& other);
+    ~Negotiate();
 
     Negotiate* clone() const;
     bool validate();

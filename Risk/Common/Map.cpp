@@ -240,7 +240,6 @@ Map::~Map() {
     for (Territory *territory: territories) {
         delete territory;
     }
-
     for (Continent *continent: continents) {
         delete continent;
     }

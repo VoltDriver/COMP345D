@@ -29,6 +29,10 @@ Order& Order::operator=(const Order &other) {
     return *this;
 }
 
+Order::~Order() {
+    cout << "Destroyed" << endl;
+}
+
 // Stream insertion operator for all Order classes
 ostream &operator<<(ostream &strm, const Order &order) {
     strm << order.description;
@@ -80,6 +84,11 @@ Deploy& Deploy::operator=(const Deploy &other) {
     return *this;
 }
 
+Deploy::~Deploy()  {
+    target = nullptr;
+    player = nullptr;
+}
+
 //validate() method for Deploy that prints out a string and returns true
 bool Deploy::validate() {
     if (player != nullptr && target != nullptr && target->getPlayer() != nullptr && target->getPlayerName().compare(player->name) == 0 &&
@@ -124,6 +133,7 @@ Advance::Advance(const Advance &advance2) : Order(advance2) {
     this->description = advance2.description;
     this->armies = advance2.armies;
     this->source = advance2.source;
+    this->target = advance2.target;
     this->player = advance2.player;
 }
 
@@ -133,8 +143,15 @@ Advance& Advance::operator=(const Advance &other) {
     this -> priority = 4;
     this->armies = other.armies;
     this->source = other.source;
+    this->target = other.target;
     this->player = other.player;
     return *this;
+}
+
+Advance::~Advance() {
+    source = nullptr;
+    target = nullptr;
+    player = nullptr;
 }
 
 //validate() method for Advance that prints out a string and returns true
@@ -247,6 +264,11 @@ class Bomb& Bomb::operator=(const Bomb &other) {
     return *this;
 }
 
+Bomb::~Bomb() noexcept {
+    target = nullptr;
+    player = nullptr;
+}
+
 //validate() method for Bomb that prints out a string and returns true
 bool Bomb::validate() {
     if (target != nullptr && player != nullptr && target->getPlayer() != nullptr && (target->getPlayerName().compare(player->name) == 0 || (target->getPlayerName().compare(player->name) != 0 && player->isFriendly(target->getPlayer())))) {
@@ -302,6 +324,11 @@ class Blockade & Blockade::operator=(const Blockade &other) {
     this->target = other.target;
     this->player = other.player;
     return *this;
+}
+
+Blockade::~Blockade() {
+    target =  nullptr;
+    player = nullptr;
 }
 
 //validate() method for Blockade that prints out a string and returns true
@@ -361,6 +388,12 @@ class Airlift & Airlift::operator=(const Airlift &other) {
     this->target = other.target;
     this->player = other.player;
     return *this;
+}
+
+Airlift::~Airlift() {
+    source = nullptr;
+    target = nullptr;
+    player = nullptr;
 }
 
 //validate() method for Airlift that prints out a string and returns true
@@ -475,6 +508,11 @@ Negotiate & Negotiate::operator=(const Negotiate &other) {
     return *this;
 }
 
+Negotiate::~Negotiate() {
+    target = nullptr;
+    player = nullptr;
+}
+
 //validate() method for Negotiate that prints out a string and returns true
 bool Negotiate::validate() {
     if (player != nullptr && target != nullptr && player->name.compare(target->name) != 0)
@@ -504,7 +542,7 @@ Negotiate* Negotiate::clone() const {
 
 //OrdersList constructor
 OrdersList::OrdersList() {
-    myList = vector<Order*>();
+    this->myList = vector<Order*>();
 }
 
 //Copy constructor for OrderList class
@@ -518,7 +556,7 @@ OrdersList::OrdersList(const OrdersList &orderList2) {
 OrdersList& OrdersList::operator=(const OrdersList &other) {
     cout << "Assignment Operator!" << endl;
     if (this != &other){
-        for (Order* order: myList) {
+        for (Order* order: this->myList) {
             delete order;
         }
         for (int i = 0; i < other.myList.size(); i++){
@@ -540,18 +578,18 @@ ostream &operator<<(ostream &strm, const OrdersList &ordersList) {
 
 // Destructor for OrdersList
 OrdersList::~OrdersList() {
-    for (Order* order: myList) {
-        delete order;
+    for (int i = 0; i < this->myList.size(); i++) {
+        delete this->myList.at(i);
     }
 }
 
 // remove() method that removes the Order specified in the parameter from the vector and shrinks the vector to fit the remaining Orders in it
 int OrdersList::remove(Order *order){
-    for(int i =0; i<myList.size(); i++ ){
-        if ((*myList.at(i)).getID() == (*order).getID()) {
-            delete myList.at(i);
-            myList.erase(myList.begin() + i);
-            myList.shrink_to_fit();
+    for(int i =0; i<this->myList.size(); i++ ){
+        if ((*this->myList.at(i)).getID() == (*order).getID()) {
+            delete this->myList.at(i);
+            this->myList.erase(myList.begin() + i);
+            this->myList.shrink_to_fit();
             return i;
         }
     }
@@ -575,7 +613,7 @@ void OrdersList::move(Order *order, int pos){
 
 //add() method that pushes the Order specified in the parameter to the vector
 void OrdersList::add(Order *order){
-    myList.push_back(order);
+    this->myList.push_back(order);
     this->sort();
 }
 

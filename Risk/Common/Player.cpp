@@ -79,9 +79,6 @@ Player::Player(const Player &p) {
 
 /* Destructor */
 Player::~Player() {
-    for (Territory *territory: territories) {
-        delete territory;
-    }
     delete orders;
     for (Player* player: friendlyPlayers){
         delete player;
