@@ -93,7 +93,9 @@ bool Deploy::validate() {
 void Deploy::execute() {
     cout << *this << endl;
     if (validate()){
+        cout << "Before deployment: " << target->get_armies() << endl << endl;
         target->set_armies(target->get_armies()+armies);
+        cout << "After deployment: " << target->get_armies() << endl << endl;
         player->setReinforcementPool(player->getReinforcementPool()-armies);
     }
     else{
@@ -160,7 +162,7 @@ void Advance::execute() {
             srand((unsigned int)time(NULL));
             if (target->get_armies() > 0) {
                 for (int i = 0; i < armies; i++) {
-                    cout << i << "   " << armies << endl;
+                    cout << "Soldier: " << i+1  << " of attacking: " <<  armies << endl;
                     int attackingKillChance = rand() % 10 + 1;
                     if (attackingKillChance > 4) {
                         defendingUnitsKilled++;
@@ -169,8 +171,9 @@ void Advance::execute() {
                     }
                 }
             }
+            cout << endl;
             for (int i = 0; i < target->get_armies(); i++) {
-                cout << i << "   " << target->get_armies() << endl;
+                cout << "Soldier: " << i+1  << " of defending: " << target->get_armies() << endl;
                 int defendingKillChance = rand() % 10 + 1;
                 if (defendingKillChance > 3) {
                     attackingUnitsKilled++;
@@ -181,7 +184,7 @@ void Advance::execute() {
             armies -= attackingUnitsKilled;
             target->set_armies(target->get_armies() - defendingUnitsKilled);
             if (armies > 0 && target->get_armies() == 0) {
-                cout << "I have conquered with an army of " << startingArmies << " by killing " << defendingUnitsKilled
+                cout << "\nI have conquered with an army of " << startingArmies << " by killing " << defendingUnitsKilled
                      << " of the " << startingDefendingArmies << " units and losing " << attackingUnitsKilled
                      << " units and being left with " << armies << " remaining!" << endl;
                 target->set_armies(armies);
@@ -198,7 +201,7 @@ void Advance::execute() {
                 }
             }
             else {
-                cout << "They have defended with an army of " << startingDefendingArmies << " by killing "
+                cout << "\nThey have defended with an army of " << startingDefendingArmies << " by killing "
                      << attackingUnitsKilled << " of the " << startingArmies << " units and losing "
                      << defendingUnitsKilled << " units and being left with " << target->get_armies() << " remaining!"
                      << endl;
@@ -246,7 +249,7 @@ class Bomb& Bomb::operator=(const Bomb &other) {
 
 //validate() method for Bomb that prints out a string and returns true
 bool Bomb::validate() {
-    if (target != nullptr && player != nullptr && target->getPlayer() != nullptr && target->getPlayerName().compare(player->name) == 0) {
+    if (target != nullptr && player != nullptr && target->getPlayer() != nullptr && (target->getPlayerName().compare(player->name) == 0 || (target->getPlayerName().compare(player->name) != 0 && player->isFriendly(target->getPlayer())))) {
         return false;
     }
     else
@@ -256,11 +259,15 @@ bool Bomb::validate() {
 //execute() method for Bomb that prints out a different string depending on the boolean returned by validate()
 void Bomb::execute() {
     cout << *this << endl;
-    if(validate()){
-        if (target->get_armies() > 1)
-            target->set_armies((target->get_armies()/2));
-        else
+    if(validate()) {
+        cout << "Before bombing: " << target->get_name() << " has " << target->get_armies() << " units" << endl;
+        if (target->get_armies() > 1) {
+        target->set_armies((target->get_armies() / 2));
+        }
+        else {
             target->set_armies(0);
+        }
+        cout << "Before bombing: " << target->get_name() << " has " << target->get_armies() << " units" << endl;
     }
     else {
         cout << "This bomb order is invalid!" << endl;
@@ -309,9 +316,11 @@ bool Blockade::validate() {
 void Blockade::execute() {
     cout << *this << endl;
     if (validate()) {
+        cout << "Before blockade: " << target->get_name() << " has " << target->get_armies() << " units" << endl;
         target->set_armies(2*target->get_armies());
         player->removeTerritory(target);
         target->setPlayer(nullptr);
+        cout << "After blockade " << target->get_name() << " has " << target->get_armies() << " units" << endl;
     }
     else{
         cout << "Not a valid order" << endl;
@@ -380,7 +389,7 @@ void Airlift::execute() {
             srand((unsigned int)time(NULL));
             if (target->get_armies() > 0) {
                 for (int i = 0; i < armies; i++) {
-                    cout << i << "   " << armies << endl;
+                    cout << "Soldier: " << i+1  << " of Attacking: " << armies << endl;
                     int attackingKillChance = rand() % 10 + 1;
                     if (attackingKillChance > 4) {
                         defendingUnitsKilled++;
@@ -389,8 +398,9 @@ void Airlift::execute() {
                     }
                 }
             }
+            cout << endl;
             for (int i = 0; i < target->get_armies(); i++) {
-                cout << i << "   " << target->get_armies() << endl;
+                cout << "Soldier: " << i+1  << " of Defending: " << target->get_armies() << endl;
                 int defendingKillChance = rand() % 10 + 1;
                 if (defendingKillChance > 3) {
                     attackingUnitsKilled++;
@@ -401,7 +411,7 @@ void Airlift::execute() {
             armies -= attackingUnitsKilled;
             target->set_armies(target->get_armies() - defendingUnitsKilled);
             if (armies > 0 && target->get_armies() == 0) {
-                cout << "I have conquered with an army of " << startingArmies << " by killing " << defendingUnitsKilled
+                cout << "\nI have conquered with an army of " << startingArmies << " by killing " << defendingUnitsKilled
                      << " of the " << startingDefendingArmies << " units and losing " << attackingUnitsKilled
                      << " units and being left with " << armies << " remaining!" << endl;
                 target->set_armies(armies);
@@ -418,15 +428,18 @@ void Airlift::execute() {
                 }
             }
             else {
-                cout << "They have defended with an army of " << startingDefendingArmies << " by killing "
+                cout << "\nThey have defended with an army of " << startingDefendingArmies << " by killing "
                      << attackingUnitsKilled << " of the " << startingArmies << " units and losing "
                      << defendingUnitsKilled << " units and being left with " << target->get_armies() << " remaining!"
                      << endl;
                 source->set_armies(source->get_armies() + armies);
             }
         }
-        else
+        else {
+            cout << "Before airlift: " << target->get_name() << " has " << target->get_armies() << " units" << endl;
             target->set_armies(target->get_armies() + armies);
+            cout << "After airlift: " << target->get_name() << " has " << target->get_armies() << " units" << endl;
+        }
     }
     else {
         cout << "This airlift order is not valid" << endl;
@@ -474,11 +487,13 @@ bool Negotiate::validate() {
 void Negotiate::execute() {
     cout << *this << endl;
     if (validate()){
+        cout << "Before negotiating friendly: " << player->isFriendly(target) << endl;
         player->addFriendlyPlayer(target);
         target->addFriendlyPlayer(player);
+        cout << "After negotiating friendly: " << player->isFriendly(target) << endl;
     }
     else {
-        cout << "Guess you read The Art of The Deal from yours truly, Donald T." << endl;
+        cout << "This negotiate order is invalid." << endl;
     }
     player->getOrdersList()->remove(this);
 }

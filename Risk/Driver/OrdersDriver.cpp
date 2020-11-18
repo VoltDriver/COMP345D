@@ -4,10 +4,11 @@
 #include "Common/GameEngine.h"
 
 int main(){
-//    GameEngine ge = *new GameEngine();
-//    ge.gameStart_Auto();
-//    ge.startupPhase();
-//    ge.executeOrdersPhase();
+    GameEngine ge = *new GameEngine();
+    ge.gameStart_Auto();
+    ge.startupPhase();
+    list<Player*> players = ge.getPlayers();
+    ge.executeOrdersPhase();
 // initializing an ID object
 //    ID id = *new ID();
 //    //creating an OrdersList

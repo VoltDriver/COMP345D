@@ -304,7 +304,7 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap, const list<Player*> gam
         }
         case 3:
             // End Turn
-            cout << "Ending turn." << endl;
+            cout << "Ending turn.\n" << endl;
             return false;
         default:
             throw exception("Invalid action chosen for a player's turn.");
