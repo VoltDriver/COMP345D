@@ -156,6 +156,12 @@ void Card::play(Player* player, Deck* deck, Map* map, const list<Player*>& gameP
                 }
             }
 
+            if(playerToNumberMap.empty())
+            {
+                cout << "You cannot play this card, because you are the only player left in the game." << endl;
+                return;
+            }
+
             // Generate a random input
             std::uniform_int_distribution<int> distribution(0,playerToNumberMap.size() - 1);
             int playerChoice = distribution(mt);
@@ -326,6 +332,12 @@ void Card::playHuman(Player* player, Deck* deck, Map* map, const list<Player*>& 
                     playerToNumberMap[counter] = p;
                     counter++;
                 }
+            }
+
+            if(playerToNumberMap.empty())
+            {
+                cout << "You cannot play this card, because you are the only player left in the game." << endl;
+                return;
             }
 
             // Read input and validate it.
