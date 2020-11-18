@@ -602,10 +602,13 @@ void GameEngine::executeOrdersPhase() {
                 // ... and still has orders...
                 if (player->orders->myList.empty())
                 {
-                    // Phase Observer notification
-                    this->phase = "Execute Orders Phase::Done";
-                    this->currentPlayer = player;
-                    Subject::notify();
+                    // Phase observer notified only if no player has won the game
+                    if (player->to_defend().size() != map->get_territories().size()) {
+                        // Phase Observer notification
+                        this->phase = "Execute Orders Phase::Done";
+                        this->currentPlayer = player;
+                        Subject::notify();
+                    }
 
                     // If it has no more orders... we add it to the number of players that are done.
                     playerOrdersStatus[player->name] = false;
@@ -613,25 +616,27 @@ void GameEngine::executeOrdersPhase() {
                 }
                 else
                 {
-                    // Phase Observer notification
-                    this->phase = "Execute Orders Phase::Execute";
-                    this->currentPlayer = player;
-                    Subject::notify();
-
-                    // ... it executes an order
-                    player->orders->myList[0]->execute();
-
-                    if (player->hasConquered()) {
-                        // Stats Observer notification
-                        this->phase = "Conquered";
-                        Subject::notify();
+                    // if current player owns all territories (won the game), remove order from list without executing.
+                    if (player->to_defend().size() == map->get_territories().size()) {
+                        player->orders->remove(player->orders->myList[0]);
                     }
-                }
-            }
+                    else {
+                        // Phase Observer notification
+                        this->phase = "Execute Orders Phase::Execute";
+                        this->currentPlayer = player;
+                        Subject::notify();
 
-            // if current player owns all territories (won the game), then leave the execute phase.
-            if (player->to_defend().size() == map->get_territories().size()) {
-                return;
+                        // ... it executes an order
+                        player->orders->myList[0]->execute();
+
+                        if (player->hasConquered()) {
+                            // Stats Observer notification
+                            this->phase = "Conquered";
+                            Subject::notify();
+                        }
+                    }
+
+                }
             }
 
         }
