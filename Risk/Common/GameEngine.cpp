@@ -421,7 +421,6 @@ void GameEngine::mainGameLoop() {
                 cout << (*current)->name << " has lost!";
                 eliminatedPlayers.push_back(*current);
                 players.erase(current);
-                it--;
             }
         }
     }
