@@ -30,6 +30,9 @@ Player::Player(string name) {
     this->name = name;
     this->reinforcementPool = 0;
     this->uncommittedReinforcementPool = 0;
+    this->conquered = false;
+    this->orderOfPlay = 0;
+    this->friendlyPlayers = vector<Player*>();
 }
 
 
@@ -268,7 +271,7 @@ bool Player::issueOrder(Deck *deck, Map* territoriesMap, const list<Player*> gam
             int destinationTerritoryChoice = distributionDestination(mt);
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
-            Advance* advanceOrder = new Advance(generator.setID());
+            Advance* advanceOrder = new Advance(generator.setID(), troopNumber, sourceTerritoryToNumberMap.at(sourceTerritoryChoice), destinationTerritoryToNumberMap.at(destinationTerritoryChoice), this);
             addOrder(advanceOrder);
 
             cout << "Advance order issued." << endl;
@@ -477,7 +480,7 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap, const list<Player*
                 cin >> destinationTerritoryChoice;
 
             // TODO: Create the order properly... And implement a constructor that makes them automatically.
-            Advance* advanceOrder = new Advance(0);
+            Advance* advanceOrder = new Advance(generator.setID(), troopNumber, sourceTerritoryToNumberMap.at(sourceTerritoryChoice), destinationTerritoryToNumberMap.at(destinationTerritoryChoice), this);
             addOrder(advanceOrder);
 
             cout << "Advance order issued." << endl;
@@ -556,7 +559,27 @@ vector<Territory *> Player::to_attack() {
 
 OrdersList* Player::getOrdersList() {
     return orders;
-};
+}
+
+void Player::addFriendlyPlayer(Player* player) {
+    friendlyPlayers.push_back(player);
+}
+
+bool Player::isFriendly(Player *player) {
+    for (int i = 0; i < friendlyPlayers.size(); i++){
+        if (player->name.compare(friendlyPlayers.at(i)->name) == 0)
+            return true;
+    }
+    return false;
+}
+
+bool Player::hasConquered() {
+    return conquered;
+}
+
+void Player::setConquered(bool conquered) {
+    this->conquered = conquered;
+}
 
 /* Overloads */
 //stream insertion operator
@@ -568,7 +591,7 @@ ostream &operator<<(std::ostream &strm, const Player &player) {
         strm << *territory;
     }
     strm << "Orders \n";
-    strm << player.orders;
+    strm << *player.orders;
     strm << "Cards \n";
     for (const Card& card: *player.hand->cards) {
         strm << card << "\n";

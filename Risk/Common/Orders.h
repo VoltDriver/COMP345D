@@ -14,31 +14,38 @@ class Territory;
 
 //Order class
 class Order {
-public:
+private:
     int id;
+protected:
+    int priority;
     string description;
+public:
     Order(int anID);
     Order(const Order &order2);
     Order& operator=(const Order& other);
     friend ostream& operator<<(ostream&, const Order&);
 
-    virtual Order* clone() const;
+    friend bool compare(Order* order, Order* other);
+    int getPriority();
+    virtual Order* clone() const = 0;
+    string getDescription();
     int getID();
-    virtual bool validate();
-    virtual void execute();
-
-
+    virtual bool validate() = 0;
+    virtual void execute() = 0;
 };
 
 //Deploy class extends Order class
 class Deploy: public Order{
+private:
     int armies;
     Territory* target;
     Player* player;
 public:
+
     Deploy(int anID, int armies, Territory* target, Player* player);
     Deploy(const Deploy &deploy2);
     Deploy& operator=(const Deploy& other);
+
 
     Deploy* clone() const;
     bool validate();
@@ -47,8 +54,13 @@ public:
 
 //Advance class extends Order class
 class Advance:public Order{
+private:
+    int armies;
+    Territory* source;
+    Territory* target;
+    Player* player;
 public:
-    Advance(int anID);
+    Advance(int anID, int armies, Territory* source, Territory* target, Player* player);
     Advance(const Advance &advance2);
     Advance& operator=(const Advance& other);
 
@@ -88,6 +100,7 @@ public:
 
 //Airlift class extends Order class
 class Airlift:public Order{
+private:
     int armies;
     Territory* source;
     Territory* target;
@@ -104,8 +117,11 @@ public:
 
 //Negotiate class extends Order class
 class Negotiate:public Order{
+private:
+    Player* player;
+    Player* target;
 public:
-    Negotiate(int anID);
+    Negotiate(int anID, Player* player, Player* target);
     Negotiate(const Negotiate &negotiate2);
     Negotiate& operator=(const Negotiate& other);
 
@@ -123,6 +139,7 @@ public:
     friend ostream& operator<<(ostream&, const OrdersList&);
     ~OrdersList();
 
+    void sort();
     int remove(Order *order);
     void move(Order *order, int pos);
     void add(Order *order);

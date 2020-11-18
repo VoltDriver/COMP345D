@@ -158,10 +158,10 @@ void Card::play(Player* player, Deck* deck, Map* map, const list<Player*>& gameP
 
             // Generate a random input
             std::uniform_int_distribution<int> distribution(0,playerToNumberMap.size() - 1);
-            int territoryChoice = distribution(mt);
+            int playerChoice = distribution(mt);
 
             // TODO: Create order properly.
-            auto* negotiateOrder = new class::Negotiate(id.setID());
+            auto* negotiateOrder = new class::Negotiate(id.setID(), player, playerToNumberMap.at(playerChoice));
             player->addOrder(negotiateOrder);
 
             cout << "Negotiate order issued." << endl;
@@ -339,7 +339,7 @@ void Card::playHuman(Player* player, Deck* deck, Map* map, const list<Player*>& 
                 cin >> playerChoice;
 
             // TODO: Create order properly.
-            auto* negotiateOrder = new class::Negotiate(id.setID());
+            auto* negotiateOrder = new class::Negotiate(id.setID(), player, playerToNumberMap.at(playerChoice));
             player->addOrder(negotiateOrder);
 
             cout << "Negotiate order issued." << endl;
