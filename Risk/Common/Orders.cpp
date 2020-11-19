@@ -168,8 +168,8 @@ bool Advance::validate() {
 void Advance::execute() {
     cout << *this << endl;
     if (validate()) {
+        source->set_armies(source->get_armies()-armies);
         if (target->getPlayer() == nullptr || target->getPlayerName().compare(player->name) != 0) {
-            source->set_armies(source->get_armies()-armies);
             int startingDefendingArmies = target->get_armies();
             int startingArmies = armies;
             int attackingUnitsKilled = 0;
@@ -302,7 +302,7 @@ class Bomb* Bomb::clone() const {
 
 //Constructor for Blockade class
 Blockade::Blockade(int anID, Territory* target, Player* player) : Order(anID){
-    description = "Blockade\n";
+    description = "Blockade";
     this->priority = 3;
     this->target = target;
     this->player = player;
@@ -342,7 +342,7 @@ bool Blockade::validate() {
 void Blockade::execute() {
     cout << *this << endl;
     if (validate()) {
-        cout << "Before blockade: " << target->get_name() << " has " << target->get_armies() << " units" << endl;
+        cout << "\nBefore blockade: " << target->get_name() << " has " << target->get_armies() << " units" << endl;
         target->set_armies(2*target->get_armies());
         player->removeTerritory(target);
         target->setPlayer(nullptr);
@@ -412,8 +412,8 @@ bool Airlift::validate() {
 void Airlift::execute() {
     cout << *this << endl;
     if (validate()) {
+        source->set_armies(source->get_armies()-armies);
         if (target->getPlayer() == nullptr || target->getPlayerName().compare(player->name) != 0) {
-            source->set_armies(source->get_armies()-armies);
             int startingDefendingArmies = target->get_armies();
             int startingArmies = armies;
             int attackingUnitsKilled = 0;
@@ -524,7 +524,7 @@ bool Negotiate::validate() {
 void Negotiate::execute() {
     cout << *this << endl;
     if (validate()){
-        cout << "Before negotiating friendly: " << player->isFriendly(target) << endl;
+        cout << "Before negotiating friendly: " << player->isFriendly(target)<< endl;
         player->addFriendlyPlayer(target);
         target->addFriendlyPlayer(player);
         cout << "After negotiating friendly: " << player->isFriendly(target) << "\n" << endl;

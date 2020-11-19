@@ -4,96 +4,95 @@
 #include "Common/GameEngine.h"
 
 int main(){
+
+    /**
+     * To execute both tests, enter 1 as map, 2 players, and y for both observers. This code does not simulate a full turn but rather
+     * orders that we have manually to show different cases. Hence no card is handed out in this driver but you will see that if a player
+     * conquers a territory, the bool conquered is flagged as true and players draw a card based on that in the actual turns. This is done in
+     * line 657 of GameEngine.cpp in the executeOrdersPhase()
+     */
+
+    /**
+     * Test without blockade to demonstrate friendly attack (Negotiate), the advance will not execute since it belongs to a friendly player
+     */
     GameEngine ge = *new GameEngine();
-    ge.gameStart_Auto();
+    ge.gameStart();
     ge.startupPhase();
     list<Player*> players = ge.getPlayers();
+    list<Player*>::iterator player2;
+    list<Player*>::iterator player1;
+    ID id = *new ID();
+
+    int armies = 9;
+
+    player1 = players.begin();
+    player2 = ++players.begin();
+
+    Deploy *deploy = new Deploy(id.setID(), 9, (*player1)->to_defend().at(0), *player1);
+    Advance *advance = new Advance(id.setID(), 10, (*player1)->to_defend().at(0), (*player1)->to_attack().at(0), *player1);
+    class Bomb *bomb = new class Bomb(id.setID(), (*player1)->to_defend().at(0), *player1);
+    class Airlift *airlift = new class Airlift(id.setID(), armies, (*player2)->to_defend().at(0), (*player1)->to_attack().at(0), *player1);
+    Negotiate *negotiate = new Negotiate(id.setID(), *player1, *player2);
+    (*player1)->getOrdersList()->add(advance);
+    (*player1)->getOrdersList()->add(bomb);
+    (*player1)->getOrdersList()->add(airlift);
+    (*player1)->getOrdersList()->add(negotiate);
+    (*player1)->getOrdersList()->add(deploy);
+
+    Deploy *deploy1 = new Deploy(id.setID(), 9, (*player2)->to_defend().at(0), *player2);
+    Advance *advance1 = new Advance(id.setID(), 8, (*player2)->to_defend().at(0), (*player2)->to_attack().at(0), *player2);
+    class Bomb *bomb1 = new class Bomb(id.setID(), (*player1)->to_defend().at(0), *player2);
+    class Blockade *blockade1 = new class Blockade(id.setID(), (*player1)->to_defend().at(0), *player2);
+    class Airlift *airlift1 = new class Airlift(id.setID(), 1, (*player2)->to_defend().at(0), (*player1)->to_attack().at(0), *player2);
+    Negotiate *negotiate1 = new Negotiate(id.setID(), *player2, *player1);
+    (*player2)->getOrdersList()->add(bomb1);
+    (*player2)->getOrdersList()->add(blockade1);
+    (*player2)->getOrdersList()->add(airlift1);
+    (*player2)->getOrdersList()->add(negotiate1);
+    (*player2)->getOrdersList()->add(deploy1);
+    (*player2)->getOrdersList()->add(advance1);
+
     ge.executeOrdersPhase();
-// initializing an ID object
-//    ID id = *new ID();
-//    //creating an OrdersList
-//    OrdersList *ol = new OrdersList();
-//    Player* player = new Player();
-//    Player* player2 = new Player();
-//    player2->name = "Tayyab";
-//    Territory* source = new Territory(0, "hello", 0);
-//    Territory* target = new Territory(1, "hilo", 0);
-//    player->setReinforcementPool(10);
-//    source->set_armies(10);
-//    target->set_armies(1);
-//    player->addTerritory(source);
-//    player2->addTerritory(target);
-//    int armies = 9;
-//
-//    //Creating an object of each class and assigning an ID to them using setID() which increments by one everytime it is called
-//    Deploy *deploy = new Deploy(id.setID(), armies, source, player);
-//    Advance *advance = new Advance(id.setID(), armies, source, target, player);
-//    class Bomb *bomb = new class Bomb(id.setID(), target, player);
-//    class Blockade *blockade = new class Blockade(id.setID(), target, player);
-//    cout << "hello" << endl;
-//    class Airlift *airlift = new class Airlift(id.setID(), armies, source, target, player);
-//    Negotiate *negotiate = new Negotiate(id.setID(), player, player2);
-//    Negotiate *negotiate1 = new Negotiate(id.setID(), player, player);
-//    negotiate->execute();
-//    cout << player->isFriendly(player2) << endl;
-//    cout << player2->isFriendly(player) << endl;
-//    negotiate1->execute();
-////    Adding each of the Orders created to the OrdersList
-//    ol->add(advance);
-//    ol->add(bomb);
-//    ol->add(blockade);
-//    ol->add(airlift);
-//    ol->add(negotiate);
-//    ol->add(deploy);
-//    ol->sort();
-//    for(Order* order: ol->myList)
-//        cout << order->getDescription() << endl;
-//
-//    //creating a copy of the OrdersList ol called ol2 using the assignment operator
-//    OrdersList ol2;
-//    ol2 = *ol;
-//
-//    //printing out the copied OrdersList
-//    cout << "Copied: \n" << ol2;
-//
-//
-//    //printing out the stream insertion operators for each of the Orders in ol2
-//    cout<< "Printing out the stream insertion operators for each Order type" << endl;
-//    cout << endl;
-//    for (int i = 0; i < ol2.myList.size(); i++){
-//        cout << target->get_armies() << endl;
-//        (ol2.myList.at(i))->execute();
-//        cout << target->get_armies() << endl;
-//        cout << endl;
-//    }
-//
-//    //printing out the Orders ids before using the move() method
-//    cout << "Before move(): \n" << ol2;
-//
-//
-//    //Moving the Order airlift of id 5 to position 3
-//    ol2.move(airlift,3);
-//
-//    //printing out the OrdersList after the use of the move() method
-//    cout << "After move(): \n" << ol2;
-//
-//
-//    //removing the Deploy Order of id 1 from the OrdersList
-//    ol2.remove(deploy);
-//
-//    //Printing out the OrdersList after the use of remove() method
-//    cout << "After remove(): \n" << ol2;
-//
-//
-//    //Using the copy constructor to create a copy of order called order2 which takes the same id=0 of order
-//    //showing that order and order2 indeed have the same id
-//
-//
-//    cout << endl;
-//
-//    //Using the assignment Operator to create a copy of deploy called deploy2 which takes the same id = 1 of deploy
-//    Deploy *deploy2 = new Deploy(id.setID(), armies, target, player);
-//    *deploy2 = *deploy;
-//
-//    //Showing that deploy has successfully been copied to deploy2
+
+    /**
+     * Test with blockade to show neutral player and to show that the territory has been conquered since it belongs to the neutral player
+     */
+
+    GameEngine ge1 = *new GameEngine();
+    ge1.gameStart();
+    ge1.startupPhase();
+    list<Player*> players1 = ge1.getPlayers();
+    list<Player*>::iterator player4;
+    list<Player*>::iterator player3;
+
+    player3 = players1.begin();
+    player4 = ++players1.begin();
+
+    Deploy *deploy2 = new Deploy(id.setID(), 9, (*player3)->to_defend().at(0), *player3);
+    Advance *advance2 = new Advance(id.setID(), 10, (*player3)->to_defend().at(0), (*player3)->to_attack().at(0), *player3);
+    class Bomb *bomb2 = new class Bomb(id.setID(), (*player3)->to_defend().at(0), *player3);
+    class Blockade *blockade2 = new class Blockade(id.setID(), (*player3)->to_defend().at(0), *player3);
+    class Airlift *airlift2 = new class Airlift(id.setID(), armies, (*player4)->to_defend().at(0), (*player3)->to_attack().at(0), *player3);
+    Negotiate *negotiate2 = new Negotiate(id.setID(), *player3, *player4);
+    (*player3)->getOrdersList()->add(advance2);
+    (*player3)->getOrdersList()->add(bomb2);
+    (*player3)->getOrdersList()->add(blockade2);
+    (*player3)->getOrdersList()->add(airlift2);
+    (*player3)->getOrdersList()->add(negotiate2);
+    (*player3)->getOrdersList()->add(deploy2);
+
+    Deploy *deploy3 = new Deploy(id.setID(), 9, (*player4)->to_defend().at(0), *player4);
+    Advance *advance3 = new Advance(id.setID(), 8, (*player4)->to_defend().at(0), (*player4)->to_attack().at(0), *player4);
+    class Bomb *bomb3 = new class Bomb(id.setID(), (*player3)->to_defend().at(0), *player4);
+    class Blockade *blockade3 = new class Blockade(id.setID(), (*player3)->to_defend().at(0), *player4);
+    class Airlift *airlift3 = new class Airlift(id.setID(), 1, (*player4)->to_defend().at(0), (*player3)->to_attack().at(0), *player4);
+    Negotiate *negotiate3 = new Negotiate(id.setID(), *player4, *player3);
+    (*player4)->getOrdersList()->add(bomb3);
+    (*player4)->getOrdersList()->add(blockade3);
+    (*player4)->getOrdersList()->add(airlift3);
+    (*player4)->getOrdersList()->add(negotiate3);
+    (*player4)->getOrdersList()->add(deploy3);
+    (*player4)->getOrdersList()->add(advance3);
+
+    ge1.executeOrdersPhase();
 }
