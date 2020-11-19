@@ -82,6 +82,7 @@ PhaseObserver::~PhaseObserver() {
     _gameEngine->remove(this);
 }
 
+// assignment operator
 PhaseObserver& PhaseObserver::operator=(const PhaseObserver& p) {
     this->_gameEngine = p._gameEngine;
     return *this;
@@ -95,6 +96,9 @@ void PhaseObserver::Update() {
     display();
 }
 
+/**
+ * Displays information of the different phases of the game.
+ */
 void PhaseObserver::display() {
     string phase = _gameEngine->getPhase();
     string player_name = _gameEngine->getCurrentPlayer()->name;
@@ -246,24 +250,40 @@ void StatsObserver::Update() {
     display();
 }
 
-void StatsObserver::displayWorldDomination(GameEngine* _gameEngine, float totalTerritories) {
+void StatsObserver::displayWorldDomination(GameEngine* _gameEngine) {
+    float totalTerritories = _gameEngine->getMap()->get_territories().size();
+
     cout << "Player Stats" << endl;
+
     for (Player* player : _gameEngine->getPlayers()) {
-        cout << player->name << ": owns " << player->to_defend().size() << " territories of " << totalTerritories << " | " << (player->to_defend().size()/totalTerritories)*100
-            << "% world domination" << endl;
+        float percentageOwned = (player->to_defend().size()/totalTerritories)*100;
+
+        cout << player->name << ": owns " << player->to_defend().size() << " territories of " << totalTerritories << " | "
+            << "Conquered: " << player->getNumOfConquers() << " | "
+            << "World domination progress: " << percentageOwned << "% [";
+
+        int progressBars = percentageOwned/10;
+        for (int i = 0; i < 10; i++) {
+            if (i < progressBars) cout << "#";
+            else cout << "-";
+        }
+        cout << "]" << endl;
+
     }
 }
 
+/**
+ * Displays world domination map when player gets conquered, player gets eliminated and when the game is over.
+ */
 void StatsObserver::display() {
     string phase = _gameEngine->getPhase();
     string player_name = _gameEngine->getCurrentPlayer()->name;
-    int totalTerritories = _gameEngine->getMap()->get_territories().size();
 
     /* Player was Conquered */
     if (phase == "Conquered") {
         cout << "********************************************************************************************" << endl;
         cout << player_name << " has won the battle!\n" << endl;
-        displayWorldDomination(_gameEngine, totalTerritories);
+        displayWorldDomination(_gameEngine);
         cout << "********************************************************************************************" << endl;
     }
 
@@ -271,7 +291,7 @@ void StatsObserver::display() {
     if (phase == "Eliminated") {
         cout << "\n********************************************************************************************" << endl;
         cout << player_name << " has been eliminated!\n" << endl;
-        displayWorldDomination(_gameEngine, totalTerritories);
+        displayWorldDomination(_gameEngine);
         cout << "********************************************************************************************\n" << endl;
     }
 
@@ -280,7 +300,7 @@ void StatsObserver::display() {
         cout << "\n********************************************************************************************" << endl;
         cout << "\t\t\t***** GAME OVER *****" << endl;
         cout << "\t\t\t    " << player_name << " wins!\n" << endl;
-        displayWorldDomination(_gameEngine, totalTerritories);
+        displayWorldDomination(_gameEngine);
         cout << "********************************************************************************************\n" << endl;
     }
 
