@@ -1,0 +1,17 @@
+[Map]
+image=world.bmp
+wrap=yes
+scroll=horizontal
+author=Your name
+warn=yes
+
+[Continents]
+North America=5
+Asia=7
+
+[Territories]
+Siam,270,139,Asia,China,India,Indonesia
+China,2,2,Asia,India
+Japan,322,104,Asia,Kamchatka,Mongolia
+Ural,241,68,Asia,Siberia,China,Afghanistan,Ukraine
+Canada,241,68,North America

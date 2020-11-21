@@ -1,4 +1,5 @@
 #pragma once
+#include <utility>
 #include <vector>
 #include <string>
 #include "Player.h"
@@ -27,7 +28,9 @@ private:
 public:
     /* Constructors */
     explicit Continent(string&);
+    explicit Continent(string& name, int army_bonus) : name(name), army_bonus(army_bonus) {};
     Continent(const Continent &obj);
+
 
     /* Accessors & Mutators */
     string get_name() const;
@@ -64,6 +67,7 @@ private:
 public:
     /* Constructors */
     Territory(int id, string name, int continent);
+    explicit Territory(int id, string name, Continent* continent) : id(id), name(name), continent(continent) {};
     explicit Territory(string&);
     Territory(const Territory &obj);
 

@@ -30,3 +30,6 @@ target_link_libraries(StartupPhaseDriver Common)
 
 add_executable(MainGameLoopDriver MainGameLoopDriver.cpp)
 target_link_libraries(MainGameLoopDriver Common)
+
+add_executable(FileReaderAdapterDriver FileReaderAdapterDriver.cpp)
+target_link_libraries(FileReaderAdapterDriver Common)

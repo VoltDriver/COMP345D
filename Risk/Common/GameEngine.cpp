@@ -146,8 +146,9 @@ void GameEngine::gameStart_Auto(string map, int player_count, bool phase_observe
     }
 
     // Load and set map
+    MapLoader loader = MapLoader();
     try {
-        this->map = MapLoader::parse(MAP_DIRECTORY + map, false);
+        this->map = loader.parse(MAP_DIRECTORY + map, false);
     } catch (const std::exception &e) {
         cout << e.what() << endl;
 
@@ -174,7 +175,7 @@ void GameEngine::gameStart_Auto(string map, int player_count, bool phase_observe
     cout << "The Deck contains " << this->deck->remainingCards() << " cards." << endl;
     cout << "> Running map validation..." << endl;
     // Validate map
-    auto temp_map = MapLoader::parse(MAP_DIRECTORY + map);
+    auto temp_map = loader.parse(MAP_DIRECTORY + map, true);
     delete temp_map;
     cout << "===================================" << endl;
 }
@@ -207,8 +208,9 @@ void GameEngine::gameStart(bool verbose) {
     }
 
     // Load and set map
+    MapLoader loader = MapLoader();
     try {
-        this->map = MapLoader::parse(MAP_DIRECTORY + map_filename, false);
+        this->map = loader.parse(MAP_DIRECTORY + map_filename, false);
     } catch (const std::exception &e) {
         verbose && (cout << "\n\n" << e.what() << endl);
         throw exception("Invalid map specified");
@@ -230,7 +232,7 @@ void GameEngine::gameStart(bool verbose) {
         cout << "\n\n=========== DEBUG OUTPUT ==========" << endl;
         // Validate map
         cout << "> Running map validation..." << endl;
-        auto temp_map = MapLoader::parse(MAP_DIRECTORY  + map_filename);
+        auto temp_map = loader.parse(MAP_DIRECTORY  + map_filename, true);
         delete temp_map;
 
         // Right number of players/Cards
