@@ -160,7 +160,10 @@ void GameEngine::gameStart_Auto(string map, int player_count, bool phase_observe
     for (int i = 1; i <= player_count; i++) {
         string name = "Player " + std::to_string(i);
 
+        // Player creation
         Player* player = new Player(name);
+        // Initial strategy being assigned
+        player->setStrategy(new DefaultPlayerStrategy());
 
         this->players.emplace_back(player);
     }
@@ -221,15 +224,10 @@ void GameEngine::gameStart(bool verbose) {
     for (int i = 1; i <= num_of_players; i++) {
         string name = "Player " + std::to_string(i);
 
+        // Player creation
         Player* player = new Player(name);
-
+        // Initial strategy being assigned
         player->setStrategy(new DefaultPlayerStrategy());
-
-//        // assigning each player a random strategy
-//        PlayerStrategy *strategy = setInitStrategy();
-//
-//        // Player construction
-//        Player* player = new Player(name, strategy);
 
         this->players.emplace_back(player);
     }
@@ -425,7 +423,7 @@ void GameEngine::mainGameLoop() {
             if ((*current)->territories.empty()) {
 
 
-                cout << (*current)->name << " has lost!" << endl;
+                cout << "\n" << (*current)->name << " has lost!" << endl;
                 eliminatedPlayers.push_back(*current);
                 players.erase(current);
 
