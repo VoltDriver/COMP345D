@@ -12,6 +12,7 @@ const int NUMBER_OF_POSSIBLE_ACTIONS = 4;
 
 // default constructor
 Player::Player() {
+    this->strategy = new DefaultPlayerStrategy();
     this->territories = vector<Territory*>();
     this->orders = new OrdersList();
     this->hand = new Hand();
@@ -26,6 +27,7 @@ Player::Player() {
 
 // parameterized constructors
 Player::Player(string name) {
+    this->strategy = new DefaultPlayerStrategy();
     this->territories = vector<Territory*>();
     this->orders = new OrdersList();
     this->hand = new Hand();
@@ -40,6 +42,7 @@ Player::Player(string name) {
 
 
 Player::Player(vector<Territory*> territories, OrdersList* orders, Hand* hand, int orderOfPlay) {
+    this->strategy = new DefaultPlayerStrategy();
     this->territories = territories;
     for (int i = 0; i < territories.size(); i++){
         territories.at(i)->setPlayer(this);
@@ -56,7 +59,11 @@ Player::Player(vector<Territory*> territories, OrdersList* orders, Hand* hand, i
 }
 
 Player::Player(vector<Territory*> territories, OrdersList* orders, Hand* hand, string name, int orderOfPlay) {
+    this->strategy = new DefaultPlayerStrategy();
     this->territories = territories;
+    for (int i = 0; i < territories.size(); i++){
+        territories.at(i)->setPlayer(this);
+    }
     this->orders = orders;
     this->hand = hand;
     this->name = name;
@@ -71,6 +78,9 @@ Player::Player(vector<Territory*> territories, OrdersList* orders, Hand* hand, s
 // copy constructor
 Player::Player(const Player &p) {
     this->territories = p.territories;
+    for (int i = 0; i < territories.size(); i++){
+        this->territories.at(i) = p.territories.at(i);
+    }
     this->orders = p.orders;
     this->hand = p.hand;
     this->name = p.name;
@@ -135,186 +145,193 @@ void Player::setUncommittedReinforcementPool(int newPool) {
  * Makes a player issue an order. This is meant to be used by an AI player.
  * @return True if an order was issued, false otherwise.
  */
-bool Player::issueOrder(Deck *deck, Map* territoriesMap, const list<Player*> gamePlayers) {
-    int actionNumber = -1;
-
-    // We use Mt19937 and random_device, which seeds the random generator with some random data from the system.
-    // There's other ways to do it, but this is efficient and does not require seeding with Time.
-    std::random_device randomDevice;
-    std::mt19937 mt(randomDevice());
-
-    // ID Generator
-    ID generator = ID();
-
-    // If some reinforcements are left in the pool of the player, he can only take deploy actions.
-    if(this->uncommittedReinforcementPool > 0)
-    {
-        cout << "You have reinforcements in your pool. Only deploy orders are allowed." << endl;
-        // Deploy
-        actionNumber = 0;
-    }
-    else
-    {
-        list<int> possibleActions = list<int>();
-
-        // Advance
-        bool advanceAllowed = false;
-        // Checking if an advance can be done
-        for(Territory* t : territories)
-        {
-            if(t->get_armies() > 0)
-                advanceAllowed = true;
-        }
-
-        if(advanceAllowed)
-            possibleActions.push_back(1);
-
-        // Play a card
-        if(this->hand->remainingCards() > 0)
-            possibleActions.push_back(2);
-
-        // End turn
-        possibleActions.push_back(3);
-
-        // Generate a random input
-        std::uniform_int_distribution<int> distribution(0, possibleActions.size() - 1);
-
-        auto iterator = std::next(possibleActions.begin(), distribution(mt));
-        actionNumber = *iterator ;
-    }
-
-    // Depending on which action was chosen, create an appropriate order.
-    switch(actionNumber)
-    {
-        case 0:
-        {
-            // Deploy
-
-            // Choose a territory
-            std::map<int, Territory*> territoryToNumberMap = map<int, Territory*>();
-            int counter = 0;
-            for(Territory* t : to_defend())
-            {
-                territoryToNumberMap[counter] = t;
-                counter++;
-            }
-
-            // Generate a random input
-            std::uniform_int_distribution<int> distribution(0,territoryToNumberMap.size() - 1);
-
-            int territoryChoice = distribution(mt);
-
-            // Generate a random input
-            std::uniform_int_distribution<int> distributionTroops(1,this->uncommittedReinforcementPool);
-            int troopNumber = distributionTroops(mt);
-
-            auto* deployOrder = new Deploy(generator.setID(), troopNumber, territoryToNumberMap[territoryChoice], this);
-            addOrder(deployOrder);
-
-            cout << "Deploy order issued." << endl;
-
-            // Adjust the uncommitted reinforcement pool.
-            this->uncommittedReinforcementPool -= troopNumber;
-            break;
-        }
-        case 1:
-        {
-            // Advance
-
-            // Choosing a starting point
-            std::map<int, Territory*> sourceTerritoryToNumberMap = map<int, Territory*>();
-            int counter = 0;
-
-            for(Territory* t : this->to_defend())
-            {
-                // We can choose a starting point only if it has any armies.
-                if(t->get_armies() > 0)
-                {
-                    sourceTerritoryToNumberMap[counter] = t;
-                    counter++;
-                }
-            }
-
-            // Generate a random input
-            std::uniform_int_distribution<int> distribution(0,sourceTerritoryToNumberMap.size() - 1);
-
-            int sourceTerritoryChoice = distribution(mt);
-
-            // Choosing randomly a number of troops to move
-            std::uniform_int_distribution<int> distributionTroops(1,sourceTerritoryToNumberMap[sourceTerritoryChoice]->get_armies());
-
-            int troopNumber = distributionTroops(mt);
-
-            // Choose a territory for the player to advance to.
-            std::map<int, Territory*> destinationTerritoryToNumberMap = map<int, Territory*>();
-            int counter2 = 0;
-
-            // Advancing to attack
-            for(Territory* t : this->to_attack())
-            {
-                if(sourceTerritoryToNumberMap[sourceTerritoryChoice]->borders_territory(t))
-                {
-                    destinationTerritoryToNumberMap[counter2] = t;
-                    counter2++;
-                }
-            }
-            // Advancing to defend
-            for(Territory* t : this->to_defend())
-            {
-                if(sourceTerritoryToNumberMap[sourceTerritoryChoice]->borders_territory(t))
-                {
-                    destinationTerritoryToNumberMap[counter2] = t;
-                    counter2++;
-                }
-            }
-
-            // Choosing randomly a territory to move to
-            std::uniform_int_distribution<int> distributionDestination(0,destinationTerritoryToNumberMap.size() - 1);
-
-            int destinationTerritoryChoice = distributionDestination(mt);
-
-            Advance* advanceOrder = new Advance(generator.setID(), troopNumber, sourceTerritoryToNumberMap.at(sourceTerritoryChoice), destinationTerritoryToNumberMap.at(destinationTerritoryChoice), this);
-            addOrder(advanceOrder);
-
-            cout << "Advance order issued." << endl;
-            break;
-        }
-        case 2:
-        {
-            // Play a card
-
-            int counter = 0;
-            std::map<int, Card*> cardsToNumbers = std::map<int, Card*>();
-
-            // Creating an iterator
-            std::list<Card>::iterator iterator;
-            // Iterating through the hand
-            for (iterator = hand->cards->begin(); iterator != hand->cards->end(); ++iterator) {
-                cardsToNumbers[counter] = &*iterator;
-                counter++;
-            }
-
-            // Generate a random input
-            std::uniform_int_distribution<int> distribution(0,hand->remainingCards() - 1);
-            int cardChoice = distribution(mt);
-
-            // Playing the card.
-            Card* card = cardsToNumbers[cardChoice];
-
-            cout << "Playing a card: " + card->toString() << endl;
-            card->play(this, deck, territoriesMap, gamePlayers);
-            break;
-        }
-        case 3:
-            // End Turn
-            cout << "Ending turn.\n" << endl;
-            return false;
-        default:
-            throw exception("Invalid action chosen for a player's turn.");
-    }
-
-    return true;
+ // new
+bool Player::issueOrder(Deck* deck, Map* territoriesMap, const list<Player*> gamePlayers) {
+    return this->strategy->issueOrder(this, deck, territoriesMap, gamePlayers);
 }
+
+
+// old (to delete)
+//bool Player::issueOrder(Deck *deck, Map* territoriesMap, const list<Player*> gamePlayers) {
+//    int actionNumber = -1;
+//
+//    // We use Mt19937 and random_device, which seeds the random generator with some random data from the system.
+//    // There's other ways to do it, but this is efficient and does not require seeding with Time.
+//    std::random_device randomDevice;
+//    std::mt19937 mt(randomDevice());
+//
+//    // ID Generator
+//    ID generator = ID();
+//
+//    // If some reinforcements are left in the pool of the player, he can only take deploy actions.
+//    if(this->uncommittedReinforcementPool > 0)
+//    {
+//        cout << "You have reinforcements in your pool. Only deploy orders are allowed." << endl;
+//        // Deploy
+//        actionNumber = 0;
+//    }
+//    else
+//    {
+//        list<int> possibleActions = list<int>();
+//
+//        // Advance
+//        bool advanceAllowed = false;
+//        // Checking if an advance can be done
+//        for(Territory* t : territories)
+//        {
+//            if(t->get_armies() > 0)
+//                advanceAllowed = true;
+//        }
+//
+//        if(advanceAllowed)
+//            possibleActions.push_back(1);
+//
+//        // Play a card
+//        if(this->hand->remainingCards() > 0)
+//            possibleActions.push_back(2);
+//
+//        // End turn
+//        possibleActions.push_back(3);
+//
+//        // Generate a random input
+//        std::uniform_int_distribution<int> distribution(0, possibleActions.size() - 1);
+//
+//        auto iterator = std::next(possibleActions.begin(), distribution(mt));
+//        actionNumber = *iterator ;
+//    }
+//
+//    // Depending on which action was chosen, create an appropriate order.
+//    switch(actionNumber)
+//    {
+//        case 0:
+//        {
+//            // Deploy
+//
+//            // Choose a territory
+//            std::map<int, Territory*> territoryToNumberMap = map<int, Territory*>();
+//            int counter = 0;
+//            for(Territory* t : to_defend())
+//            {
+//                territoryToNumberMap[counter] = t;
+//                counter++;
+//            }
+//
+//            // Generate a random input
+//            std::uniform_int_distribution<int> distribution(0,territoryToNumberMap.size() - 1);
+//
+//            int territoryChoice = distribution(mt);
+//
+//            // Generate a random input
+//            std::uniform_int_distribution<int> distributionTroops(1,this->uncommittedReinforcementPool);
+//            int troopNumber = distributionTroops(mt);
+//
+//            auto* deployOrder = new Deploy(generator.setID(), troopNumber, territoryToNumberMap[territoryChoice], this);
+//            addOrder(deployOrder);
+//
+//            cout << "Deploy order issued." << endl;
+//
+//            // Adjust the uncommitted reinforcement pool.
+//            this->uncommittedReinforcementPool -= troopNumber;
+//            break;
+//        }
+//        case 1:
+//        {
+//            // Advance
+//
+//            // Choosing a starting point
+//            std::map<int, Territory*> sourceTerritoryToNumberMap = map<int, Territory*>();
+//            int counter = 0;
+//
+//            for(Territory* t : this->to_defend())
+//            {
+//                // We can choose a starting point only if it has any armies.
+//                if(t->get_armies() > 0)
+//                {
+//                    sourceTerritoryToNumberMap[counter] = t;
+//                    counter++;
+//                }
+//            }
+//
+//            // Generate a random input
+//            std::uniform_int_distribution<int> distribution(0,sourceTerritoryToNumberMap.size() - 1);
+//
+//            int sourceTerritoryChoice = distribution(mt);
+//
+//            // Choosing randomly a number of troops to move
+//            std::uniform_int_distribution<int> distributionTroops(1,sourceTerritoryToNumberMap[sourceTerritoryChoice]->get_armies());
+//
+//            int troopNumber = distributionTroops(mt);
+//
+//            // Choose a territory for the player to advance to.
+//            std::map<int, Territory*> destinationTerritoryToNumberMap = map<int, Territory*>();
+//            int counter2 = 0;
+//
+//            // Advancing to attack
+//            for(Territory* t : this->to_attack())
+//            {
+//                if(sourceTerritoryToNumberMap[sourceTerritoryChoice]->borders_territory(t))
+//                {
+//                    destinationTerritoryToNumberMap[counter2] = t;
+//                    counter2++;
+//                }
+//            }
+//            // Advancing to defend
+//            for(Territory* t : this->to_defend())
+//            {
+//                if(sourceTerritoryToNumberMap[sourceTerritoryChoice]->borders_territory(t))
+//                {
+//                    destinationTerritoryToNumberMap[counter2] = t;
+//                    counter2++;
+//                }
+//            }
+//
+//            // Choosing randomly a territory to move to
+//            std::uniform_int_distribution<int> distributionDestination(0,destinationTerritoryToNumberMap.size() - 1);
+//
+//            int destinationTerritoryChoice = distributionDestination(mt);
+//
+//            Advance* advanceOrder = new Advance(generator.setID(), troopNumber, sourceTerritoryToNumberMap.at(sourceTerritoryChoice), destinationTerritoryToNumberMap.at(destinationTerritoryChoice), this);
+//            addOrder(advanceOrder);
+//
+//            cout << "Advance order issued." << endl;
+//            break;
+//        }
+//        case 2:
+//        {
+//            // Play a card
+//
+//            int counter = 0;
+//            std::map<int, Card*> cardsToNumbers = std::map<int, Card*>();
+//
+//            // Creating an iterator
+//            std::list<Card>::iterator iterator;
+//            // Iterating through the hand
+//            for (iterator = hand->cards->begin(); iterator != hand->cards->end(); ++iterator) {
+//                cardsToNumbers[counter] = &*iterator;
+//                counter++;
+//            }
+//
+//            // Generate a random input
+//            std::uniform_int_distribution<int> distribution(0,hand->remainingCards() - 1);
+//            int cardChoice = distribution(mt);
+//
+//            // Playing the card.
+//            Card* card = cardsToNumbers[cardChoice];
+//
+//            cout << "Playing a card: " + card->toString() << endl;
+//            card->play(this, deck, territoriesMap, gamePlayers);
+//            break;
+//        }
+//        case 3:
+//            // End Turn
+//            cout << "Ending turn.\n" << endl;
+//            return false;
+//        default:
+//            throw exception("Invalid action chosen for a player's turn.");
+//    }
+//
+//    return true;
+//}
 
 
 /**
@@ -527,35 +544,47 @@ bool Player::issueOrderHuman(Deck* deck, Map* territoriesMap, const list<Player*
     return true;
 }
 
+// old (will delete)
+//vector<Territory *> Player::to_defend() {
+//    return territories;
+//}
 
-vector<Territory *> Player::to_defend() {
-    return territories;
+// new. for a3
+vector<Territory*> Player::to_defend() {
+    return this->strategy->to_defend(this);
 }
 
-vector<Territory *> Player::to_attack() {
-    std::set<Territory*> territoriesToAttack = set<Territory*>();
+// old (will delete)
+//vector<Territory *> Player::to_attack() {
+//    std::set<Territory*> territoriesToAttack = set<Territory*>();
+//
+//    // Loop through all our territories...
+//    for(Territory* t : this->territories)
+//    {
+//        // ... finding every adjacent territories...
+//        for(Territory* adj : t->get_bordering_territory())
+//        {
+//            // ... that aren't ours.
+//            if(adj->getPlayer() != this)
+//                territoriesToAttack.emplace(adj);
+//        }
+//    }
+//
+//    // Transforming the set to a vector.
+//    vector<Territory*> setToVector = vector<Territory*>();
+//
+//    setToVector.reserve(territoriesToAttack.size());
+//    for(Territory* t : territoriesToAttack)
+//    {
+//        setToVector.push_back(t);
+//    }
+//    return setToVector;
+//}
 
-    // Loop through all our territories...
-    for(Territory* t : this->territories)
-    {
-        // ... finding every adjacent territories...
-        for(Territory* adj : t->get_bordering_territory())
-        {
-            // ... that aren't ours.
-            if(adj->getPlayer() != this)
-                territoriesToAttack.emplace(adj);
-        }
-    }
 
-    // Transforming the set to a vector.
-    vector<Territory*> setToVector = vector<Territory*>();
-
-    setToVector.reserve(territoriesToAttack.size());
-    for(Territory* t : territoriesToAttack)
-    {
-        setToVector.push_back(t);
-    }
-    return setToVector;
+// new. for a3
+vector<Territory*> Player::to_attack() {
+    return this->strategy->to_attack(this);
 }
 
 OrdersList* Player::getOrdersList() {
@@ -591,18 +620,25 @@ void Player::setConquered(bool conquered) {
 }
 
 
-//vector<Territory*> Player::execute_to_defend() {
+vector<Territory*> Player::getTerritories() {
+    return territories;
+}
+
+//vector<Territory*> Player::to_defend() {
 //    return this->strategy->to_defend();
 //}
 //
-//vector<Territory*> Player::execute_to_attack() {
+//vector<Territory*> Player::to_attack() {
 //    return this->strategy->to_attack();
 //}
 //
-//bool Player::execute_issueOrder(Deck* deck, Map* territoriesMap, const list<Player*> gamePlayers) {
+//bool Player::issueOrder(Deck* deck, Map* territoriesMap, const list<Player*> gamePlayers) {
 //    return this->strategy->issueOrder(deck, territoriesMap, gamePlayers);
 //}
 
+void Player::setStrategy(PlayerStrategy *newStrategy) {
+    this->strategy = newStrategy;
+}
 
 
 /* Overloads */

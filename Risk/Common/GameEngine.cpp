@@ -9,6 +9,7 @@
 #include <filesystem>
 #include <vector>
 #include <limits>
+#include <random>
 
 
 namespace fs = std::filesystem;
@@ -221,6 +222,14 @@ void GameEngine::gameStart(bool verbose) {
         string name = "Player " + std::to_string(i);
 
         Player* player = new Player(name);
+
+        player->setStrategy(new DefaultPlayerStrategy());
+
+//        // assigning each player a random strategy
+//        PlayerStrategy *strategy = setInitStrategy();
+//
+//        // Player construction
+//        Player* player = new Player(name, strategy);
 
         this->players.emplace_back(player);
     }
@@ -774,3 +783,30 @@ void GameEngine::main() {
     startupPhase();
     mainGameLoop();
 }
+
+
+//PlayerStrategy* GameEngine::setInitStrategy() {
+//    PlayerStrategy *initStrategy;
+//    std::random_device randomDevice;
+//    std::mt19937 mt(randomDevice());
+//
+//    std::uniform_int_distribution<int> distribution(1, 4);
+//    int strategyChoice = distribution(mt);
+//
+//    switch(strategyChoice) {
+//        case 1:
+//            initStrategy = new HumanPlayerStrategy();
+//            break;
+//        case 2:
+//            initStrategy = new AggressivePlayerStrategy();
+//            break;
+//        case 3:
+//            initStrategy = new BenevolentPlayerStrategy();
+//            break;
+//        case 4:
+//            initStrategy = new NeutralPlayerStrategy();
+//            break;
+//    }
+//
+//    return initStrategy;
+//}

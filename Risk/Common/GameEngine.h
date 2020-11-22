@@ -17,6 +17,7 @@ class Player;
 class Deck;
 class Map;
 class Continent;
+class PlayerStrategy;
 
 
 class ContinentOwnership_DataObject {
@@ -78,11 +79,10 @@ class GameEngine: public Subject {
 
 
         Player* getCurrentPlayer();
-
         Map* getMap();
-
         string getPhase();
-
         int getTurnCounter();
+
+        PlayerStrategy* setInitStrategy();
 
 };

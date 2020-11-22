@@ -12,7 +12,7 @@ class Hand;
 class Order;
 class Deck;
 class OrdersList;
-class PlayerStrategy;
+
 
 using namespace std;
 
@@ -21,6 +21,7 @@ using namespace std;
  */
 class Player {
 private:
+    PlayerStrategy *strategy;
     vector<Territory*> territories;
     OrdersList* orders;
     int reinforcementPool;
@@ -30,7 +31,6 @@ private:
     vector<Player*> friendlyPlayers;
     int orderOfPlay;
     int numOfConquers;
-    PlayerStrategy *strategy;
 
 public:
     string name;
@@ -38,7 +38,7 @@ public:
 
     /* Constructors */
     Player();
-    Player(string name);
+    explicit Player(string name);
     explicit Player(vector<Territory*> territories, OrdersList* orders, Hand* hand, int orderOfPlay);
     explicit Player(vector<Territory*> territories, OrdersList* orders, Hand* hand, string name, int orderOfPlay);
     Player(const Player &p);
@@ -53,9 +53,9 @@ public:
     void setUncommittedReinforcementPool(int newPool);
     vector<Territory*> to_defend();
     vector<Territory*> to_attack();
-    void addOrder(Order* order);
     bool issueOrder(Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers);
     bool issueOrderHuman(Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers);
+    void addOrder(Order* order);
     void addFriendlyPlayer(Player* player);
     void addTerritory(Territory* territory);
     void removeTerritory(Territory* territory);
@@ -65,11 +65,8 @@ public:
     OrdersList* getOrdersList();
     Hand* getHand();
     int getNumOfConquers();
-
-    // these functions are to execute the functions defined in strategy
-//    vector<Territory*> execute_to_defend();
-//    vector<Territory*> execute_to_attack();
-//    bool execute_issueOrder(Deck* deck, Map* territoriesMap, const list<Player*> gamePlayers);
+    vector<Territory*> getTerritories();
+    void setStrategy(PlayerStrategy *newStrategy);
 
     /* Overloaders */
     Player& operator=(const Player &p);

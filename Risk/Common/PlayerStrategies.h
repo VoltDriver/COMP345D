@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "Cards.h"
 
+class Player;
 
 /**
  * PlayerStrategy is an abstract class. All concrete Strategy classes that inherit this class must
@@ -10,9 +11,26 @@
  */
 class PlayerStrategy {
 public:
-    virtual vector<Territory*> to_defend() = 0;
-    virtual vector<Territory*> to_attack() = 0;
-    virtual bool issueOrder(Deck* deck, Map* territoriesMap, const list<Player*> gamePlayers) = 0;
+    PlayerStrategy();
+    virtual ~PlayerStrategy();
+
+    virtual vector<Territory*> to_defend(Player *player) = 0;
+    virtual vector<Territory*> to_attack(Player *player) = 0;
+    virtual bool issueOrder(Player *player, Deck* deck, Map* territoriesMap, const list<Player*> gamePlayers) = 0;
+};
+
+
+/**
+ * Default Strategy (the original AI from A2)
+ */
+class DefaultPlayerStrategy : public PlayerStrategy {
+public:
+    DefaultPlayerStrategy();
+    ~DefaultPlayerStrategy();
+
+    vector<Territory*> to_defend(Player *player);
+    vector<Territory*> to_attack(Player *player);
+    bool issueOrder(Player *player, Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers);
 };
 
 
@@ -21,6 +39,9 @@ public:
  */
 class HumanPlayerStrategy : public PlayerStrategy {
 public:
+    HumanPlayerStrategy();
+    ~HumanPlayerStrategy();
+
     vector<Territory*> to_defend();
     vector<Territory*> to_attack();
     bool issueOrder(Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers);
@@ -34,6 +55,9 @@ public:
  */
 class AggressivePlayerStrategy : public PlayerStrategy {
 public:
+    AggressivePlayerStrategy();
+    ~AggressivePlayerStrategy();
+
     vector<Territory*> to_defend();
     vector<Territory*> to_attack();
     bool issueOrder(Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers);
@@ -47,6 +71,9 @@ public:
  */
 class BenevolentPlayerStrategy : public PlayerStrategy {
 public:
+    BenevolentPlayerStrategy();
+    ~BenevolentPlayerStrategy();
+
     vector<Territory*> to_defend();
     vector<Territory*> to_attack();
     bool issueOrder(Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers);
@@ -58,6 +85,9 @@ public:
  */
 class NeutralPlayerStrategy : public PlayerStrategy {
 public:
+    NeutralPlayerStrategy();
+    ~NeutralPlayerStrategy();
+
     vector<Territory*> to_defend();
     vector<Territory*> to_attack();
     bool issueOrder(Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers);

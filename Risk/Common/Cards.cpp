@@ -5,7 +5,6 @@
 #include <list>
 #include <random>
 #include "Cards.h"
-#include "Player.h"
 
 // Card
 
