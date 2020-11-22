@@ -33,3 +33,6 @@ target_link_libraries(MainGameLoopDriver Common)
 
 add_executable(FileReaderAdapterDriver FileReaderAdapterDriver.cpp)
 target_link_libraries(FileReaderAdapterDriver Common)
+
+add_executable(PlayerStrategiesDriver PlayerStrategiesDriver.cpp)
+target_link_libraries(PlayerStrategiesDriver Common)

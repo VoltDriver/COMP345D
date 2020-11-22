@@ -6,7 +6,8 @@ set(SOURCES
         Util.cpp
         Orders.cpp
         GameEngine.cpp
-        GameObservers.cpp)
+        GameObservers.cpp
+        PlayerStrategies.cpp)
 set(HEADERS
         Cards.h
         Map.h
@@ -15,7 +16,8 @@ set(HEADERS
         Util.h
         Orders.h
         GameEngine.h
-        GameObservers.h)
+        GameObservers.h
+        PlayerStrategies.h)
 
 add_library(Common STATIC ${SOURCES} ${HEADERS})
 add_executable(CommonLib Main.cpp)
