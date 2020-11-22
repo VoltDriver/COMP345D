@@ -1,7 +1,8 @@
 #pragma once
 
-
 #include "Map.h"
+#include "Cards.h"
+
 
 /**
  * PlayerStrategy is an abstract class. All concrete Strategy classes that inherit this class must
@@ -11,7 +12,7 @@ class PlayerStrategy {
 public:
     virtual vector<Territory*> to_defend() = 0;
     virtual vector<Territory*> to_attack() = 0;
-    virtual bool issueOrder(Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers) = 0;
+    virtual bool issueOrder(Deck* deck, Map* territoriesMap, const list<Player*> gamePlayers) = 0;
 };
 
 

@@ -5,12 +5,14 @@
 #include "Map.h"
 #include "Orders.h"
 #include "GameEngine.h"
+#include "PlayerStrategies.h"
 
 class Card;
 class Hand;
 class Order;
 class Deck;
 class OrdersList;
+class PlayerStrategy;
 
 using namespace std;
 
@@ -28,6 +30,7 @@ private:
     vector<Player*> friendlyPlayers;
     int orderOfPlay;
     int numOfConquers;
+    PlayerStrategy *strategy;
 
 public:
     string name;
@@ -61,6 +64,11 @@ public:
     bool isFriendly(Player* player);
     OrdersList* getOrdersList();
     int getNumOfConquers();
+
+    // these functions are to execute the functions defined in strategy
+//    vector<Territory*> execute_to_defend();
+//    vector<Territory*> execute_to_attack();
+//    bool execute_issueOrder(Deck* deck, Map* territoriesMap, const list<Player*> gamePlayers);
 
     /* Overloaders */
     Player& operator=(const Player &p);

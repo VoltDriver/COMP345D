@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Cards.h"
 #include "Orders.h"
+#include "Map.h"
 
 // Number of Possible actions the user can take
 const int NUMBER_OF_POSSIBLE_ACTIONS = 4;
@@ -584,6 +585,21 @@ bool Player::hasConquered() {
 void Player::setConquered(bool conquered) {
     this->conquered = conquered;
 }
+
+
+//vector<Territory*> Player::execute_to_defend() {
+//    return this->strategy->to_defend();
+//}
+//
+//vector<Territory*> Player::execute_to_attack() {
+//    return this->strategy->to_attack();
+//}
+//
+//bool Player::execute_issueOrder(Deck* deck, Map* territoriesMap, const list<Player*> gamePlayers) {
+//    return this->strategy->issueOrder(deck, territoriesMap, gamePlayers);
+//}
+
+
 
 /* Overloads */
 //stream insertion operator
