@@ -562,6 +562,10 @@ OrdersList* Player::getOrdersList() {
     return orders;
 }
 
+Hand* Player::getHand() {
+    return hand;
+}
+
 int Player::getNumOfConquers() {
     return numOfConquers;
 }

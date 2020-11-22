@@ -63,6 +63,7 @@ public:
     void setConquered(bool conquered);
     bool isFriendly(Player* player);
     OrdersList* getOrdersList();
+    Hand* getHand();
     int getNumOfConquers();
 
     // these functions are to execute the functions defined in strategy

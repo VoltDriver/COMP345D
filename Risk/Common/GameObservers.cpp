@@ -147,11 +147,17 @@ void PhaseObserver::display() {
         vector<Territory*> terrToDef = _gameEngine->getCurrentPlayer()->to_defend();
         vector<Territory*> terrToAtk = _gameEngine->getCurrentPlayer()->to_attack();
         int armiesToDeploy = _gameEngine->getCurrentPlayer()->getUncommittedReinforcementPool();
+        string cardsInHand = *_gameEngine->getCurrentPlayer()->getHand()->listAllCards();
 
         cout << "\n--------------------------------------------------------------------------------------------------" << endl;
         cout << "-" << player_name << " Pre-Issue Order Phase-\n" << endl;
 
         cout << "Armies left to deploy: " << armiesToDeploy << "\n" << endl;
+
+        if (cardsInHand != "") {
+            cout << "Cards in hand: " << cardsInHand << "\n" << endl;
+        }
+
         cout << "Territories owned: " << endl;
         for (int i = 0; i < terrToDef.size(); i++) {
             cout << *terrToDef[i];
@@ -160,6 +166,7 @@ void PhaseObserver::display() {
         for (int i = 0; i < terrToAtk.size(); i++) {
             cout << *terrToAtk[i];
         }
+
         cout << "--------------------------------------------------------------------------------------------------\n" << endl;
     }
 
