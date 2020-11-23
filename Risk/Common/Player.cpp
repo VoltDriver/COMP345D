@@ -90,6 +90,7 @@ Player::Player(const Player &p) {
     this->conquered = p.conquered;
     this->orderOfPlay = p.orderOfPlay;
     this->friendlyPlayers = p.friendlyPlayers;
+    this->strategy = p.strategy;
 }
 
 
@@ -100,6 +101,7 @@ Player::~Player() {
         delete player;
     }
     delete hand;
+    delete strategy;
 }
 
 
@@ -670,12 +672,15 @@ Player& Player::operator=(const Player& p) {
         delete player;
     }
     delete hand;
+    delete strategy;
+
     this->territories = p.territories;
     this->orders = p.orders;
     this->hand = p.hand;
     this->conquered = p.conquered;
     this->orderOfPlay = p.orderOfPlay;
     this->friendlyPlayers = p.friendlyPlayers;
+    this->strategy = p.strategy;
 
     return *this;
 }
