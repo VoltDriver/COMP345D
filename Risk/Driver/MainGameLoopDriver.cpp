@@ -76,9 +76,14 @@ int main() {
     // 6) A player that does not control any territory is removed from the game.
     // 7) The game ends when a single player  controls  all  the  territories.
     GameEngine engineHuman = GameEngine();
-    engineHuman.hasHumanPlayers = true;
+
     engineHuman.gameStart();
     engineHuman.startupPhase();
+
+    for(Player* p : engineHuman.getPlayers())
+    {
+        p->setStrategy(new HumanPlayerStrategy());
+    }
 
     Card c = Card(Bomb);
 

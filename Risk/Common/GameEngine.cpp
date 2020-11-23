@@ -557,16 +557,7 @@ void GameEngine::issueOrdersPhase() {
                 Subject::notify();
 
                 // ... it is prompted to play.
-
-                // Checking if we have human players.
-                if(hasHumanPlayers)
-                {
-                    playerTurns[player->name] = player->issueOrderHuman(this->deck, this->map, gamePlayers);
-                }
-                else
-                {
-                    playerTurns[player->name] = player->issueOrder(this->deck, this->map, gamePlayers);
-                }
+                playerTurns[player->name] = player->issueOrder(this->deck, this->map, gamePlayers);
 
                 // If it decided to end it's turn just now...
                 if (!playerTurns[player->name]) {
@@ -583,7 +574,6 @@ void GameEngine::issueOrdersPhase() {
                     this->phase = "Issue Orders Phase::Post-issuance";
                     Subject::notify();
                 }
-
             }
         }
     }
@@ -724,7 +714,6 @@ GameEngine::GameEngine() {
     deck = new Deck();
     phase_observer_flag = true;
     stat_observer_flag = true;
-    hasHumanPlayers = false;
     phaseView = nullptr;
     statsView = nullptr;
 }
@@ -739,7 +728,6 @@ GameEngine::GameEngine(const GameEngine &g) {
     deck = g.deck;
     phase_observer_flag = g.phase_observer_flag;
     stat_observer_flag = g.stat_observer_flag;
-    hasHumanPlayers = g.hasHumanPlayers;
 }
 
 GameEngine::~GameEngine() {

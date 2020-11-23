@@ -55,7 +55,6 @@ class GameEngine: public Subject {
     public:
         PhaseObserver *phaseView;
         StatsObserver *statsView;
-        bool hasHumanPlayers;
 
         // Constants
         static const int MINIMUM_REINFORCEMENT;

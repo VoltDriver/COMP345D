@@ -42,9 +42,9 @@ public:
     HumanPlayerStrategy();
     ~HumanPlayerStrategy();
 
-    vector<Territory*> to_defend();
-    vector<Territory*> to_attack();
-    bool issueOrder(Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers);
+    vector<Territory*> to_defend(Player *player);
+    vector<Territory*> to_attack(Player *player);
+    bool issueOrder(Player *player, Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers);
 };
 
 
@@ -58,9 +58,9 @@ public:
     AggressivePlayerStrategy();
     ~AggressivePlayerStrategy();
 
-    vector<Territory*> to_defend();
-    vector<Territory*> to_attack();
-    bool issueOrder(Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers);
+    vector<Territory*> to_defend(Player *player);
+    vector<Territory*> to_attack(Player *player);
+    bool issueOrder(Player *player, Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers);
 };
 
 
@@ -74,9 +74,9 @@ public:
     BenevolentPlayerStrategy();
     ~BenevolentPlayerStrategy();
 
-    vector<Territory*> to_defend();
-    vector<Territory*> to_attack();
-    bool issueOrder(Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers);
+    vector<Territory*> to_defend(Player *player);
+    vector<Territory*> to_attack(Player *player);
+    bool issueOrder(Player *player, Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers);
 };
 
 
@@ -88,7 +88,7 @@ public:
     NeutralPlayerStrategy();
     ~NeutralPlayerStrategy();
 
-    vector<Territory*> to_defend();
-    vector<Territory*> to_attack();
-    bool issueOrder(Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers);
+    vector<Territory*> to_defend(Player *player);
+    vector<Territory*> to_attack(Player *player);
+    bool issueOrder(Player *player, Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers);
 };
