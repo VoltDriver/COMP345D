@@ -307,7 +307,7 @@ void StatsObserver::display() {
     /* A Player has won */
     if (phase == "Game Over") {
         cout << "\n**************************************************************************************************" << endl;
-        cout << "\t\t\t\t***** GAME OVER *****" << endl;
+        cout << "\t\t\t\t\t ***** GAME OVER *****" << endl;
         cout << "\t\t\t\t    " << player_name << " (" << player_strategy << ") wins!\n" << endl;
         displayWorldDomination(_gameEngine);
         cout << "**************************************************************************************************\n" << endl;
