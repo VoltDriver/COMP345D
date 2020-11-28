@@ -10,12 +10,22 @@
 
 /* PlayerStrategy class */
 PlayerStrategy::PlayerStrategy() {}
-PlayerStrategy::~PlayerStrategy() {}
+PlayerStrategy::~PlayerStrategy() {}\
+
+void PlayerStrategy::setStrategyName(string name) {
+    strategy_name = name;
+}
+
+string PlayerStrategy::getStrategyName() {
+    return strategy_name;
+}
 
 
 
 /* DefaultPlayerStrategy class */
-DefaultPlayerStrategy::DefaultPlayerStrategy() {}
+DefaultPlayerStrategy::DefaultPlayerStrategy() {
+    setStrategyName("Default");
+}
 DefaultPlayerStrategy::~DefaultPlayerStrategy() {}
 
 vector<Territory*> DefaultPlayerStrategy::to_defend(Player *player) {
@@ -232,7 +242,9 @@ bool DefaultPlayerStrategy::issueOrder(Player *player, Deck* deck, Map* territor
 
 
 /* HumanPlayerStrategy class */
-HumanPlayerStrategy::HumanPlayerStrategy() {}
+HumanPlayerStrategy::HumanPlayerStrategy() {
+    setStrategyName("Human");
+}
 HumanPlayerStrategy::~HumanPlayerStrategy() {}
 vector<Territory*> HumanPlayerStrategy::to_defend(Player* player) {
     return player->getTerritories();
@@ -474,7 +486,9 @@ bool HumanPlayerStrategy::issueOrder(Player *player, Deck* deck, Map* territorie
 
 
 /* AggressivePlayerStrategy class */
-//AggressivePlayerStrategy::AggressivePlayerStrategy() {}
+//AggressivePlayerStrategy::AggressivePlayerStrategy() {
+//    setStrategyName("Aggressive");
+//}
 //AggressivePlayerStrategy::~AggressivePlayerStrategy() {}
 //vector<Territory*> AggressivePlayerStrategy::to_defend(Player *player) {
 //
@@ -491,7 +505,9 @@ bool HumanPlayerStrategy::issueOrder(Player *player, Deck* deck, Map* territorie
 
 
 /* BenevolentPlayerStrategy class */
-//BenevolentPlayerStrategy::BenevolentPlayerStrategy() {}
+//BenevolentPlayerStrategy::BenevolentPlayerStrategy() {
+//    setStrategyName("Benevolent");
+//}
 //BenevolentPlayerStrategy::~BenevolentPlayerStrategy() {}
 //vector<Territory*> BenevolentPlayerStrategy::to_defend(Player *player) {
 //
@@ -508,17 +524,44 @@ bool HumanPlayerStrategy::issueOrder(Player *player, Deck* deck, Map* territorie
 
 
 /* NeutralPlayerStrategy class */
-//NeutralPlayerStrategy::NeutralPlayerStrategy() {}
-//NeutralPlayerStrategy::~NeutralPlayerStrategy() {}
-//vector<Territory*> NeutralPlayerStrategy::to_defend(Player *player) {
-//
-//}
-//
-//vector<Territory*> NeutralPlayerStrategy::to_attack(Player *player) {
-//
-//}
-//
-//bool NeutralPlayerStrategy::issueOrder(Player *player, Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers) {
-//
-//}
+NeutralPlayerStrategy::NeutralPlayerStrategy() {
+    setStrategyName("Neutral");
+}
+NeutralPlayerStrategy::~NeutralPlayerStrategy() {}
+
+vector<Territory*> NeutralPlayerStrategy::to_defend(Player *player) {
+    return player->getTerritories();
+}
+
+vector<Territory*> NeutralPlayerStrategy::to_attack(Player *player) {
+    std::set<Territory*> territoriesToAttack = set<Territory*>();
+
+    // Loop through all our territories...
+    for(Territory* t : player->getTerritories())
+    {
+        // ... finding every adjacent territories...
+        for(Territory* adj : t->get_bordering_territory())
+        {
+            // ... that aren't ours.
+            if(adj->getPlayer() != player)
+                territoriesToAttack.emplace(adj);
+        }
+    }
+
+    // Transforming the set to a vector.
+    vector<Territory*> setToVector = vector<Territory*>();
+
+    setToVector.reserve(territoriesToAttack.size());
+    for(Territory* t : territoriesToAttack)
+    {
+        setToVector.push_back(t);
+    }
+    return setToVector;
+}
+
+bool NeutralPlayerStrategy::issueOrder(Player *player, Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers) {
+    cout << "Ending turn.\n" << endl;
+    return false;
+}
+
 

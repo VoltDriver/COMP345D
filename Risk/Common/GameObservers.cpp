@@ -102,6 +102,7 @@ void PhaseObserver::Update() {
 void PhaseObserver::display() {
     string phase = _gameEngine->getPhase();
     string player_name = _gameEngine->getCurrentPlayer()->name;
+    string player_strategy = _gameEngine->getCurrentPlayer()->getPlayerStrategy()->getStrategyName();
 
     /* Startup Phase */
     if (phase == "Startup Phase") {
@@ -150,7 +151,7 @@ void PhaseObserver::display() {
         string cardsInHand = *_gameEngine->getCurrentPlayer()->getHand()->listAllCards();
 
         cout << "\n--------------------------------------------------------------------------------------------------" << endl;
-        cout << "-" << player_name << " Pre-Issue Order Phase-\n" << endl;
+        cout << "-" << player_name << " (" << player_strategy << ") Pre-Issue Order Phase-\n" << endl;
 
         cout << "Armies left to deploy: " << armiesToDeploy << "\n" << endl;
 
@@ -174,7 +175,7 @@ void PhaseObserver::display() {
         string order = _gameEngine->getCurrentPlayer()->getOrdersList()->myList.back()->getDescription();
 
         cout << "\n--------------------------------------------------------------------------------------------------" << endl;
-        cout << "-" << player_name << " Post-Issue Order Phase-\n" << endl;
+        cout << "-" << player_name << " (" << player_strategy << ") Post-Issue Order Phase-\n" << endl;
 
         cout << player_name << " issued " << order << " order\n" <<endl;
         cout << "Current list of orders issued: " << endl;
@@ -187,7 +188,7 @@ void PhaseObserver::display() {
 
     if (phase == "Issue Orders Phase::Turn end") {
         cout << "--------------------------------------------------------------------------------------------------" << endl;
-        cout << player_name << " has no more orders to issue." << endl;
+        cout << player_name << " (" << player_strategy << ") has no more orders to issue." << endl;
         cout << "--------------------------------------------------------------------------------------------------" << endl;
     }
 
@@ -203,7 +204,7 @@ void PhaseObserver::display() {
         string order = _gameEngine->getCurrentPlayer()->getOrdersList()->myList[0]->getDescription();
 
         cout << "\n--------------------------------------------------------------------------------------------------" << endl;
-        cout << "-" << player_name << " Execute Order Phase-\n" << endl;
+        cout << "-" << player_name << " (" << player_strategy << ") Execute Order Phase-\n" << endl;
         cout << "Remaining orders to execute: " << endl;
         for (Order* order : _gameEngine->getCurrentPlayer()->getOrdersList()->myList) {
             cout << "-" << order->getDescription() << endl;
@@ -214,7 +215,7 @@ void PhaseObserver::display() {
 
     if (phase == "Execute Orders Phase::Done") {
         cout << "\n--------------------------------------------------------------------------------------------------" << endl;
-        cout << player_name << " is done executing orders." << endl;
+        cout << player_name << " (" << player_strategy << ") is done executing orders." << endl;
         cout << "--------------------------------------------------------------------------------------------------" << endl;
     }
 
@@ -285,11 +286,12 @@ void StatsObserver::displayWorldDomination(GameEngine* _gameEngine) {
 void StatsObserver::display() {
     string phase = _gameEngine->getPhase();
     string player_name = _gameEngine->getCurrentPlayer()->name;
+    string player_strategy = _gameEngine->getCurrentPlayer()->getPlayerStrategy()->getStrategyName();
 
     /* Player was Conquered */
     if (phase == "Conquered") {
         cout << "**************************************************************************************************" << endl;
-        cout << player_name << " has won the battle!\n" << endl;
+        cout << player_name << " (" << player_strategy << ") has won the battle!\n" << endl;
         displayWorldDomination(_gameEngine);
         cout << "**************************************************************************************************" << endl;
     }
@@ -297,7 +299,7 @@ void StatsObserver::display() {
     /* A Player was Eliminated */
     if (phase == "Eliminated") {
         cout << "\n**************************************************************************************************" << endl;
-        cout << player_name << " has been eliminated!\n" << endl;
+        cout << player_name << " (" << player_strategy << ") has been eliminated!\n" << endl;
         displayWorldDomination(_gameEngine);
         cout << "**************************************************************************************************\n" << endl;
     }
@@ -306,7 +308,7 @@ void StatsObserver::display() {
     if (phase == "Game Over") {
         cout << "\n**************************************************************************************************" << endl;
         cout << "\t\t\t\t***** GAME OVER *****" << endl;
-        cout << "\t\t\t\t    " << player_name << " wins!\n" << endl;
+        cout << "\t\t\t\t    " << player_name << " (" << player_strategy << ") wins!\n" << endl;
         displayWorldDomination(_gameEngine);
         cout << "**************************************************************************************************\n" << endl;
     }

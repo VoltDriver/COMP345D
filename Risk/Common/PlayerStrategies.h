@@ -10,6 +10,8 @@ class Player;
  * provide function definition for issueOrder(), toAttack() and toDefend().
  */
 class PlayerStrategy {
+private:
+    string strategy_name;
 public:
     PlayerStrategy();
     virtual ~PlayerStrategy();
@@ -17,6 +19,9 @@ public:
     virtual vector<Territory*> to_defend(Player *player) = 0;
     virtual vector<Territory*> to_attack(Player *player) = 0;
     virtual bool issueOrder(Player *player, Deck* deck, Map* territoriesMap, const list<Player*> gamePlayers) = 0;
+
+    void setStrategyName(string name);
+    string getStrategyName();
 };
 
 

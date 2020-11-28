@@ -67,6 +67,7 @@ public:
     int getNumOfConquers();
     vector<Territory*> getTerritories();
     void setStrategy(PlayerStrategy *newStrategy);
+    PlayerStrategy* getPlayerStrategy();
 
     /* Overloaders */
     Player& operator=(const Player &p);

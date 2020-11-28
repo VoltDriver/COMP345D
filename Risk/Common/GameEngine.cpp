@@ -163,7 +163,7 @@ void GameEngine::gameStart_Auto(string map, int player_count, bool phase_observe
         // Player creation
         Player* player = new Player(name);
         // Initial strategy being assigned
-        player->setStrategy(new DefaultPlayerStrategy());
+        player->setStrategy(new DefaultPlayerStrategy()); // use setInitStrategy to randomly assign between agg, ben, neutral once those strats are made
 
         this->players.emplace_back(player);
     }
@@ -776,23 +776,20 @@ void GameEngine::main() {
 //    std::random_device randomDevice;
 //    std::mt19937 mt(randomDevice());
 //
-//    std::uniform_int_distribution<int> distribution(1, 4);
+//    std::uniform_int_distribution<int> distribution(1, 3);
 //    int strategyChoice = distribution(mt);
 //
 //    switch(strategyChoice) {
 //        case 1:
-//            initStrategy = new HumanPlayerStrategy();
-//            break;
-//        case 2:
 //            initStrategy = new AggressivePlayerStrategy();
 //            break;
-//        case 3:
+//        case 2:
 //            initStrategy = new BenevolentPlayerStrategy();
 //            break;
-//        case 4:
+//        case 3:
 //            initStrategy = new NeutralPlayerStrategy();
 //            break;
 //    }
 //
 //    return initStrategy;
-//}-
+//}

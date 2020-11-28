@@ -642,6 +642,9 @@ void Player::setStrategy(PlayerStrategy *newStrategy) {
     this->strategy = newStrategy;
 }
 
+PlayerStrategy* Player::getPlayerStrategy() {
+    return strategy;
+}
 
 /* Overloads */
 //stream insertion operator
