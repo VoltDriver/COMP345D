@@ -4,9 +4,49 @@
 using namespace std;
 
 int main() {
-    GameEngine* engine = new GameEngine();
+    // Setting up GameEngine
+    GameEngine engine = GameEngine();
+    engine.gameStart_Auto("test_success1.map", 4, true, true);
+    engine.startupPhase();
 
-    engine->main();
+    // Assigning strategies
+    int counter = 0;
+    for(Player* p : engine.getPlayers())
+    {
+        switch (counter) {
+            case 0:
+                p->setStrategy(new HumanPlayerStrategy());
+                break;
+            case 1:
+                p->setStrategy(new AggressivePlayerStrategy());
+                break;
+            case 2:
+                p->setStrategy(new BenevolentPlayerStrategy());
+                break;
+            default:
+                p->setStrategy(new NeutralPlayerStrategy());
+                break;
+        }
 
-    delete engine;
+        counter++;
+    }
+
+    // Set dynamic switching to on, so we can see a dynamic change in strategies.
+    engine.dynamicStrategySwitching = true;
+
+    // Launching game
+    engine.mainGameLoop();
+
+    // Printing out the players and their strategies.
+    for(Player* p : engine.getPlayers())
+    {
+        cout << p << endl;
+        cout << "Strategy was: " << p->getPlayerStrategy()->getStrategyName() << endl;
+    }
+
+    for(Player* p : engine.getEliminatedPlayers())
+    {
+        cout << p << endl;
+        cout << "Strategy was: " << p->getPlayerStrategy()->getStrategyName() << endl;
+    }
 }

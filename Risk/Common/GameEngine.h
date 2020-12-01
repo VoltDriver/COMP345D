@@ -55,6 +55,7 @@ class GameEngine: public Subject {
     public:
         PhaseObserver *phaseView;
         StatsObserver *statsView;
+        bool dynamicStrategySwitching;
 
         // Constants
         static const int MINIMUM_REINFORCEMENT;
@@ -70,6 +71,7 @@ class GameEngine: public Subject {
         void executeOrdersPhase();
         void main();
         list<Player*> getPlayers();
+        list<Player*> getEliminatedPlayers();
 
         GameEngine& operator=(const GameEngine &g);
         GameEngine();

@@ -431,6 +431,23 @@ void GameEngine::mainGameLoop() {
                 this->phase = "Eliminated";
                 this->currentPlayer = eliminatedPlayers.back();
                 Subject::notify();
+
+                // If a player has lost, check for dynamic switching.
+                if(dynamicStrategySwitching)
+                {
+                    // If only 2 players remain, they need to both either be human or aggressive.
+                    if(players.size() == 2)
+                    {
+                        for(Player* p : players)
+                        {
+                            if(p->getPlayerStrategy()->getStrategyName() != HumanPlayerStrategy().getStrategyName() &&
+                               p->getPlayerStrategy()->getStrategyName() != AggressivePlayerStrategy().getStrategyName())
+                            {
+                                p->setStrategy(new AggressivePlayerStrategy());
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -699,6 +716,7 @@ GameEngine &GameEngine::operator=(const GameEngine &g) {
         phase_observer_flag = g.phase_observer_flag;
         stat_observer_flag = g.stat_observer_flag;
         eliminatedPlayers = g.eliminatedPlayers;
+        dynamicStrategySwitching = g.dynamicStrategySwitching;
     }
 
     return *this;
@@ -716,6 +734,7 @@ GameEngine::GameEngine() {
     stat_observer_flag = true;
     phaseView = nullptr;
     statsView = nullptr;
+    dynamicStrategySwitching = false;
 }
 
 GameEngine::GameEngine(const GameEngine &g) {
@@ -728,6 +747,7 @@ GameEngine::GameEngine(const GameEngine &g) {
     deck = g.deck;
     phase_observer_flag = g.phase_observer_flag;
     stat_observer_flag = g.stat_observer_flag;
+    dynamicStrategySwitching = g.dynamicStrategySwitching;
 }
 
 GameEngine::~GameEngine() {
@@ -768,6 +788,10 @@ void GameEngine::main() {
     gameStart(false);
     startupPhase();
     mainGameLoop();
+}
+
+list<Player *> GameEngine::getEliminatedPlayers() {
+    return eliminatedPlayers;
 }
 
 
