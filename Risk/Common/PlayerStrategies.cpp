@@ -16,10 +16,26 @@ void PlayerStrategy::setStrategyName(string name) {
     strategy_name = name;
 }
 
-string PlayerStrategy::getStrategyName() {
+string PlayerStrategy::getStrategyName() const {
     return strategy_name;
 }
 
+PlayerStrategy &PlayerStrategy::operator=(const PlayerStrategy &strategy) {
+    if(this != &strategy)
+    {
+        this->setStrategyName(strategy.strategy_name);
+    }
+
+    return *this;
+}
+
+std::ostream &operator<<(ostream &out, const PlayerStrategy &strategy) {
+    return out << strategy.strategy_name;
+}
+
+PlayerStrategy::PlayerStrategy(const PlayerStrategy &strategy) {
+    this->setStrategyName(strategy.strategy_name);
+}
 
 
 /* DefaultPlayerStrategy class */
@@ -239,6 +255,21 @@ bool DefaultPlayerStrategy::issueOrder(Player *player, Deck* deck, Map* territor
     return true;
 }
 
+DefaultPlayerStrategy::DefaultPlayerStrategy(const DefaultPlayerStrategy &strategy) {
+    this->setStrategyName(strategy.getStrategyName());
+}
+
+std::ostream &operator<<(ostream &out, const DefaultPlayerStrategy &strategy) {
+    return out << strategy.getStrategyName();
+}
+
+DefaultPlayerStrategy &DefaultPlayerStrategy::operator=(const DefaultPlayerStrategy &strategy) {
+    if(this != &strategy)
+    {
+        this->setStrategyName(strategy.getStrategyName());
+    }
+    return *this;
+}
 
 
 /* HumanPlayerStrategy class */
@@ -482,6 +513,21 @@ bool HumanPlayerStrategy::issueOrder(Player *player, Deck* deck, Map* territorie
     return true;
 }
 
+HumanPlayerStrategy::HumanPlayerStrategy(const HumanPlayerStrategy &strategy) {
+    this->setStrategyName(strategy.getStrategyName());
+}
+
+std::ostream &operator<<(ostream &out, const HumanPlayerStrategy &strategy) {
+    return out << strategy.getStrategyName();
+}
+
+HumanPlayerStrategy &HumanPlayerStrategy::operator=(const HumanPlayerStrategy &strategy) {
+    if(this != &strategy)
+    {
+        this->setStrategyName(strategy.getStrategyName());
+    }
+    return *this;
+}
 
 
 /* AggressivePlayerStrategy class */
@@ -491,7 +537,9 @@ AggressivePlayerStrategy::AggressivePlayerStrategy() {
     advanceAllowed = true;
 }
 
-AggressivePlayerStrategy::~AggressivePlayerStrategy() {}
+AggressivePlayerStrategy::~AggressivePlayerStrategy() {
+    strongestTerritory = nullptr;
+}
 
 
 Territory* AggressivePlayerStrategy::getStrongestTerritory() {
@@ -695,7 +743,26 @@ bool AggressivePlayerStrategy::issueOrder(Player *player, Deck* deck, Map* terri
             return true;
     }
 
+AggressivePlayerStrategy::AggressivePlayerStrategy(const AggressivePlayerStrategy &strategy)  : PlayerStrategy(strategy) {
+    strongestTerritory = strategy.strongestTerritory;
+    advanceAllowed = strategy.advanceAllowed;
+}
 
+std::ostream &operator<<(ostream &out, const AggressivePlayerStrategy &strategy) {
+    return out << strategy.getStrategyName() << " AdvanceAllowed: " << strategy.advanceAllowed
+    << " StrongestTerritory: " << strategy.strongestTerritory->get_name();
+}
+
+AggressivePlayerStrategy &AggressivePlayerStrategy::operator=(const AggressivePlayerStrategy &strategy) {
+    if(this != &strategy)
+    {
+        strongestTerritory = nullptr;
+        strongestTerritory = strategy.strongestTerritory;
+        advanceAllowed = strategy.advanceAllowed;
+        setStrategyName(strategy.getStrategyName());
+    }
+    return *this;
+}
 
 
 //BenevolentPlayerStrategy class
@@ -705,7 +772,13 @@ BenevolentPlayerStrategy::BenevolentPlayerStrategy() {
     weakestTerritories = vector<Territory*>();
 }
 
-BenevolentPlayerStrategy::~BenevolentPlayerStrategy() {}
+BenevolentPlayerStrategy::~BenevolentPlayerStrategy() {
+    weakestTerritory = nullptr;
+    for(Territory* ptr : weakestTerritories)
+    {
+        ptr = nullptr;
+    }
+}
 
 Territory* BenevolentPlayerStrategy::getWeakestTerritory() {
     return weakestTerritory;
@@ -941,6 +1014,33 @@ bool BenevolentPlayerStrategy::issueOrder(Player *player, Deck* deck, Map* terri
     return true;
 }
 
+BenevolentPlayerStrategy::BenevolentPlayerStrategy(const BenevolentPlayerStrategy &strategy) : PlayerStrategy(strategy) {
+    weakestTerritories = strategy.weakestTerritories;
+    weakestTerritory = strategy.weakestTerritory;
+}
+
+std::ostream &operator<<(ostream &out, const BenevolentPlayerStrategy &strategy) {
+    string weakestTerritories;
+    int count = 0;
+    for(Territory* territory : strategy.weakestTerritories)
+    {
+        if(count != 0)
+            weakestTerritories += " ";
+        weakestTerritories += territory->get_name();
+    }
+    return out << strategy.getStrategyName() << " WeakestTerritory: " << strategy.weakestTerritory->get_name() <<
+    " " << "WeakestTerritories:" << weakestTerritories;
+}
+
+BenevolentPlayerStrategy &BenevolentPlayerStrategy::operator=(const BenevolentPlayerStrategy &strategy) {
+    if(this != &strategy)
+    {
+        weakestTerritories = strategy.weakestTerritories;
+        weakestTerritory = strategy.weakestTerritory;
+        setStrategyName(strategy.getStrategyName());
+    }
+    return *this;
+}
 
 
 /* NeutralPlayerStrategy class */
@@ -982,6 +1082,23 @@ vector<Territory*> NeutralPlayerStrategy::to_attack(Player *player) {
 bool NeutralPlayerStrategy::issueOrder(Player *player, Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers) {
     cout << "Ending turn.\n" << endl;
     return false;
+}
+
+NeutralPlayerStrategy::NeutralPlayerStrategy(const NeutralPlayerStrategy &strategy) : PlayerStrategy(strategy) {
+
+}
+
+std::ostream &operator<<(ostream &out, const NeutralPlayerStrategy &strategy) {
+    return out << strategy.getStrategyName();
+}
+
+NeutralPlayerStrategy &NeutralPlayerStrategy::operator=(const NeutralPlayerStrategy &strategy) {
+    if(this != &strategy)
+    {
+        setStrategyName(strategy.getStrategyName());
+    }
+
+    return *this;
 }
 
 
