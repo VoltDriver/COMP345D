@@ -15,7 +15,7 @@ int main() {
     {
         switch (counter) {
             case 0:
-                p->setStrategy(new AggressivePlayerStrategy());
+                p->setStrategy(new HumanPlayerStrategy());
                 break;
             case 1:
                 p->setStrategy(new AggressivePlayerStrategy());
