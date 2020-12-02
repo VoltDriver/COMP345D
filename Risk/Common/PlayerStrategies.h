@@ -59,10 +59,15 @@ public:
  * fortifies in order to maximize aggregation of force in one territory.
  */
 class AggressivePlayerStrategy : public PlayerStrategy {
+protected:
+    Territory* strongestTerritory;
+    bool advanceAllowed;
 public:
     AggressivePlayerStrategy();
     ~AggressivePlayerStrategy();
 
+    Territory* getStrongestTerritory();
+    void setStrongestTerritory(Player* player);
     vector<Territory*> to_defend(Player *player);
     vector<Territory*> to_attack(Player *player);
     bool issueOrder(Player *player, Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers);
@@ -75,10 +80,15 @@ public:
  *
  */
 class BenevolentPlayerStrategy : public PlayerStrategy {
+protected:
+    Territory* weakestTerritory;
+    vector<Territory*> weakestTerritories;
 public:
     BenevolentPlayerStrategy();
     ~BenevolentPlayerStrategy();
 
+    vector<Territory*> getWeakestTerritories(Player* player);
+    Territory* getWeakestTerritory();
     vector<Territory*> to_defend(Player *player);
     vector<Territory*> to_attack(Player *player);
     bool issueOrder(Player *player, Deck* deck, Map* territoriesMap,const list<Player*> gamePlayers);

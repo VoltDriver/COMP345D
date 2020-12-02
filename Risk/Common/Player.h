@@ -21,6 +21,7 @@ using namespace std;
  */
 class Player {
 private:
+    bool wonFight;
     PlayerStrategy *strategy;
     vector<Territory*> territories;
     OrdersList* orders;
@@ -47,6 +48,9 @@ public:
     ~Player();
 
     /* Methods */
+    bool hasWonFight();
+    void setWonFight(bool wonFight);
+    void incrementNumOfConquers();
     int getReinforcementPool() const;
     void setReinforcementPool(int newPool);
     int getUncommittedReinforcementPool() const;

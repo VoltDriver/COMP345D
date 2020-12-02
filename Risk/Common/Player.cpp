@@ -646,6 +646,18 @@ PlayerStrategy* Player::getPlayerStrategy() {
     return strategy;
 }
 
+void Player::incrementNumOfConquers() {
+    numOfConquers++;
+}
+
+bool Player::hasWonFight(){
+    return wonFight;
+}
+
+void Player::setWonFight(bool wonFight){
+    this->wonFight = wonFight;
+}
+
 /* Overloads */
 //stream insertion operator
 ostream &operator<<(std::ostream &strm, const Player &player) {

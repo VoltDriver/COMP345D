@@ -99,10 +99,11 @@ bool Deploy::validate() {
 //execute() method for Deploy that prints out a different string depending on the boolean returned by validate()
 void Deploy::execute() {
     cout << *this << endl;
+    player->setWonFight(false);
     if (validate()){
-        cout << "Before deployment: " << target->get_armies() << endl << endl;
+        cout << "Before deployment: " << *target << endl << endl;
         target->set_armies(target->get_armies()+armies);
-        cout << "After deployment: " << target->get_armies() << endl << endl;
+        cout << "After deployment: " << *target << endl << endl;
         player->setReinforcementPool(player->getReinforcementPool()-armies);
     }
     else{
@@ -167,6 +168,7 @@ bool Advance::validate() {
 //execute() method for Advance that prints out a different string depending on the boolean returned by validate()
 void Advance::execute() {
     cout << *this << endl;
+    player->setWonFight(false);
     if (validate()) {
         source->set_armies(source->get_armies()-armies);
         if (target->getPlayer() == nullptr || target->getPlayerName().compare(player->name) != 0) {
@@ -212,6 +214,7 @@ void Advance::execute() {
                 }
                 target->setPlayer(player);
                 player->addTerritory(target);
+                player->setWonFight(true);
                 if (!(player->hasConquered())){
                     player->setConquered(true);
                 }
@@ -224,8 +227,11 @@ void Advance::execute() {
                 source->set_armies(source->get_armies() + armies);
             }
         }
-        else
+        else {
+            cout << "Before advance: " << *target << endl;
             target->set_armies(target->get_armies() + armies);
+            cout << "After advance: " << *target << endl;
+        }
     }
     else {
         cout << "This advance order is not valid" << endl;
@@ -280,6 +286,7 @@ bool Bomb::validate() {
 //execute() method for Bomb that prints out a different string depending on the boolean returned by validate()
 void Bomb::execute() {
     cout << *this << endl;
+    player->setWonFight(false);
     if(validate()) {
         cout << "Before bombing: " << target->get_name() << " has " << target->get_armies() << " units" << endl;
         if (target->get_armies() > 1) {
@@ -341,6 +348,7 @@ bool Blockade::validate() {
 //execute() method for Blockade that prints out a different string depending on the boolean returned by validate()
 void Blockade::execute() {
     cout << *this << endl;
+    player->setWonFight(false);
     if (validate()) {
         cout << "\nBefore blockade: " << target->get_name() << " has " << target->get_armies() << " units" << endl;
         target->set_armies(2*target->get_armies());
@@ -411,6 +419,7 @@ bool Airlift::validate() {
 //execute() method for Airlift that prints out a different string depending on the boolean returned by validate()
 void Airlift::execute() {
     cout << *this << endl;
+    player->setWonFight(false);
     if (validate()) {
         source->set_armies(source->get_armies()-armies);
         if (target->getPlayer() == nullptr || target->getPlayerName().compare(player->name) != 0) {
@@ -455,6 +464,7 @@ void Airlift::execute() {
                 }
                 target->setPlayer(player);
                 player->addTerritory(target);
+                player->setWonFight(true);
                 if (!(player->hasConquered())){
                     player->setConquered(true);
                 }
@@ -523,6 +533,7 @@ bool Negotiate::validate() {
 //execute() method for Negotiate that prints out a different string depending on the boolean returned by validate()
 void Negotiate::execute() {
     cout << *this << endl;
+    player->setWonFight(false);
     if (validate()){
         cout << "Before negotiating friendly: " << player->isFriendly(target)<< endl;
         player->addFriendlyPlayer(target);

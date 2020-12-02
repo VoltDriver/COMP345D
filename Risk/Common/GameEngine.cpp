@@ -163,7 +163,7 @@ void GameEngine::gameStart_Auto(string map, int player_count, bool phase_observe
         // Player creation
         Player* player = new Player(name);
         // Initial strategy being assigned
-        player->setStrategy(new DefaultPlayerStrategy()); // use setInitStrategy to randomly assign between agg, ben, neutral once those strats are made
+        player->setStrategy(new BenevolentPlayerStrategy()); // use setInitStrategy to randomly assign between agg, ben, neutral once those strats are made
 
         this->players.emplace_back(player);
     }
@@ -227,7 +227,7 @@ void GameEngine::gameStart(bool verbose) {
         // Player creation
         Player* player = new Player(name);
         // Initial strategy being assigned
-        player->setStrategy(new DefaultPlayerStrategy());
+        player->setStrategy(new AggressivePlayerStrategy());
 
         this->players.emplace_back(player);
     }
@@ -652,9 +652,8 @@ void GameEngine::executeOrdersPhase() {
                         // ... it executes an order
                         player->orders->myList[0]->execute();
 
-                        if (player->hasConquered()) {
-                            player->numOfConquers++;
-
+                        if (player->hasWonFight()) {
+                            player->incrementNumOfConquers();
                             // Stats Observer notification
                             this->phase = "Conquered";
                             Subject::notify();

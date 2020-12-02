@@ -5,6 +5,8 @@
 #include <list>
 #include <random>
 #include "Cards.h"
+#include "PlayerStrategies.h"
+class BenevolentPlayerStrategy;
 
 // Card
 
@@ -94,51 +96,104 @@ void Card::play(Player* player, Deck* deck, Map* map, const list<Player*>& gameP
         case Airlift:
         {
             // Choosing a starting point
-            std::map<int, Territory*> sourceTerritoryToNumberMap = std::map<int, Territory*>();
-            int counter = 0;
-            for(Territory* t : player->to_defend())
-            {
-                // We can only choose a territory that has armies as a starting point.
-                if(t->get_armies() > 0) {
-                    sourceTerritoryToNumberMap[counter] = t;
+            if (player->getPlayerStrategy()->getStrategyName().compare("Benevolent") != 0) {
+                std::map<int, Territory *> sourceTerritoryToNumberMap = std::map<int, Territory *>();
+                int counter = 0;
+                for (Territory *t : player->to_defend()) {
+                    // We can only choose a territory that has armies as a starting point.
+                    if (t->get_armies() > 0) {
+                        sourceTerritoryToNumberMap[counter] = t;
 
-                    cout << counter << ": " << t->get_name() << " (" << t->get_armies() << " troops)" << endl;
-                    counter++;
+                        cout << counter << ": " << t->get_name() << " (" << t->get_armies() << " troops)" << endl;
+                        counter++;
+                    }
                 }
+
+                // Generate a random input
+                std::uniform_int_distribution<int> distribution(0, sourceTerritoryToNumberMap.size() - 1);
+
+                int sourceTerritoryChoice = distribution(mt);
+
+                // Choosing randomly a number of troops to move
+                std::uniform_int_distribution<int> distributionTroops(1,
+                                                                      sourceTerritoryToNumberMap[sourceTerritoryChoice]->get_armies());
+
+                int troopNumber = distributionTroops(mt);
+
+                // Choose a territory for the player to advance to.
+                std::map<int, Territory *> destinationTerritoryToNumberMap = std::map<int, Territory *>();
+                int counter2 = 0;
+
+                // Advancing to any territory
+                for (Territory *t : map->territories) {
+                    destinationTerritoryToNumberMap[counter2] = t;
+                    counter2++;
+                }
+
+                // Choosing randomly a territory to move to
+                std::uniform_int_distribution<int> distributionDestination(0,
+                                                                           destinationTerritoryToNumberMap.size() - 1);
+
+                int destinationTerritoryChoice = distributionDestination(mt);
+
+                auto *airliftOrder = new class::Airlift(id.setID(), troopNumber,
+                                                        sourceTerritoryToNumberMap[sourceTerritoryChoice],
+                                                        destinationTerritoryToNumberMap[destinationTerritoryChoice],
+                                                        player);
+                player->addOrder(airliftOrder);
+
+                cout << "Airlift order issued." << endl;
+                break;
             }
+            else{
+                std::map<int, Territory *> sourceTerritoryToNumberMap = std::map<int, Territory *>();
+                int counter = 0;
+                for (Territory *t : player->getTerritories()) {
+                    // We can only choose a territory that has armies as a starting point that are greater than your weakest countries.
+                    if (t->get_armies() > dynamic_cast<BenevolentPlayerStrategy*>(player->getPlayerStrategy())->getWeakestTerritory()->get_armies()) {
+                        sourceTerritoryToNumberMap[counter] = t;
 
-            // Generate a random input
-            std::uniform_int_distribution<int> distribution(0,sourceTerritoryToNumberMap.size() - 1);
+                        cout << counter << ": " << t->get_name() << " (" << t->get_armies() << " troops)" << endl;
+                        counter++;
+                    }
+                }
 
-            int sourceTerritoryChoice = distribution(mt);
+                // Generate a random input
+                std::uniform_int_distribution<int> distribution(0, sourceTerritoryToNumberMap.size() - 1);
 
-            // Choosing randomly a number of troops to move
-            std::uniform_int_distribution<int> distributionTroops(1,sourceTerritoryToNumberMap[sourceTerritoryChoice]->get_armies());
+                int sourceTerritoryChoice = distribution(mt);
 
-            int troopNumber = distributionTroops(mt);
+                // Choosing randomly a number of troops to move
+                std::uniform_int_distribution<int> distributionTroops(1,
+                                                                      sourceTerritoryToNumberMap[sourceTerritoryChoice]->get_armies());
 
-            // Choose a territory for the player to advance to.
-            std::map<int, Territory*> destinationTerritoryToNumberMap = std::map<int, Territory*>();
-            int counter2 = 0;
+                int troopNumber = distributionTroops(mt);
 
-            // Advancing to any territory
-            for(Territory* t : map->territories)
-            {
-                destinationTerritoryToNumberMap[counter2] = t;
-                counter2++;
+                // Choose a territory for the player to advance to.
+                std::map<int, Territory *> destinationTerritoryToNumberMap = std::map<int, Territory *>();
+                int counter2 = 0;
+
+                // Advancing to any of your weakest territories
+                for (Territory *t : player->to_defend()) {
+                    destinationTerritoryToNumberMap[counter2] = t;
+                    counter2++;
+                }
+
+                // Choosing randomly a territory to move to
+                std::uniform_int_distribution<int> distributionDestination(0,
+                                                                           destinationTerritoryToNumberMap.size() - 1);
+
+                int destinationTerritoryChoice = distributionDestination(mt);
+
+                auto *airliftOrder = new class::Airlift(id.setID(), troopNumber,
+                                                        sourceTerritoryToNumberMap[sourceTerritoryChoice],
+                                                        destinationTerritoryToNumberMap[destinationTerritoryChoice],
+                                                        player);
+                player->addOrder(airliftOrder);
+
+                cout << "Airlift order issued." << endl;
+                break;
             }
-
-            // Choosing randomly a territory to move to
-            std::uniform_int_distribution<int> distributionDestination(0,destinationTerritoryToNumberMap.size() - 1);
-
-            int destinationTerritoryChoice = distributionDestination(mt);
-
-            auto* airliftOrder = new class::Airlift(id.setID(), troopNumber, sourceTerritoryToNumberMap[sourceTerritoryChoice],
-                    destinationTerritoryToNumberMap[destinationTerritoryChoice], player);
-            player->addOrder(airliftOrder);
-
-            cout << "Airlift order issued." << endl;
-            break;
         }
         case Diplomacy:
         {
@@ -451,19 +506,21 @@ void Deck::draw(Hand* hand) {
     // There's other ways to do it, but this is efficient and does not require seeding with Time.
     std::random_device randomDevice;
     std::mt19937 mt(randomDevice());
-    std::uniform_int_distribution<int> distribution(0,this->cards->size() - 1);
-    int randomIndex = distribution(mt);
+    if (this->cards->size()!= 0) {
+        std::uniform_int_distribution<int> distribution(0, this->cards->size() - 1);
+        int randomIndex = distribution(mt);
 
-    // Drawing the card at the index generated.
-    auto iterator = std::next(this->cards->begin(), randomIndex);
-    // Copying the card to the heap, so that we have a deep copy.
-    Card* pulled = new Card(*iterator);
+        // Drawing the card at the index generated.
+        auto iterator = std::next(this->cards->begin(), randomIndex);
+        // Copying the card to the heap, so that we have a deep copy.
+        Card* pulled = new Card(*iterator);
 
-    // Adding the card we pulled to the hand
-    hand->addCard(*pulled);
+        // Adding the card we pulled to the hand
+        hand->addCard(*pulled);
 
-    // Removing the card from the deck.
-    cards->erase(iterator);
+        // Removing the card from the deck.
+        cards->erase(iterator);
+    }
 }
 
 // Returns the number of cards left in the deck.

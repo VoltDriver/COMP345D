@@ -15,7 +15,7 @@ int main() {
     {
         switch (counter) {
             case 0:
-                p->setStrategy(new HumanPlayerStrategy());
+                p->setStrategy(new AggressivePlayerStrategy());
                 break;
             case 1:
                 p->setStrategy(new AggressivePlayerStrategy());
@@ -40,13 +40,17 @@ int main() {
     // Printing out the players and their strategies.
     for(Player* p : engine.getPlayers())
     {
-        cout << p << endl;
+        cout << "========================================================" << endl;
+        cout << *p << endl;
         cout << "Strategy was: " << p->getPlayerStrategy()->getStrategyName() << endl;
+        cout << "========================================================" << endl;
     }
 
     for(Player* p : engine.getEliminatedPlayers())
     {
-        cout << p << endl;
+        cout << "========================================================" << endl;
+        cout << *p << endl;
         cout << "Strategy was: " << p->getPlayerStrategy()->getStrategyName() << endl;
+        cout << "========================================================" << endl;
     }
 }
