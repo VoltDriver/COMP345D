@@ -131,7 +131,7 @@ void PhaseObserver::display() {
     if (phase == "Reinforcement Phase::Deploy") {
         int armiesToDeploy = _gameEngine->getCurrentPlayer()->getReinforcementPool();
         cout << "\n--------------------------------------------------------------------------------------------------" << endl;
-        cout << "-" << player_name << " Reinforcement Phase-" << endl;
+        cout << "-" << player_name << " (" << player_strategy << ") Reinforcement Phase-" << endl;
         cout << "Number of armies to Deploy: " << armiesToDeploy;
         cout << "\n--------------------------------------------------------------------------------------------------" << endl;
     }
