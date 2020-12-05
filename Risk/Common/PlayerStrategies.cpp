@@ -343,6 +343,7 @@ bool HumanPlayerStrategy::issueOrder(Player *player, Deck* deck, Map* territorie
 
         if(advanceAllowed) {
             possibleActions.push_back(1);
+            cout << "1: Advance" << endl;
         }
 
         // Play a card
